@@ -1,0 +1,16 @@
+/* Write your global styles here, in PostCSS syntax */
+html, body { @apply h-full overflow-hidden; }
+
+a {
+    @apply !no-underline;
+}
+
+.paginator {
+    & .paginator-select {
+        @apply !text-sm !font-normal !text-gray-500 !border-none;
+    }
+}
+
+.radio-item-label {
+    @apply !p-0.5 !px-3 !text-sm !font-normal;
+}
