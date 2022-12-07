@@ -11,6 +11,9 @@
 	--primary-hover: #1976d2;
 	--primary-focus: rgba(30, 136, 229, 0.125);
 	--primary-inverse: #fff;
+	--muted-color-hover: hsl(205deg, 10%, 95%);
+	--muted-color-focus: hsl(205deg, 10%, 90%);
+	--muted-color-inverse: #fff;
 }
 
 /* Blue Dark scheme (Auto) */
@@ -21,6 +24,9 @@
 		--primary-hover: #2196f3;
 		--primary-focus: rgba(30, 136, 229, 0.25);
 		--primary-inverse: #fff;
+		--muted-color-hover: hsl(205deg, 10%, 20%);
+		--muted-color-focus: hsl(205deg, 10%, 15%);
+		--muted-color-inverse: #fff;
 	}
 }
 
@@ -31,6 +37,7 @@
 	--primary-hover: #2196f3;
 	--primary-focus: rgba(30, 136, 229, 0.25);
 	--primary-inverse: #fff;
+	--muted-color-inverse: #fff;
 }
 
 :root {
@@ -44,23 +51,10 @@
 	--border-radius: 999rem;
 	--font-size: 14px;
 	--spacing: 0.25rem;
-
-	--muted-color-inverse: #fff;
 }
 
 body {
 	margin: 0;
-}
-
-.label {
-	font-size: 0.875rem;
-	font-weight: 600;
-	margin-bottom: 0.5rem;
-	flex: 1;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	text-transform: uppercase;
-	white-space: nowrap;
 }
 
 .sr-only {

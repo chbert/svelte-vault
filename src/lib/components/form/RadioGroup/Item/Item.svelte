@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { Icon } from '@steeze-ui/svelte-icon'
+
 	import type { ComponentType } from 'svelte'
 	import { slugify } from '$utils'
 
@@ -7,6 +9,7 @@
 	export let value: string
 	export let counter: number
 	export let selected: string
+	export let iconVariant: 'outline' | 'solid' | 'mini'
 </script>
 
 <input type="radio" id={slugify(label)} class="sr-only" {value} bind:group={selected} />
@@ -14,10 +17,10 @@
 <label for={slugify(label)}>
 	{#if icon}
 		<span class="icon">
-			<svelte:component this={icon} />
+			<Icon src={icon} theme={iconVariant} />
 		</span>
 	{/if}
-	<span>
+	<span class="label">
 		{label}
 	</span>
 
@@ -29,8 +32,20 @@
 <style lang="postcss">
 	input[type='radio'] {
 		&:checked + label {
-			background-color: var(--primary);
-			color: var(--primary-inverse);
+			background-color: var(--muted-color-hover);
+
+			& .label {
+				font-weight: 600;
+			}
+
+			& .badge {
+				background-color: var(--primary);
+				color: var(--primary-inverse);
+			}
+
+			&:hover {
+				background-color: var(--muted-color-focus);
+			}
 		}
 
 		& + label {
@@ -38,11 +53,10 @@
 			border-radius: 999rem;
 			align-items: center;
 			justify-content: space-between;
-			padding: 0.5rem 0.5rem;
+			padding: 0.5rem 0.5rem 0.5rem 1rem;
 
 			&:hover {
-				background-color: var(--primary);
-				color: var(--primary-inverse);
+				background-color: var(--muted-color-hover);
 			}
 
 			& .icon {
@@ -57,8 +71,8 @@
 				margin-left: auto;
 				padding: 0 0.75rem;
 				border-radius: 999rem;
-				background-color: var(--muted-color);
-				color: var(--muted-color-inverse);
+				background-color: var(--muted-color-focus);
+				color: var(--muted-color);
 			}
 		}
 	}
