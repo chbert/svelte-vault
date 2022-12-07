@@ -18,10 +18,11 @@
 
 <style lang="postcss">
 	.header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		width: 100%;
+		display: grid;
+		grid-template-areas: 'start center end';
+		grid-auto-flow: row;
+		grid-template-columns: 1fr 2fr 1fr;
+		gap: 1rem 2rem;
 
 		& .start,
 		& .center,
@@ -30,12 +31,25 @@
 			align-items: center;
 		}
 
+		& .start {
+			grid-area: start;
+			justify-content: start;
+		}
+
+		& .center {
+			grid-area: center;
+			justify-content: center;
+		}
+
 		& .end {
+			grid-area: end;
 			justify-content: end;
 		}
 
 		& input[id='search'] {
 			margin-bottom: 0;
+			margin-left: 0.5rem;
+			width: 100%;
 		}
 	}
 </style>

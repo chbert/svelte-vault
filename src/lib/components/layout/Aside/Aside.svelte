@@ -11,17 +11,17 @@
 	} from '@steeze-ui/heroicons'
 
 	const values = [
-		{ label: 'All', value: 'all', icon: Square3Stack3d, counter: 1 },
-		{ label: 'Repositories', value: 'repositories', icon: BookOpen, counter: 2 },
-		{ label: 'Templates', value: 'templates', icon: Document, counter: 3 },
-		{ label: 'Components', value: 'components', icon: Squares2x2, counter: 4 },
-		{ label: 'Tools', value: 'tools', icon: WrenchScrewdriver, counter: 5 }
+		{ label: 'All', value: 'all', icon: Square3Stack3d, count: 1 },
+		{ label: 'Repositories', value: 'repositories', icon: BookOpen, count: 2 },
+		{ label: 'Templates', value: 'templates', icon: Document, count: 3 },
+		{ label: 'Components', value: 'components', icon: Squares2x2, count: 4 },
+		{ label: 'Tools', value: 'tools', icon: WrenchScrewdriver, count: 5 }
 	]
 </script>
 
 <div class="aside">
 	<section>
-		<Title tag="h2" size="lg">Filters</Title>
+		<Title tag="h2" size="lg" color="muted">Filters</Title>
 	</section>
 
 	<RadioGroup legend="Categories" {values} />
@@ -33,7 +33,7 @@
 
 <style lang="postcss">
 	.aside {
-		margin-top: 2rem;
+		margin-top: 1.5rem;
 		background-color: var(--color-gray-100);
 
 		& section {

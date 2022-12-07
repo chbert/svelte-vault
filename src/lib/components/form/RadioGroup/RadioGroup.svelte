@@ -14,11 +14,11 @@
 			<Title size="sm" transform="uppercase">{legend}</Title>
 		</legend>
 	{/if}
-	{#each values as { icon, label, counter, value }}
+	{#each values as { icon, label, count, value }}
 		<Item
 			{icon}
 			{label}
-			{counter}
+			{count}
 			{value}
 			iconVariant={selected === value ? 'solid' : 'outline'}
 			bind:selected
