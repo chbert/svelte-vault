@@ -27,7 +27,13 @@
 <div class="result">
 	<div class="result-header">
 		<div class="title">
-			<Title size="lg" tag="h3" hasMargin={false}><a href={homepage}>{fullName}</a></Title>
+			<Title size="lg" tag="h3" hasMargin={false}>
+				{#if homepage}
+					<a href={homepage}>{fullName}</a>
+				{:else}
+					{fullName}
+				{/if}
+			</Title>
 			<div class="subtitle">
 				<Icon src={ArrowPath} size="16" /> Last updated
 				{`${formatDate(updated, true)}`}

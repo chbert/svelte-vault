@@ -8,7 +8,7 @@ const token = PRIVATE_GITHUB_TOKEN
 const octokit = new Octokit({ auth: token })
 
 export const GET = async () => {
-	const { data, error } = await supabaseAdminClient.from('entries').select(`*`)
+	const { data, error } = await supabaseAdminClient.from('entries').select(`*, categories(*)`)
 	if (error) return json$1({ error: error?.message }, { status: 500 })
 
 	let updateData = false
@@ -90,7 +90,7 @@ export const GET = async () => {
 
 	if (updateData) {
 		// Get all entries from the database
-		const { data, error } = await supabaseAdminClient.from('entries').select(`*`)
+		const { data, error } = await supabaseAdminClient.from('entries').select(`*, categories(*)`)
 
 		if (error) return json$1({ error: error?.message }, { status: 500 })
 		return json$1({ data, error }, { status: 200 })

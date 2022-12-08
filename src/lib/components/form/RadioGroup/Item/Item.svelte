@@ -23,6 +23,7 @@
 <style lang="postcss">
 	label {
 		border-radius: 999rem;
+		transition: all var(--transition);
 
 		&.horizontal {
 			margin-right: 0.5rem;

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { categoryCounts, entriesStore } from '$stores/categories'
+
 	import Title from '$components/Title'
 	import RadioGroup from '$components/form/RadioGroup'
 
@@ -11,11 +13,21 @@
 	} from '@steeze-ui/heroicons'
 
 	const values = [
-		{ label: 'All', value: 'all', icon: Square3Stack3d, count: 1 },
-		{ label: 'Repositories', value: 'repositories', icon: BookOpen, count: 2 },
-		{ label: 'Templates', value: 'templates', icon: Document, count: 3 },
-		{ label: 'Components', value: 'components', icon: Squares2x2, count: 4 },
-		{ label: 'Tools', value: 'tools', icon: WrenchScrewdriver, count: 0 }
+		{ label: 'All', value: 'all', icon: Square3Stack3d, count: $entriesStore.length },
+		{
+			label: 'Repositories',
+			value: 'repositories',
+			icon: BookOpen,
+			count: $categoryCounts['repositories']
+		},
+		{ label: 'Templates', value: 'templates', icon: Document, count: $categoryCounts['templates'] },
+		{
+			label: 'Components',
+			value: 'components',
+			icon: Squares2x2,
+			count: $categoryCounts['components']
+		},
+		{ label: 'Tools', value: 'tools', icon: WrenchScrewdriver, count: $categoryCounts['tools'] }
 	]
 </script>
 
