@@ -26,11 +26,20 @@
 		align-items: center;
 		cursor: pointer;
 
-		background-color: var(--primary-light);
-		border-color: var(--primary-light);
+		background-color: var(--primary-focus);
+		border-color: var(--primary-focus);
 		color: var(--primary);
 		padding: 0.5rem 0.75rem 0.625rem 1rem;
 		border-radius: 999rem;
+
+		transition-property: all;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		transition-duration: 300ms;
+
+		&:hover {
+			background-color: var(--primary-light);
+			border-color: var(--primary-light);
+		}
 
 		code {
 			background-color: transparent;

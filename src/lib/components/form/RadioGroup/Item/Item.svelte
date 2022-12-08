@@ -9,21 +9,34 @@
 	export let count: number
 	export let selected: string
 	export let iconVariant: 'outline' | 'solid' | 'mini'
+	export let orientation: 'vertical' | 'horizontal' = 'vertical'
 
 	$: active = value === selected
 </script>
 
 <input type="radio" id={slugify(label)} class="sr-only" {value} bind:group={selected} />
 
-<label for={slugify(label)} class:active>
+<label for={slugify(label)} class={orientation} class:active>
 	<Item {icon} {iconVariant} {count} {active}>{label}</Item>
 </label>
 
 <style lang="postcss">
 	label {
-		width: 100%;
 		border-radius: 999rem;
-		padding: 0.5rem 0.5rem 0.5rem 1rem;
+
+		&.horizontal {
+			margin-right: 0.5rem;
+			padding: 0.5rem 1rem;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+
+		&.vertical {
+			width: 100%;
+			padding: 0.5rem 0.5rem 0.5rem 1rem;
+		}
 
 		&:hover {
 			background-color: var(--muted-color-hover);

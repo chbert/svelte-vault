@@ -15,7 +15,7 @@
 		{ label: 'Repositories', value: 'repositories', icon: BookOpen, count: 2 },
 		{ label: 'Templates', value: 'templates', icon: Document, count: 3 },
 		{ label: 'Components', value: 'components', icon: Squares2x2, count: 4 },
-		{ label: 'Tools', value: 'tools', icon: WrenchScrewdriver, count: 5 }
+		{ label: 'Tools', value: 'tools', icon: WrenchScrewdriver, count: 0 }
 	]
 </script>
 

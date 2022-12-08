@@ -1,10 +1,20 @@
 <script lang="ts">
+	import type { PageData } from './$types'
+	import selectedPackageManager from '$stores/packageManager'
+
 	import Title from '$components/Title'
 	import Stacked from '$components/list/Stacked'
 	import Item from '$components/list/Stacked/Item'
-	import Result from '$components/Result/Result.svelte'
+	import Result from '$components/Result'
+	import RadioGroup from '$components/form/RadioGroup'
 
-	let source = []
+	export let data: PageData
+
+	const values = [
+		{ label: 'npm', value: 'npm' },
+		{ label: 'pnpm', value: 'pnpm' },
+		{ label: 'yarn', value: 'yarn' }
+	]
 </script>
 
 <svelte:head>
@@ -13,27 +23,40 @@
 </svelte:head>
 
 <div class="container">
-	<div class="page-title">
+	<div class="page-header">
 		<Title tag="h2" size="xl">Results</Title>
+		<RadioGroup {values} orientation="horizontal" bind:selected={$selectedPackageManager} />
 	</div>
 
 	<Stacked>
-		<Item>
-			<Result
-				title="Svelte Vault"
-				description="All things svelte"
-				url="https://svelte-vault.vercel.app"
-				stars={1}
-				issues={1}
-				license="MIT"
-				updated="2021-01-01"
-			/>
-		</Item>
+		{#each data.entries as { github_updated_at, full_name, description, homepage, open_issues, stars, license, npm_package, npm_downloads_last_week }}
+			{@const _license = JSON.parse(license)}
+			<Item>
+				<Result
+					fullName={full_name}
+					{description}
+					{homepage}
+					{stars}
+					openIssues={open_issues}
+					license={_license}
+					updated={github_updated_at}
+					npmPackage={npm_package}
+					npmDownloads={npm_downloads_last_week}
+				/>
+			</Item>
+		{/each}
 	</Stacked>
 </div>
 
 <style lang="postcss">
-	.page-title {
-		margin-left: 1rem;
+	:root {
+		--padding: 0 0 0 1rem;
+	}
+
+	.page-header {
+		padding: var(--padding);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 	}
 </style>

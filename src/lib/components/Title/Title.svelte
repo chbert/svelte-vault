@@ -3,9 +3,15 @@
 	export let tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span' = 'span'
 	export let transform: 'uppercase' | 'capitalize' | 'lowercase' | 'none' = 'none'
 	export let color: 'primary' | 'secondary' | 'muted' | 'color' = 'color'
+	export let hasMargin: boolean = true
 </script>
 
-<svelte:element this={tag} class="title size-{size} text-{color}" style="--transform:{transform};">
+<svelte:element
+	this={tag}
+	class="title size-{size} text-{color}"
+	class:no-margin={!hasMargin}
+	style="--transform:{transform};"
+>
 	<slot />
 </svelte:element>
 
@@ -18,6 +24,10 @@
 		text-overflow: ellipsis;
 		text-transform: var(--transform);
 		white-space: nowrap;
+
+		&.no-margin {
+			margin-bottom: 0 !important;
+		}
 
 		&.size-sm {
 			font-size: 0.875rem;

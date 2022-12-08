@@ -4,11 +4,17 @@
 	import Title from '$components/Title'
 
 	export let values: any[]
-	export let legend: string
+	export let legend: string = ''
 	export let selected: any = values[0]?.value
+	export let orientation: 'vertical' | 'horizontal' = 'vertical'
 </script>
 
-<section role="radiogroup" aria-labelledby={`label-${uniqueID}`} id={`group-${uniqueID}`}>
+<section
+	role="radiogroup"
+	aria-labelledby={`label-${uniqueID}`}
+	id={`group-${uniqueID}`}
+	class={orientation}
+>
 	{#if legend}
 		<legend id={`label-${uniqueID}`}>
 			<Title size="sm" transform="uppercase">{legend}</Title>
@@ -20,6 +26,7 @@
 			{label}
 			{count}
 			{value}
+			{orientation}
 			iconVariant={selected === value ? 'solid' : 'outline'}
 			bind:selected
 		/>
@@ -28,10 +35,25 @@
 
 <style lang="postcss">
 	section {
-		margin-bottom: var(--block-spacing-vertical);
+		&.vertical {
+			margin-bottom: var(--block-spacing-vertical);
 
-		& legend {
-			margin: 2rem 1rem 0.5rem 1rem;
+			& legend {
+				margin: 0.5rem 1rem;
+			}
+		}
+
+		&.horizontal {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+			align-items: center;
+			align-content: center;
+
+			& legend {
+				margin: 0.5rem 1rem;
+			}
 		}
 	}
 </style>

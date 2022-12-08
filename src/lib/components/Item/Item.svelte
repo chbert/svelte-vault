@@ -1,11 +1,10 @@
 <script lang="ts">
-	import type { ComponentType } from 'svelte'
 	import { Icon } from '@steeze-ui/svelte-icon'
 
-	export let icon: ComponentType
+	export let icon: any
 	export let iconVariant: 'outline' | 'solid' | 'mini' = 'outline'
-	export let count: number
-	export let active: boolean
+	export let count: number = 0
+	export let active: boolean = false
 </script>
 
 <span class="item" class:active>
@@ -14,11 +13,11 @@
 			<Icon size="20" src={icon} theme={iconVariant} />
 		</span>
 	{/if}
-	<span class="label">
+	<div class="label">
 		<slot />
-	</span>
+	</div>
 
-	{#if count}
+	{#if count !== 0}
 		<span class="badge">{count}</span>
 	{/if}
 </span>
@@ -26,6 +25,7 @@
 <style lang="postcss">
 	.item {
 		display: flex;
+		flex-wrap: nowrap;
 		align-items: center;
 		justify-content: space-between;
 
@@ -35,6 +35,13 @@
 			margin-right: 0.75rem;
 			width: 1.25rem;
 			height: 1.25rem;
+		}
+
+		& .label {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 100%;
 		}
 
 		& .badge {
