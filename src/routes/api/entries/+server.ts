@@ -18,10 +18,9 @@ export const GET = async () => {
 			data.map(async (entry) => {
 				const {
 					id,
-					github,
 					last_data_update: lastDataUpdate,
-					npm_package: npmPackage,
-					full_name: fullName
+					github_repo: githubRepo,
+					npm_package: npmPackage
 				} = entry
 
 				// Check if data was updated in the past 24 hours
@@ -29,8 +28,8 @@ export const GET = async () => {
 				if (true) {
 					updateData = true
 
-					const owner = github.split('/')[0]
-					const repo = github.split('/')[1]
+					const owner = githubRepo.split('/')[0]
+					const repo = githubRepo.split('/')[1]
 
 					const repository = await octokit.request('GET /repos/{owner}/{repo}', {
 						owner: owner,
@@ -73,6 +72,7 @@ export const GET = async () => {
 							stars,
 							open_issues,
 							license,
+							github_repo: githubRepo,
 							github_updated_at: updated_at,
 							last_data_update: new Date().toISOString(),
 							npm_downloads_last_week: npmDownloadsLastWeek,

@@ -15,6 +15,7 @@
 	export let fullName: string
 	export let homepage: string
 	export let description: string
+	export let githubRepo: string
 	export let npmPackage: string
 	export let npmDownloads: number
 	export let license: License
@@ -33,8 +34,17 @@
 			</div>
 		</div>
 		<div class="external-links">
-			<a href="#" name="NPM"><Npm /></a>
-			<a href="#" name="Github"><Github /></a>
+			<a
+				href={`https://npmjs.com/package/${npmPackage}`}
+				target="_blank"
+				rel="noreferrer"
+				name="NPM"
+			>
+				<Npm />
+			</a>
+			<a href={`https://github.com/${githubRepo}`} target="_blank" rel="noreferrer" name="Github">
+				<Github />
+			</a>
 		</div>
 	</div>
 	<div class="result-main">
@@ -44,28 +54,18 @@
 	<div class="result-footer">
 		<div class="row">
 			<div class="start col-xl">
-				<div>
-					<Item icon={Scale}>{license.spdx_id}</Item>
-				</div>
-				<div>
-					<Item icon={Star}>{stars}</Item>
-				</div>
-				<div>
-					<Item icon={XCircle}>{openIssues}</Item>
-				</div>
-				<div>
-					<Item icon={ArrowDownTray}>{npmDownloads.toLocaleString()} last week</Item>
-				</div>
+				<Item icon={Scale}>{license.spdx_id}</Item>
+				<Item icon={Star}>{stars.toLocaleString()}</Item>
+				<Item icon={XCircle}>{openIssues.toLocaleString()} open issues</Item>
+				<Item icon={ArrowDownTray}>{npmDownloads.toLocaleString()} last week</Item>
 			</div>
 
 			<div class="end col-xl">
 				<CopyCode>
 					{#if $selectedPackageManager === 'npm'}
 						npm install -D
-					{:else if $selectedPackageManager === 'pnpm'}
-						pnpm add -D
-					{:else if $selectedPackageManager === 'yarn'}
-						yarn add -D
+					{:else}
+						{$selectedPackageManager} add -D
 					{/if}
 					{npmPackage}
 				</CopyCode>
@@ -137,7 +137,8 @@
 				margin-top: 0;
 				display: flex;
 				align-items: center;
-				flex-basis: 1;
+				flex-basis: 0;
+				gap: 1rem;
 			}
 			& .end {
 				display: block;
