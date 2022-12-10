@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { PageData } from './$types'
+	import { term, sort, category, downloads, days } from '$stores'
 	import selectedPackageManager from '$stores/packageManager'
+	import { updateUrl } from '$utils/filter'
 
 	import Title from '$components/Title'
 	import Stacked from '$components/list/Stacked'
@@ -10,11 +12,24 @@
 
 	export let data: PageData
 
-	const values = [
+	const packageManagerValues = [
 		{ label: 'npm', value: 'npm' },
 		{ label: 'pnpm', value: 'pnpm' },
 		{ label: 'yarn', value: 'yarn' }
 	]
+
+	const sortValues = [
+		{ label: 'name', value: 'full_name' },
+		{ label: 'downloads', value: 'npm_downloads_last_week' },
+		{ label: 'open issues', value: 'open_issues' }
+	]
+
+	$: selectedSort = sortValues.filter((value) => value.value === $sort)[0].label
+
+	const onClickSort = (value: number) => {
+		$sort = sortValues[value].value
+		updateUrl($term, $sort, $category, $downloads, $days)
+	}
 </script>
 
 <svelte:head>
@@ -28,15 +43,21 @@
 			<Title tag="h2" size="xl" hasMargin={false}>Results</Title>
 		</div>
 		<div class="center">
-			<RadioGroup {values} orientation="horizontal" bind:selected={$selectedPackageManager} />
+			<RadioGroup
+				values={packageManagerValues}
+				orientation="horizontal"
+				bind:selected={$selectedPackageManager}
+			/>
 		</div>
 		<div class="end">
 			<details role="list">
-				<summary aria-haspopup="listbox">Sort by name</summary>
+				<summary aria-haspopup="listbox">Sort by {selectedSort}</summary>
 				<ul role="listbox">
-					<li><a>name</a></li>
-					<li><a>downloads</a></li>
-					<li><a>open issues </a></li>
+					{#each sortValues as value, index}
+						<li on:keypress={() => onClickSort(index)} on:click={() => onClickSort(index)}>
+							{value.label}
+						</li>
+					{/each}
 				</ul>
 			</details>
 		</div>
@@ -73,23 +94,29 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		flex-direction: column;
+		gap: 1rem;
 
-		& .start {
-			display: flex;
-			align-items: center;
-			justify-content: flex-start;
-		}
+		@media (min-width: 1200px) {
+			flex-direction: row;
 
-		& .center {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
+			& .start {
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
+			}
 
-		& .end {
-			display: flex;
-			align-items: center;
-			justify-content: flex-end;
+			& .center {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			& .end {
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+			}
 		}
 	}
 </style>

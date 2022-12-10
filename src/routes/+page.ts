@@ -3,6 +3,7 @@ import { entriesStore, categoriesStore } from '$stores/categories'
 
 export const load: Load = async ({ fetch, url }) => {
 	const term = url.searchParams.get('term') || ''
+	const sort = url.searchParams.get('sort') || 'full_name'
 	const days = url.searchParams.get('days') || '0'
 	const downloads = url.searchParams.get('downloads') || '0'
 	const category = url.searchParams.get('category') || '0'
@@ -10,7 +11,7 @@ export const load: Load = async ({ fetch, url }) => {
 	const resEntries = await fetch(
 		`/api/entries?term=${encodeURI(
 			term
-		)}&category=${category}&lastupdated=${days}&downloads=${downloads}`
+		)}&sort=${sort}&category=${category}&lastupdated=${days}&downloads=${downloads}`
 	)
 	const entries = await resEntries.json()
 

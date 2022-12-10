@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Icon } from '@steeze-ui/svelte-icon'
 
-	export let icon: any
+	export let icon: any = null
 	export let iconVariant: 'outline' | 'solid' | 'mini' = 'outline'
 	export let count: number = 0
 	export let active: boolean = false

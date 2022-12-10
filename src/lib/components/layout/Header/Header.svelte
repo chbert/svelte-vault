@@ -1,14 +1,14 @@
 <script>
 	import { updateUrl } from '$utils/filter'
 
-	import { term, category, downloads, days } from '$stores'
+	import { term, sort, category, downloads, days } from '$stores'
 	import Logo from '$components/Logo'
 
 	let search = ''
 
 	const onTermChange = (e) => {
 		$term = e.target.value
-		updateUrl($term, $category, $downloads, $days)
+		updateUrl($term, $sort, $category, $downloads, $days)
 	}
 </script>
 

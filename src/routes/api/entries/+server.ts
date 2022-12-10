@@ -10,6 +10,7 @@ const octokit = new Octokit({ auth: token })
 
 export const GET: RequestHandler = async ({ url }) => {
 	const term = url.searchParams.get('term') || ''
+	const sort = url.searchParams.get('sort') || 'full_name'
 	const days = url.searchParams.get('days') || 0
 	const downloads = url.searchParams.get('downloads') || 0
 	const category = url.searchParams.get('category') || 0
@@ -31,7 +32,7 @@ export const GET: RequestHandler = async ({ url }) => {
 				.gte('npm_downloads_last_week', downloads)
 				.lt('github_updated_at', gitHubUpdatedAtComp)
 				.or(`full_name.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`)
-				.order('full_name', { ascending: true })
+				.order(sort, { ascending: true })
 		} else {
 			return await supabaseAdminClient
 				.from('entries')
@@ -40,7 +41,7 @@ export const GET: RequestHandler = async ({ url }) => {
 				.lt('github_updated_at', gitHubUpdatedAtComp)
 				.or(`full_name.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`)
 				.eq('category', category)
-				.order('full_name', { ascending: true })
+				.order(sort, { ascending: true })
 		}
 	}
 
