@@ -76,6 +76,21 @@ body {
 	margin: 0;
 }
 
+details[role='list'] summary:not([role]) {
+	border-radius: var(--border-radius);
+}
+
+details[role='list'] summary + ul,
+li[role='list'] > ul {
+	border-radius: 1rem;
+}
+
+.truncate {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 .sr-only {
 	position: absolute;
 	width: 1px;

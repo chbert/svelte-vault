@@ -24,8 +24,22 @@
 
 <div class="container">
 	<div class="page-header">
-		<Title tag="h2" size="xl">Results</Title>
-		<RadioGroup {values} orientation="horizontal" bind:selected={$selectedPackageManager} />
+		<div class="start">
+			<Title tag="h2" size="xl" hasMargin={false}>Results</Title>
+		</div>
+		<div class="center">
+			<RadioGroup {values} orientation="horizontal" bind:selected={$selectedPackageManager} />
+		</div>
+		<div class="end">
+			<details role="list">
+				<summary aria-haspopup="listbox">Sort by name</summary>
+				<ul role="listbox">
+					<li><a>name</a></li>
+					<li><a>downloads</a></li>
+					<li><a>open issues </a></li>
+				</ul>
+			</details>
+		</div>
 	</div>
 
 	<Stacked>
@@ -51,7 +65,7 @@
 
 <style lang="postcss">
 	:root {
-		--padding: 0 0 0 1rem;
+		--padding: 0 0 1rem 1rem;
 	}
 
 	.page-header {
@@ -59,5 +73,23 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+
+		& .start {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+		}
+
+		& .center {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		& .end {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+		}
 	}
 </style>

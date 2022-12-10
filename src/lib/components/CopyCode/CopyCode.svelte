@@ -12,7 +12,7 @@
 </script>
 
 <div class="copy-code" use:copy on:copy={handleCopy}>
-	<code>
+	<code class="truncate">
 		<slot />
 	</code>
 
@@ -21,16 +21,19 @@
 
 <style lang="postcss">
 	.copy-code {
-		position: relative;
-		display: inline;
+		display: flex;
 		align-items: center;
+		justify-content: flex-end;
 		cursor: pointer;
 
 		background-color: var(--primary-focus);
-		border-color: var(--primary-focus);
 		color: var(--primary);
-		padding: 0.5rem 0.75rem 0.625rem 1rem;
+		white-space: nowrap;
+
+		border-color: var(--primary-focus);
 		border-radius: 999rem;
+
+		padding: 0.5rem 0.75rem 0.625rem 1rem;
 
 		transition-property: all;
 		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -42,11 +45,14 @@
 		}
 
 		code {
+			display: block;
 			background-color: transparent;
+			border-radius: 0;
 			color: inherit;
 			padding: 0;
 			margin-right: 0.5rem;
 			line-height: 1.25rem;
+			max-width: 20rem;
 		}
 	}
 </style>

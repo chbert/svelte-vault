@@ -59,6 +59,7 @@
 			justify-content: flex-start;
 			align-items: center;
 			align-content: center;
+			margin-bottom: 0;
 
 			& legend {
 				margin: 0.5rem 1rem;

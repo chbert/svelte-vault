@@ -60,32 +60,35 @@
 	</div>
 
 	<div class="result-footer">
-		<div class="row">
-			<div class="start col-xl">
-				<Item icon={Scale}>{license.spdx_id}</Item>
-				<Item icon={Star}>{stars.toLocaleString()}</Item>
-				<Item icon={XCircle}>{openIssues.toLocaleString()} open issues</Item>
-				{#if npmPackage}
-					<Item icon={ArrowDownTray}>{npmDownloads.toLocaleString()} last week</Item>
-				{/if}
-			</div>
+		<div class="start">
+			<Item icon={Scale}>{license.spdx_id}</Item>
+			<Item icon={Star}>{stars.toLocaleString()}</Item>
+			<Item icon={XCircle}>{openIssues.toLocaleString()} open issues</Item>
+			{#if npmPackage}
+				<Item icon={ArrowDownTray}>{npmDownloads.toLocaleString()} last week</Item>
+			{/if}
+		</div>
 
-			<div class="end col-xl">
+		<div class="end">
+			<CopyCode>
 				{#if npmPackage}
-					<CopyCode>
-						{#if $selectedPackageManager === 'npm'}
-							npm install -D
-						{:else}
-							{$selectedPackageManager} add -D
-						{/if}
-						{npmPackage}
-					</CopyCode>
+					{#if $selectedPackageManager === 'npm'}
+						npm install -D
+					{:else}
+						{$selectedPackageManager} add -D
+					{/if}
+					{npmPackage}
+				{:else}
+					git clone https://github.com/{githubRepo}.git
 				{/if}
-			</div>
+			</CopyCode>
 		</div>
 	</div>
 </div>
 
+<!--
+	
+-->
 <style lang="postcss">
 	.result {
 		overflow: hidden;
@@ -136,11 +139,14 @@
 	}
 
 	.result-footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		padding: var(--element-padding);
 		color: var(--muted-color);
 		background: var(--muted-color-hover);
 
-		& .end {
+		& .start {
 			margin-top: 1rem;
 		}
 
@@ -152,12 +158,13 @@
 				flex-basis: 0;
 				gap: 1rem;
 			}
+
 			& .end {
-				display: block;
-				text-align: right;
-				margin-top: 0;
-				margin-right: -1rem; /* HACK: to align with the start */
-				padding: 0;
+				display: flex;
+				flex-basis: 0;
+				justify-content: end;
+				align-items: center;
+				margin-right: -0.5rem; /* compensate for the margin on the copy button */
 			}
 		}
 	}
