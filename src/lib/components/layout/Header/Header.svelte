@@ -1,4 +1,5 @@
 <script>
+	import { searchTerm } from '$stores'
 	import Logo from '$components/Logo'
 </script>
 
@@ -10,7 +11,13 @@
 			</div>
 
 			<div class="center col-xl">
-				<input type="search" id="search" name="search" placeholder="Search" />
+				<input
+					type="search"
+					id="search"
+					name="search"
+					placeholder="Search"
+					bind:value={$searchTerm}
+				/>
 			</div>
 
 			<div class="end col-xl-3">
