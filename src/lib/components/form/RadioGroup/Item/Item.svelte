@@ -14,7 +14,7 @@
 	$: active = value === selected
 </script>
 
-<input type="radio" id={slugify(label)} class="sr-only" {value} bind:group={selected} />
+<input type="radio" id={slugify(label)} class="sr-only" {value} bind:group={selected} on:change />
 
 <label for={slugify(label)} class={orientation} class:active>
 	<Item {icon} {iconVariant} {count} {active}>{label}</Item>
@@ -45,10 +45,6 @@
 
 		&.active {
 			background-color: var(--muted-color-hover);
-
-			& .label {
-				font-weight: 600;
-			}
 
 			&:hover {
 				background-color: var(--muted-color-focus);

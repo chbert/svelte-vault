@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte'
+
 	import { uniqueID } from '$utils'
 	import Item from './Item'
 	import Title from '$components/Title'
@@ -7,6 +9,12 @@
 	export let legend: string = ''
 	export let selected: any = values[0]?.value
 	export let orientation: 'vertical' | 'horizontal' = 'vertical'
+
+	const dispatch = createEventDispatcher()
+
+	const onItemChange = () => {
+		dispatch('change', selected)
+	}
 </script>
 
 <section
@@ -29,6 +37,7 @@
 			{orientation}
 			iconVariant={selected === value ? 'solid' : 'outline'}
 			bind:selected
+			on:change={onItemChange}
 		/>
 	{/each}
 </section>

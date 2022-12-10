@@ -1,6 +1,15 @@
 <script>
-	import { searchTerm } from '$stores'
+	import { updateUrl } from '$utils/filter'
+
+	import { term, category, downloads, days } from '$stores'
 	import Logo from '$components/Logo'
+
+	let search = ''
+
+	const onTermChange = (e) => {
+		$term = e.target.value
+		updateUrl($term, $category, $downloads, $days)
+	}
 </script>
 
 <div class="header">
@@ -16,7 +25,8 @@
 					id="search"
 					name="search"
 					placeholder="Search"
-					bind:value={$searchTerm}
+					bind:value={search}
+					on:change={(e) => onTermChange(e)}
 				/>
 			</div>
 

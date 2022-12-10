@@ -1,3 +1,4 @@
+import type { RequestHandler } from './$types'
 import { json as json$1 } from '@sveltejs/kit'
 import { supabaseAdminClient } from '$db/server'
 import { Octokit } from 'octokit'
@@ -7,12 +8,46 @@ import { PRIVATE_GITHUB_TOKEN } from '$env/static/private'
 const token = PRIVATE_GITHUB_TOKEN
 const octokit = new Octokit({ auth: token })
 
-export const GET = async () => {
-	const { data, error } = await supabaseAdminClient.from('entries').select(`*, categories(*)`)
+export const GET: RequestHandler = async ({ url }) => {
+	const term = url.searchParams.get('term') || ''
+	const days = url.searchParams.get('days') || 0
+	const downloads = url.searchParams.get('downloads') || 0
+	const category = url.searchParams.get('category') || 0
+
+	// console.log('term, days, downloads, category :>> ', decodeURI(term), days, downloads, category)
+
+	const now = Number(new Date())
+	const range = now - Number(days) * 1000 * 60 * 60 * 24
+
+	// Convert range to  YYYY-MM-DD HH:MI:SS
+	const gitHubUpdatedAtComp = new Date(range).toISOString().slice(0, 19).replace('T', ' ')
+
+	// Only check for categories if category is not 0
+	const getData = async () => {
+		if (category == 0) {
+			return await supabaseAdminClient
+				.from('entries')
+				.select(`*, categories(*)`)
+				.gte('npm_downloads_last_week', downloads)
+				.lt('github_updated_at', gitHubUpdatedAtComp)
+				.or(`full_name.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`)
+				.order('full_name', { ascending: true })
+		} else {
+			return await supabaseAdminClient
+				.from('entries')
+				.select(`*, categories(*)`)
+				.gt('npm_downloads_last_week', downloads)
+				.lt('github_updated_at', gitHubUpdatedAtComp)
+				.or(`full_name.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`)
+				.eq('category', category)
+				.order('full_name', { ascending: true })
+		}
+	}
+
+	const { data, error } = await getData()
 	if (error) return json$1({ error: error?.message }, { status: 500 })
 
 	let updateData = false
-
 	if (data) {
 		await Promise.all(
 			data.map(async (entry) => {
@@ -48,20 +83,24 @@ export const GET = async () => {
 					} = repository.data
 					const license = JSON.stringify(repository.data.license)
 
-					// Get last week downloads from npm
-					// Replace / with %2F in npm package name
-					const npmEncoded = npmPackage.replace(/\//g, '%2F')
+					let npmDownloadsLastWeek = 0
 
-					const npmDownloadsRes = await fetch(
-						`https://api.npmjs.org/downloads/range/last-week/${npmEncoded}`
-					)
-					const npmDownloads = await npmDownloadsRes.json()
+					if (npmPackage) {
+						// Get last week downloads from npm
+						// Replace / with %2F in npm package name
+						const npmEncoded = npmPackage.replace(/\//g, '%2F')
 
-					// Sum up all downloads values in downloads inside npmDownloads
-					const npmDownloadsLastWeek = npmDownloads.downloads.reduce(
-						(acc: number, curr: any) => acc + curr.downloads,
-						0
-					)
+						const npmDownloadsRes = await fetch(
+							`https://api.npmjs.org/downloads/range/last-week/${npmEncoded}`
+						)
+						const npmDownloads = await npmDownloadsRes.json()
+
+						// Sum up all downloads values in downloads inside npmDownloads
+						npmDownloadsLastWeek = npmDownloads.downloads.reduce(
+							(acc: number, curr: any) => acc + curr.downloads,
+							0
+						)
+					}
 
 					const { error } = await supabaseAdminClient
 						.from('entries')
@@ -80,8 +119,6 @@ export const GET = async () => {
 						})
 						.eq('id', id)
 
-					// console.log('error :>> ', error)
-
 					if (error) throw error
 				}
 			})
@@ -90,7 +127,7 @@ export const GET = async () => {
 
 	if (updateData) {
 		// Get all entries from the database
-		const { data, error } = await supabaseAdminClient.from('entries').select(`*, categories(*)`)
+		const { data, error } = await getData()
 
 		if (error) return json$1({ error: error?.message }, { status: 500 })
 		return json$1({ data, error }, { status: 200 })

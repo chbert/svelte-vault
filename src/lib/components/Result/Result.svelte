@@ -40,14 +40,16 @@
 			</div>
 		</div>
 		<div class="external-links">
-			<a
-				href={`https://npmjs.com/package/${npmPackage}`}
-				target="_blank"
-				rel="noreferrer"
-				name="NPM"
-			>
-				<Npm />
-			</a>
+			{#if npmPackage}
+				<a
+					href={`https://npmjs.com/package/${npmPackage}`}
+					target="_blank"
+					rel="noreferrer"
+					name="NPM"
+				>
+					<Npm />
+				</a>
+			{/if}
 			<a href={`https://github.com/${githubRepo}`} target="_blank" rel="noreferrer" name="Github">
 				<Github />
 			</a>
@@ -63,18 +65,22 @@
 				<Item icon={Scale}>{license.spdx_id}</Item>
 				<Item icon={Star}>{stars.toLocaleString()}</Item>
 				<Item icon={XCircle}>{openIssues.toLocaleString()} open issues</Item>
-				<Item icon={ArrowDownTray}>{npmDownloads.toLocaleString()} last week</Item>
+				{#if npmPackage}
+					<Item icon={ArrowDownTray}>{npmDownloads.toLocaleString()} last week</Item>
+				{/if}
 			</div>
 
 			<div class="end col-xl">
-				<CopyCode>
-					{#if $selectedPackageManager === 'npm'}
-						npm install -D
-					{:else}
-						{$selectedPackageManager} add -D
-					{/if}
-					{npmPackage}
-				</CopyCode>
+				{#if npmPackage}
+					<CopyCode>
+						{#if $selectedPackageManager === 'npm'}
+							npm install -D
+						{:else}
+							{$selectedPackageManager} add -D
+						{/if}
+						{npmPackage}
+					</CopyCode>
+				{/if}
 			</div>
 		</div>
 	</div>

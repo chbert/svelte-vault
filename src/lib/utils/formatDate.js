@@ -5,7 +5,7 @@ import utc from 'dayjs/plugin/utc'
 dayjs.extend(relativeTime)
 dayjs.extend(utc)
 
-export const formatTime = (date, relative = false, format = 'dddd, MMMM D, YYYY') => {
+const formatTime = (date, relative = false, format = 'dddd, MMMM D, YYYY') => {
 	if (relative) {
 		return dayjs.utc(date).fromNow()
 	}

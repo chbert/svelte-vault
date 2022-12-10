@@ -29,7 +29,7 @@
 	</div>
 
 	<Stacked>
-		{#each data.entries as { github_repo, github_updated_at, full_name, description, homepage, open_issues, stars, license, npm_package, npm_downloads_last_week }}
+		{#each data?.entries as { github_repo, github_updated_at, full_name, description, homepage, open_issues, stars, license, npm_package, npm_downloads_last_week }}
 			{@const _license = JSON.parse(license)}
 			<Item>
 				<Result
