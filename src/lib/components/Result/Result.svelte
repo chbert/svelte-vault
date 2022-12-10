@@ -162,7 +162,7 @@
 			& .end {
 				display: flex;
 				flex-basis: 0;
-				justify-content: end;
+				justify-content: flex-end;
 				align-items: center;
 				margin-right: -0.5rem; /* compensate for the margin on the copy button */
 			}

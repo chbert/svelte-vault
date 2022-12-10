@@ -22,9 +22,6 @@ export const GET: RequestHandler = async ({ url }) => {
 	const now = Number(new Date())
 	const range = now - Number(days) * 1000 * 60 * 60 * 24
 
-	console.log('now :>> ', now)
-	console.log('range :>> ', range)
-
 	// Convert range to  YYYY-MM-DD HH:MI:SS
 	const gitHubUpdatedAtComp = new Date(range).toISOString().slice(0, 19).replace('T', ' ')
 

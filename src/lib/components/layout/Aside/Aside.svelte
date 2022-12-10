@@ -53,12 +53,10 @@
 		updateUrl($term, $sort, $category, $days, $downloads)
 	}
 
-	/*
 	const onChangeDownloads = (e) => {
 		$downloads = getDownloads(e.detail.values[0])
 		updateUrl($term, $sort, $category, $days, $downloads)
 	}
-	*/
 </script>
 
 <div class="aside">
@@ -87,7 +85,6 @@
 		</div>
 	</section>
 
-	<!--
 	<section>
 		<div class="range-slider">
 			<Title size="sm" transform="uppercase" tag="span">Weekly downloads</Title>
@@ -106,7 +103,6 @@
 			</div>
 		</div>
 	</section>
-	-->
 </div>
 
 <style lang="postcss">

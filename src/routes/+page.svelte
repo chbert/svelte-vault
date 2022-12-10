@@ -80,6 +80,11 @@
 					npmDownloads={npm_downloads_last_week}
 				/>
 			</Item>
+		{:else}
+			<div class="no-results">
+				<Title size="lg">No results found</Title>
+				<a href="/">Reset filters and search</a>
+			</div>
 		{/each}
 	</Stacked>
 </div>
@@ -118,5 +123,17 @@
 				justify-content: flex-end;
 			}
 		}
+	}
+
+	.no-results {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		padding: 2rem;
+		overflow: hidden;
+		border: var(--border-width) solid var(--muted-border-color);
+		border-radius: var(--element-border-radius);
 	}
 </style>

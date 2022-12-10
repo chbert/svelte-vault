@@ -49,7 +49,7 @@
 		}
 
 		& .end {
-			justify-content: end;
+			justify-content: flex-end;
 		}
 
 		& input[id='search'] {
