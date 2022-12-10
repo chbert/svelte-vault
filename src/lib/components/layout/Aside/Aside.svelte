@@ -45,18 +45,20 @@
 	// Update the URL with the new filters
 	const onChangeCategory = (e) => {
 		$category = e.detail
-		updateUrl($term, $sort, $category, $downloads, $days)
+		updateUrl($term, $sort, $category, $days, $downloads)
 	}
 
 	const onChangeDays = (e) => {
-		$days = getDateRangeDays(e.detail.values[0])
-		updateUrl($term, $sort, $category, $downloads, $days)
+		$days = getDateRangeDays(e.detail.value)
+		updateUrl($term, $sort, $category, $days, $downloads)
 	}
 
+	/*
 	const onChangeDownloads = (e) => {
 		$downloads = getDownloads(e.detail.values[0])
-		updateUrl($term, $sort, $category, $downloads, $days)
+		updateUrl($term, $sort, $category, $days, $downloads)
 	}
+	*/
 </script>
 
 <div class="aside">

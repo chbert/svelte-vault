@@ -28,7 +28,7 @@
 
 	const onClickSort = (value: number) => {
 		$sort = sortValues[value].value
-		updateUrl($term, $sort, $category, $downloads, $days)
+		updateUrl($term, $sort, $category, $days, $downloads)
 	}
 </script>
 

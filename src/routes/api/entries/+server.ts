@@ -15,10 +15,15 @@ export const GET: RequestHandler = async ({ url }) => {
 	const downloads = url.searchParams.get('downloads') || 0
 	const category = url.searchParams.get('category') || 0
 
+	const ascending = sort === 'full_name' ? true : false
+
 	// console.log('term, days, downloads, category :>> ', decodeURI(term), days, downloads, category)
 
 	const now = Number(new Date())
 	const range = now - Number(days) * 1000 * 60 * 60 * 24
+
+	console.log('now :>> ', now)
+	console.log('range :>> ', range)
 
 	// Convert range to  YYYY-MM-DD HH:MI:SS
 	const gitHubUpdatedAtComp = new Date(range).toISOString().slice(0, 19).replace('T', ' ')
@@ -30,18 +35,18 @@ export const GET: RequestHandler = async ({ url }) => {
 				.from('entries')
 				.select(`*, categories(*)`)
 				.gte('npm_downloads_last_week', downloads)
-				.lt('github_updated_at', gitHubUpdatedAtComp)
+				.gt('github_updated_at', gitHubUpdatedAtComp)
 				.or(`full_name.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`)
-				.order(sort, { ascending: true })
+				.order(sort, { ascending: ascending })
 		} else {
 			return await supabaseAdminClient
 				.from('entries')
 				.select(`*, categories(*)`)
-				.gt('npm_downloads_last_week', downloads)
-				.lt('github_updated_at', gitHubUpdatedAtComp)
+				.gte('npm_downloads_last_week', downloads)
+				.gt('github_updated_at', gitHubUpdatedAtComp)
 				.or(`full_name.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`)
 				.eq('category', category)
-				.order(sort, { ascending: true })
+				.order(sort, { ascending: ascending })
 		}
 	}
 

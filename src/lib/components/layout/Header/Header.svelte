@@ -8,7 +8,7 @@
 
 	const onTermChange = (e) => {
 		$term = e.target.value
-		updateUrl($term, $sort, $category, $downloads, $days)
+		updateUrl($term, $sort, $category, $days, $downloads)
 	}
 </script>
 

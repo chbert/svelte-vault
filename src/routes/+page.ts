@@ -11,7 +11,7 @@ export const load: Load = async ({ fetch, url }) => {
 	const resEntries = await fetch(
 		`/api/entries?term=${encodeURI(
 			term
-		)}&sort=${sort}&category=${category}&lastupdated=${days}&downloads=${downloads}`
+		)}&sort=${sort}&category=${category}&days=${days}&downloads=${downloads}`
 	)
 	const entries = await resEntries.json()
 

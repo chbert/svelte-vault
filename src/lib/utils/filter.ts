@@ -13,8 +13,6 @@ export const updateUrl = (
 			term
 		)}&sort=${sort}&category=${category}&days=${days}&downloads=${downloads}`
 
-		console.log('url :>> ', url)
-
 		goto(url)
 	}
 }

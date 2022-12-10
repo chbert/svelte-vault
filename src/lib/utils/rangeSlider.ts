@@ -40,7 +40,7 @@ export const getDateRange = (value: number) => {
 export const getDateRangeDays = (value: number) => {
 	switch (value) {
 		case 0:
-			return 0
+			return 100000
 		case 1:
 			return 1
 		case 2:
