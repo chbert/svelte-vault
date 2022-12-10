@@ -1,17 +1,14 @@
+import { get } from 'svelte/store'
 import { browser } from '$app/environment'
 import { goto } from '$app/navigation'
 
-export const updateUrl = (
-	term: string,
-	sort: string,
-	category: number,
-	days: number,
-	downloads: number
-) => {
+import { term, sort, category, days, downloads } from '$stores'
+
+export const updateUrl = () => {
 	if (browser) {
-		const url = `/?term=${encodeURI(
-			term
-		)}&sort=${sort}&category=${category}&days=${days}&downloads=${downloads}`
+		const url = `/?term=${encodeURI(get(term))}&sort=${get(sort)}&category=${get(
+			category
+		)}&days=${get(days)}&downloads=${get(downloads)}`
 
 		goto(url)
 	}

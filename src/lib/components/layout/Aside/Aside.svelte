@@ -10,7 +10,7 @@
 	} from '$utils/rangeSlider'
 	import { updateUrl } from '$utils/filter'
 
-	import { category, term, sort, downloads, days } from '$stores'
+	import { category, downloads, days } from '$stores'
 
 	import Title from '$components/Title'
 	import RadioGroup from '$components/form/RadioGroup'
@@ -45,17 +45,17 @@
 	// Update the URL with the new filters
 	const onChangeCategory = (e) => {
 		$category = e.detail
-		updateUrl($term, $sort, $category, $days, $downloads)
+		updateUrl()
 	}
 
 	const onChangeDays = (e) => {
 		$days = getDateRangeDays(e.detail.value)
-		updateUrl($term, $sort, $category, $days, $downloads)
+		updateUrl()
 	}
 
 	const onChangeDownloads = (e) => {
 		$downloads = getDownloads(e.detail.values[0])
-		updateUrl($term, $sort, $category, $days, $downloads)
+		updateUrl()
 	}
 </script>
 
