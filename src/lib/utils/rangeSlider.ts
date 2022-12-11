@@ -40,7 +40,7 @@ export const getDateRange = (value: number) => {
 export const getDateRangeDays = (value: number) => {
 	switch (value) {
 		case 0:
-			return 100000
+			return -1
 		case 1:
 			return 1
 		case 2:
@@ -81,37 +81,24 @@ export const getDownloadsRange = (value: number) => {
 		case 0:
 			return 'Any'
 		case 1:
-			return '10'
+			return '100+'
 		case 2:
-			return '100'
+			return '1000+'
 		case 3:
-			return (1000).toLocaleString()
+			return `${(10000).toLocaleString()}+`
 		case 4:
-			return (10000).toLocaleString()
+			return `${(100000).toLocaleString()}+`
 		case 5:
-			return (100000).toLocaleString()
-		case 6:
 			return `${(1000000).toLocaleString()}+`
+		case 6:
+			return `${(10000000).toLocaleString()}+`
 	}
 
 	return 'Any'
 }
 
 export const getDownloads = (value: number) => {
-	switch (value) {
-		case 0:
-			return 0
-		case 1:
-			return 10
-		case 2:
-			return 100
-		case 3:
-			return 1000
-		case 4:
-			return 10000
-		case 5:
-			return 100000
-		case 6:
-			return -1
-	}
+	if (value === 0) return -1
+
+	return Math.pow(10, value)
 }

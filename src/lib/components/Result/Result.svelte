@@ -92,6 +92,7 @@
 <style lang="postcss">
 	.result {
 		overflow: hidden;
+		background-color: inherit;
 		border-radius: var(--element-border-radius);
 
 		& .external-links {

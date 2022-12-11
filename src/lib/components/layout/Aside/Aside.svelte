@@ -1,6 +1,7 @@
 <script lang="ts">
 	import RangeSlider from 'svelte-range-slider-pips'
-	import { categoryCounts, entriesStore } from '$stores/categories'
+	import { entriesStore } from '$stores'
+	import { categoryCountsStore } from '$stores/categories'
 
 	import {
 		getDateRange,
@@ -8,9 +9,8 @@
 		getDownloadsRange,
 		getDownloads
 	} from '$utils/rangeSlider'
-	import { updateUrl } from '$utils/filter'
-
-	import { category, downloads, days } from '$stores'
+	import { updateParams, resetParams } from '$utils/filter'
+	import { categoryStore, downloadsStore, daysStore } from '$stores'
 
 	import Title from '$components/Title'
 	import RadioGroup from '$components/form/RadioGroup'
@@ -30,32 +30,32 @@
 			label: 'Repositories',
 			value: 1,
 			icon: BookOpen,
-			count: $categoryCounts['1']
+			count: $categoryCountsStore['1']
 		},
-		{ label: 'Templates', value: 2, icon: Document, count: $categoryCounts['2'] },
+		{ label: 'Templates', value: 2, icon: Document, count: $categoryCountsStore['2'] },
 		{
 			label: 'Components',
 			value: 3,
 			icon: Squares2x2,
-			count: $categoryCounts['3']
+			count: $categoryCountsStore['3']
 		},
-		{ label: 'Tools', value: 4, icon: WrenchScrewdriver, count: $categoryCounts['4'] }
+		{ label: 'Tools', value: 4, icon: WrenchScrewdriver, count: $categoryCountsStore['4'] }
 	]
 
 	// Update the URL with the new filters
 	const onChangeCategory = (e) => {
-		$category = e.detail
-		updateUrl()
+		$categoryStore = e.detail
+		updateParams()
 	}
 
 	const onChangeDays = (e) => {
-		$days = getDateRangeDays(e.detail.value)
-		updateUrl()
+		$daysStore = getDateRangeDays(e.detail.value)
+		updateParams()
 	}
 
 	const onChangeDownloads = (e) => {
-		$downloads = getDownloads(e.detail.values[0])
-		updateUrl()
+		$downloadsStore = getDownloads(e.detail.values[0])
+		updateParams()
 	}
 </script>
 
@@ -64,7 +64,12 @@
 		<Title tag="h2" size="lg" color="muted">Filters</Title>
 	</section>
 
-	<RadioGroup legend="Categories" {values} on:change={(e) => onChangeCategory(e)} />
+	<RadioGroup
+		legend="Categories"
+		{values}
+		on:change={(e) => onChangeCategory(e)}
+		bind:selected={$categoryStore}
+	/>
 
 	<section>
 		<div class="range-slider">
@@ -72,7 +77,7 @@
 
 			<RangeSlider
 				float
-				values={[0]}
+				values={[$daysStore]}
 				formatter={(v) => getDateRange(v)}
 				min={0}
 				max={15}
@@ -91,17 +96,21 @@
 
 			<RangeSlider
 				float
-				values={[0]}
+				values={[$downloadsStore]}
 				formatter={(v) => getDownloadsRange(v)}
 				min={0}
 				max={6}
 				on:change={(e) => onChangeDownloads(e)}
 			/>
 			<div class="labels">
-				<span>0</span>
+				<span>Any</span>
 				<span>10,000,000+</span>
 			</div>
 		</div>
+	</section>
+
+	<section>
+		<button on:click={resetParams}>Clear filters</button>
 	</section>
 </div>
 

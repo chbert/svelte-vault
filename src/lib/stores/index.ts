@@ -1,7 +1,10 @@
 import { writable, type Writable } from 'svelte/store'
 
-export const days: Writable<number> = writable(0)
-export const downloads: Writable<number> = writable(0)
-export const term: Writable<string> = writable('')
-export const category: Writable<number> = writable(0)
-export const sort: Writable<string> = writable('full_name')
+export const daysStore: Writable<number> = writable(0)
+export const downloadsStore: Writable<number> = writable(0)
+export const termStore: Writable<string> = writable('')
+export const categoryStore: Writable<number> = writable(0)
+export const sortStore: Writable<string> = writable('full_name')
+
+export const entriesStore: Writable<any> = writable(null)
+export const categoriesStore: Writable<any> = writable(null)

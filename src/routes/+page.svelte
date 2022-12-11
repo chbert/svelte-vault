@@ -1,8 +1,12 @@
 <script lang="ts">
+	import { quintOut } from 'svelte/easing'
+	import { crossfade } from 'svelte/transition'
+	import { flip } from 'svelte/animate'
+
 	import type { PageData } from './$types'
-	import { term, sort, category, downloads, days } from '$stores'
+	import { sortStore } from '$stores'
 	import selectedPackageManager from '$stores/packageManager'
-	import { updateUrl } from '$utils/filter'
+	import { updateParams } from '$utils/filter'
 
 	import Title from '$components/Title'
 	import Stacked from '$components/list/Stacked'
@@ -11,6 +15,23 @@
 	import RadioGroup from '$components/form/RadioGroup'
 
 	export let data: PageData
+
+	const duration = 300
+	const easing = quintOut
+
+	const [send, receive] = crossfade({
+		duration: (d) => Math.sqrt(d * 200),
+
+		fallback() {
+			return {
+				duration: duration,
+				easing: easing,
+				css: (t) => `
+					opacity: ${t}
+				`
+			}
+		}
+	})
 
 	const packageManagerValues = [
 		{ label: 'npm', value: 'npm' },
@@ -24,11 +45,11 @@
 		{ label: 'open issues', value: 'open_issues' }
 	]
 
-	$: selectedSort = sortValues.filter((value) => value.value === $sort)[0].label
+	$: selectedSort = sortValues.filter((value) => value.value === $sortStore)[0].label
 
 	const onClickSort = (value: number) => {
-		$sort = sortValues[value].value
-		updateUrl()
+		$sortStore = sortValues[value].value
+		updateParams()
 	}
 </script>
 
@@ -64,28 +85,53 @@
 	</div>
 
 	<Stacked>
-		{#each data?.entries as { github_repo, github_updated_at, full_name, description, homepage, open_issues, stars, license, npm_package, npm_downloads_last_week }}
-			{@const _license = JSON.parse(license)}
-			<Item>
-				<Result
-					fullName={full_name}
-					{description}
-					{homepage}
-					{stars}
-					openIssues={open_issues}
-					githubRepo={github_repo}
-					license={_license}
-					updated={github_updated_at}
-					npmPackage={npm_package}
-					npmDownloads={npm_downloads_last_week}
-				/>
-			</Item>
-		{:else}
-			<div class="no-results">
-				<Title size="lg">No results found</Title>
-				<a href="/">Reset filters and search</a>
+		{#await data}
+			<div class="loading">
+				<Title size="lg">Loading...</Title>
 			</div>
-		{/each}
+		{:then data}
+			{#each data?.entries as entry (entry.id)}
+				{@const {
+					github_repo,
+					github_updated_at,
+					full_name,
+					description,
+					homepage,
+					open_issues,
+					stars,
+					license,
+					npm_package,
+					npm_downloads_last_week
+				} = entry}
+				{@const _license = JSON.parse(license)}
+
+				<div
+					in:receive={{ key: entry.id }}
+					out:send={{ key: entry.id }}
+					animate:flip={{ duration: duration, easing: easing }}
+				>
+					<Item>
+						<Result
+							fullName={full_name}
+							{description}
+							{homepage}
+							{stars}
+							openIssues={open_issues}
+							githubRepo={github_repo}
+							license={_license}
+							updated={github_updated_at}
+							npmPackage={npm_package}
+							npmDownloads={npm_downloads_last_week}
+						/>
+					</Item>
+				</div>
+			{:else}
+				<div class="no-results">
+					<Title size="lg">No results found</Title>
+					<a href="/">Reset filters and search</a>
+				</div>
+			{/each}
+		{/await}
 	</Stacked>
 </div>
 

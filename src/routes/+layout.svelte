@@ -2,16 +2,19 @@
 	import '../pico.scss'
 	import '../app.postcss'
 
-	import { supabaseClient } from '$db'
-	import { invalidate } from '$app/navigation'
 	import { onMount } from 'svelte'
+	import { fade } from 'svelte/transition'
+
+	import { supabaseClient } from '$db'
+	import { navigating } from '$app/stores'
+	import { invalidate } from '$app/navigation'
+	import navigationState from '$stores/navigation'
 
 	import Footer from '$components/layout/Footer'
 	import Aside from '$components/layout/Aside'
 	import Header from '$components/layout/Header'
-	import Main from '$components/layout/Main/Main.svelte'
-
-	let term = ''
+	import Main from '$components/layout/Main'
+	import PageLoader from '$components/PageLoader'
 
 	onMount(() => {
 		const {
@@ -24,7 +27,15 @@
 			subscription.unsubscribe()
 		}
 	})
+
+	$: $navigating ? ($navigationState = 'loading') : ($navigationState = 'loaded')
 </script>
+
+{#if $navigationState === 'loading'}
+	<div out:fade={{ delay: 500 }}>
+		<PageLoader />
+	</div>
+{/if}
 
 <!-- Header -->
 <div class="container">

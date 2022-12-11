@@ -2,6 +2,7 @@ import type { RequestHandler } from './$types'
 import { json as json$1 } from '@sveltejs/kit'
 import { supabaseAdminClient } from '$db/server'
 import { Octokit } from 'octokit'
+import { entriesStore } from '$stores/categories'
 
 import { PRIVATE_GITHUB_TOKEN } from '$env/static/private'
 
@@ -11,14 +12,11 @@ const octokit = new Octokit({ auth: token })
 export const GET: RequestHandler = async ({ url }) => {
 	const term = url.searchParams.get('term') || ''
 	const sort = url.searchParams.get('sort') || 'full_name'
-	const days = url.searchParams.get('days') || 0
-	const downloads = url.searchParams.get('downloads') || 0
-	const category = url.searchParams.get('category') || 0
+	const days = Number(url.searchParams.get('days')) || -1
+	const downloads = Number(url.searchParams.get('downloads')) || 0
+	const category = Number(url.searchParams.get('category')) || 0
 
 	const ascending = sort === 'full_name' ? true : false
-
-	// console.log('term, days, downloads, category :>> ', decodeURI(term), days, downloads, category)
-
 	const now = Number(new Date())
 	const range = now - Number(days) * 1000 * 60 * 60 * 24
 
@@ -27,27 +25,22 @@ export const GET: RequestHandler = async ({ url }) => {
 
 	// Only check for categories if category is not 0
 	const getData = async () => {
-		if (category == 0) {
-			return await supabaseAdminClient
-				.from('entries')
-				.select(`*, categories(*)`)
-				.gte('npm_downloads_last_week', downloads)
-				.gt('github_updated_at', gitHubUpdatedAtComp)
-				.or(`full_name.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`)
-				.order(sort, { ascending: ascending })
-		} else {
-			return await supabaseAdminClient
-				.from('entries')
-				.select(`*, categories(*)`)
-				.gte('npm_downloads_last_week', downloads)
-				.gt('github_updated_at', gitHubUpdatedAtComp)
-				.or(`full_name.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`)
-				.eq('category', category)
-				.order(sort, { ascending: ascending })
-		}
+		let query = supabaseAdminClient
+			.from('entries')
+			.select(`*, categories(*)`)
+			.or(`full_name.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`)
+			.order(sort, { ascending: ascending })
+			.gte('npm_downloads_last_week', downloads)
+
+		if (category !== 0) query = query.eq('category', category)
+		if (days > -1) query = query.gt('github_updated_at', gitHubUpdatedAtComp)
+		if (downloads > -1) query = query.gt('npm_downloads_last_week', downloads)
+
+		return await query
 	}
 
 	const { data, error } = await getData()
+
 	if (error) return json$1({ error: error?.message }, { status: 500 })
 
 	let updateData = false
