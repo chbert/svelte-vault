@@ -55,8 +55,7 @@ export const GET: RequestHandler = async ({ url }) => {
 				} = entry
 
 				// Check if data was updated in the past 24 hours
-				// lastDataUpdate < Date.now() - 1000 * 60 * 60 * 24
-				if (true) {
+				if (lastDataUpdate < Date.now() - 1000 * 60 * 60 * 24) {
 					updateData = true
 
 					const owner = githubRepo.split('/')[0]
