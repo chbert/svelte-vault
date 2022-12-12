@@ -6,7 +6,7 @@
 
 	import type { ActionData, PageData } from './$types'
 	import { enhance } from '$app/forms'
-	import { sortStore, submissionsModalStore } from '$stores'
+	import { sortStore, submissionsModalStore, pageStore, pageSizeStore } from '$stores'
 	import selectedPackageManager from '$stores/packageManager'
 	import { updateParams } from '$utils/filter'
 
@@ -16,11 +16,13 @@
 	import Result from '$components/Result'
 	import RadioGroup from '$components/form/RadioGroup'
 	import Modal from '$components/Modal'
+	import Pagination from '$components/Pagination'
 
 	export let data: PageData
 	export let form: ActionData
 
 	const modalId = 'modal-submission'
+	const totalPages = data.entries.length / $pageSizeStore + 1
 
 	// List animations
 	const duration = 300
@@ -154,6 +156,8 @@
 			{/each}
 		{/await}
 	</Stacked>
+
+	<Pagination bind:page={$pageStore} {totalPages} />
 </div>
 
 <Modal id={modalId} bind:open={$submissionsModalStore} hasCloseButton={false}>

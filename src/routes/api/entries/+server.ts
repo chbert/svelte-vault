@@ -2,21 +2,23 @@ import type { RequestHandler } from './$types'
 import { json as json$1 } from '@sveltejs/kit'
 import { supabaseAdminClient } from '$db/server'
 import { Octokit } from 'octokit'
-import { entriesStore } from '$stores/categories'
 
 import { PRIVATE_GITHUB_TOKEN } from '$env/static/private'
+import { getPagination } from '$utils/pagination'
 
 const token = PRIVATE_GITHUB_TOKEN
 const octokit = new Octokit({ auth: token })
 
 export const GET: RequestHandler = async ({ url }) => {
 	const term = url.searchParams.get('term') || ''
-	const sort = url.searchParams.get('sort') || 'full_name'
+	const sort = url.searchParams.get('sort') || 'github_repo'
 	const days = Number(url.searchParams.get('days')) || -1
 	const downloads = Number(url.searchParams.get('downloads')) || 0
 	const category = Number(url.searchParams.get('category')) || 0
+	const page = Number(url.searchParams.get('page')) || 0
+	const pageSize = Number(url.searchParams.get('pagesize')) || 5
 
-	const ascending = sort === 'full_name' ? true : false
+	const ascending = sort === 'github' ? true : false
 	const now = Number(new Date())
 	const range = now - Number(days) * 1000 * 60 * 60 * 24
 
@@ -25,16 +27,20 @@ export const GET: RequestHandler = async ({ url }) => {
 
 	// Only check for categories if category is not 0
 	const getData = async () => {
+		const { from, to } = getPagination(page, pageSize)
+
 		let query = supabaseAdminClient
 			.from('entries')
 			.select(`*, categories(*)`)
-			.or(`full_name.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`)
+			.or(`github_repo.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`)
 			.order(sort, { ascending: ascending })
 			.gte('npm_downloads_last_week', downloads)
 
 		if (category !== 0) query = query.eq('category', category)
 		if (days > -1) query = query.gt('github_updated_at', gitHubUpdatedAtComp)
 		if (downloads > -1) query = query.gt('npm_downloads_last_week', downloads)
+
+		query = query.range(from, to)
 
 		return await query
 	}
@@ -55,7 +61,10 @@ export const GET: RequestHandler = async ({ url }) => {
 				} = entry
 
 				// Check if data was updated in the past 24 hours
-				if (lastDataUpdate < Date.now() - 1000 * 60 * 60 * 24) {
+				const needsDataUpdate =
+					new Date(lastDataUpdate).valueOf() < Date.now() - 1000 * 60 * 60 * 24
+
+				if (needsDataUpdate) {
 					updateData = true
 
 					const owner = githubRepo.split('/')[0]
@@ -65,8 +74,6 @@ export const GET: RequestHandler = async ({ url }) => {
 						owner: owner,
 						repo: repo
 					})
-
-					// console.log(repository)
 
 					const {
 						stargazers_count: stars,

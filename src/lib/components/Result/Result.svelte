@@ -22,17 +22,16 @@
 	export let stars: number
 	export let openIssues: number
 	export let updated: string
+
+	const githubUrl = `https://github.com/${githubRepo}`
+	const npmUrl = `https://npmjs.com/package/${npmPackage}`
 </script>
 
 <div class="result">
 	<div class="result-header">
 		<div class="title">
 			<Title size="lg" tag="h3" hasMargin={false}>
-				{#if homepage}
-					<a href={homepage}>{fullName}</a>
-				{:else}
-					{fullName}
-				{/if}
+				<a href={homepage || githubUrl || npmUrl}>{fullName}</a>
 			</Title>
 			<div class="subtitle">
 				<Icon src={ArrowPath} size="16" /> Last updated
@@ -41,16 +40,11 @@
 		</div>
 		<div class="icon-links">
 			{#if npmPackage}
-				<a
-					href={`https://npmjs.com/package/${npmPackage}`}
-					target="_blank"
-					rel="noreferrer"
-					name="NPM"
-				>
+				<a href={npmUrl} target="_blank" rel="noreferrer" name="NPM">
 					<Npm />
 				</a>
 			{/if}
-			<a href={`https://github.com/${githubRepo}`} target="_blank" rel="noreferrer" name="Github">
+			<a href={githubUrl} target="_blank" rel="noreferrer" name="Github">
 				<Github />
 			</a>
 		</div>
@@ -61,7 +55,7 @@
 
 	<div class="result-footer">
 		<div class="start">
-			<Item icon={Scale}>{license.spdx_id}</Item>
+			<Item icon={Scale}>{license?.spdx_id}</Item>
 			<Item icon={Star}>{stars.toLocaleString()}</Item>
 			<Item icon={XCircle}>{openIssues.toLocaleString()} open issues</Item>
 			{#if npmPackage}
