@@ -5,9 +5,9 @@
 	import { page as pageStore } from '$app/stores'
 	import { goto } from '$app/navigation'
 
-	export let page = 1
 	export let totalPages: number = 1
 
+	let page = Number($pageStore.url.searchParams.get('page')) || 1
 	let newUrl = new URL($pageStore.url)
 </script>
 

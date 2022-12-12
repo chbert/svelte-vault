@@ -7,7 +7,13 @@
 
 	import type { ActionData, PageData } from './$types'
 	import { enhance } from '$app/forms'
-	import { sortStore, submissionsModalStore, pageSizeStore, totalEntriesStore } from '$stores'
+	import {
+		sortStore,
+		submissionsModalStore,
+		pageSizeStore,
+		totalPagesStore,
+		totalEntriesStore
+	} from '$stores'
 	import selectedPackageManager from '$stores/packageManager'
 	import { updateParams } from '$utils/filter'
 
@@ -25,7 +31,7 @@
 
 	const modalId = 'modal-submission'
 
-	$: totalPages = Math.ceil($totalEntriesStore / $pageSizeStore)
+	$: $totalPagesStore = Math.ceil($totalEntriesStore / $pageSizeStore)
 
 	// List animations
 	const duration = 300
@@ -167,7 +173,7 @@
 		{/await}
 	</Stacked>
 
-	<Pagination {totalPages} />
+	<Pagination totalPages={$totalPagesStore} />
 </div>
 
 <Modal id={modalId} bind:open={$submissionsModalStore} hasCloseButton={false}>
