@@ -7,8 +7,9 @@ import {
 	daysStore,
 	categoriesStore,
 	entriesStore,
-	pageStore,
-	pageSizeStore
+	pageSizeStore,
+	totalEntriesStore,
+	categoriesEntriesStore
 } from '$stores'
 
 export const load: Load = async ({ fetch, url }) => {
@@ -22,7 +23,6 @@ export const load: Load = async ({ fetch, url }) => {
 
 	termStore.set(term)
 	sortStore.set(sort)
-	pageStore.set(Number(page))
 	pageSizeStore.set(Number(pageSize))
 	daysStore.set(Number(days))
 	downloadsStore.set(Number(downloads))
@@ -34,7 +34,6 @@ export const load: Load = async ({ fetch, url }) => {
 		)}&sort=${sort}&page=${page}&pagesize=${pageSize}&category=${category}&days=${days}&downloads=${downloads}`
 	)
 	const entries = await resEntries.json()
-
 	if (entries.error) throw console.error(500, entries.error.message)
 
 	const resCategories = await fetch(`/api/categories`)
@@ -44,6 +43,8 @@ export const load: Load = async ({ fetch, url }) => {
 
 	// Update stores
 	entriesStore.set(entries.data)
+	totalEntriesStore.set(entries.count)
+	categoriesEntriesStore.set(entries.categoriesEntries)
 	categoriesStore.set(categories.data)
 
 	return {

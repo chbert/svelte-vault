@@ -2,10 +2,13 @@
 	import { ChevronLeft, ChevronRight } from '@steeze-ui/heroicons'
 	import { Icon } from '@steeze-ui/svelte-icon'
 
-	import { updateParams } from '$utils/filter'
+	import { page as pageStore } from '$app/stores'
+	import { goto } from '$app/navigation'
 
 	export let page = 1
 	export let totalPages: number = 1
+
+	let newUrl = new URL($pageStore.url)
 </script>
 
 {#if totalPages >= 2}
@@ -16,7 +19,8 @@
 			disabled={page <= 1}
 			on:click={() => {
 				page = page - 1
-				updateParams()
+				newUrl?.searchParams?.set('page', String(page))
+				goto(newUrl)
 			}}
 		>
 			<Icon size="14" src={ChevronLeft} />
@@ -32,7 +36,8 @@
 			disabled={page >= totalPages}
 			on:click={() => {
 				page = page + 1
-				updateParams()
+				newUrl?.searchParams?.set('page', String(page))
+				goto(newUrl)
 			}}
 		>
 			<Icon size="14" src={ChevronRight} />

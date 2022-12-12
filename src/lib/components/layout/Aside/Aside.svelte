@@ -10,7 +10,7 @@
 		getDownloads
 	} from '$utils/rangeSlider'
 	import { updateParams, resetParams } from '$utils/filter'
-	import { categoryStore, downloadsStore, daysStore } from '$stores'
+	import { categoryStore, downloadsStore, daysStore, totalEntriesStore } from '$stores'
 
 	import Title from '$components/Title'
 	import RadioGroup from '$components/form/RadioGroup'
@@ -25,7 +25,7 @@
 
 	// Radio group categories values
 	$: values = [
-		{ label: 'All', value: 0, icon: Square3Stack3d, count: $entriesStore?.length },
+		{ label: 'All', value: 0, icon: Square3Stack3d, count: $totalEntriesStore },
 		{
 			label: 'Repositories',
 			value: 1,

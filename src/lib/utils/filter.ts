@@ -5,7 +5,6 @@ import { goto } from '$app/navigation'
 import {
 	termStore,
 	sortStore,
-	pageStore,
 	pageSizeStore,
 	categoryStore,
 	daysStore,
@@ -14,11 +13,9 @@ import {
 
 export const updateParams = () => {
 	if (browser) {
-		const url = `/?term=${encodeURI(get(termStore))}&sort=${get(sortStore)}&page=${get(
-			pageStore
-		)}&pagesize=${get(pageSizeStore)}&category=${get(categoryStore)}&days=${get(
-			daysStore
-		)}&downloads=${get(downloadsStore)}`
+		const url = `/?term=${encodeURI(get(termStore))}&sort=${get(sortStore)}&page=1&pagesize=${get(
+			pageSizeStore
+		)}&category=${get(categoryStore)}&days=${get(daysStore)}&downloads=${get(downloadsStore)}`
 
 		goto(url, { invalidateAll: true })
 	}

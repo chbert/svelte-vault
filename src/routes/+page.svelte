@@ -7,7 +7,7 @@
 
 	import type { ActionData, PageData } from './$types'
 	import { enhance } from '$app/forms'
-	import { sortStore, submissionsModalStore, pageStore, pageSizeStore } from '$stores'
+	import { sortStore, submissionsModalStore, pageSizeStore, totalEntriesStore } from '$stores'
 	import selectedPackageManager from '$stores/packageManager'
 	import { updateParams } from '$utils/filter'
 
@@ -25,7 +25,7 @@
 
 	const modalId = 'modal-submission'
 
-	$: totalPages = data.entries.length / $pageSizeStore + 1
+	$: totalPages = Math.ceil($totalEntriesStore / $pageSizeStore)
 
 	// List animations
 	const duration = 300
@@ -57,11 +57,13 @@
 		{ label: 'open issues', value: 'open_issues' }
 	]
 
+	let showSortList: boolean = false
 	$: selectedSort = sortValues.filter((value) => value.value === $sortStore)[0].label
 
 	const onClickSort = (value: number) => {
 		$sortStore = sortValues[value].value
 		updateParams()
+		showSortList = false
 	}
 
 	$: formValue = ''
@@ -99,14 +101,18 @@
 		</div>
 		<div class="end">
 			<details role="list">
-				<summary aria-haspopup="listbox">Sort by {selectedSort}</summary>
-				<ul role="listbox">
-					{#each sortValues as value, index}
-						<li on:keypress={() => onClickSort(index)} on:click={() => onClickSort(index)}>
-							{value.label}
-						</li>
-					{/each}
-				</ul>
+				<summary aria-haspopup="listbox" on:click={() => (showSortList = true)}
+					>Sort by {selectedSort}</summary
+				>
+				{#if showSortList}
+					<ul role="listbox">
+						{#each sortValues as value, index}
+							<li on:keypress={() => onClickSort(index)} on:click={() => onClickSort(index)}>
+								{value.label}
+							</li>
+						{/each}
+					</ul>
+				{/if}
 			</details>
 		</div>
 	</div>
@@ -161,7 +167,7 @@
 		{/await}
 	</Stacked>
 
-	<Pagination bind:page={$pageStore} {totalPages} />
+	<Pagination {totalPages} />
 </div>
 
 <Modal id={modalId} bind:open={$submissionsModalStore} hasCloseButton={false}>
