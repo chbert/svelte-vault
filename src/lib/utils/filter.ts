@@ -3,12 +3,12 @@ import { browser } from '$app/environment'
 import { goto } from '$app/navigation'
 
 import {
-	termStore,
 	sortStore,
 	pageSizeStore,
 	categoryStore,
 	daysStore,
-	downloadsStore
+	downloadsStore,
+	termStore
 } from '$stores'
 
 export const updateParams = () => {
@@ -26,6 +26,8 @@ export const resetParams = () => {
 		const url = `/?term=&sort=full_name&page=1&pagesize=${get(
 			pageSizeStore
 		)}&category=0&days=-1&downloads=-1`
+
+		termStore.set('')
 
 		goto(url, { invalidateAll: true })
 	}

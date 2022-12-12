@@ -1,6 +1,5 @@
 <script lang="ts">
 	import RangeSlider from 'svelte-range-slider-pips'
-	import { entriesStore } from '$stores'
 	import { categoryCountsStore } from '$stores/categories'
 
 	import {
@@ -22,6 +21,8 @@
 		Squares2x2,
 		Square3Stack3d
 	} from '@steeze-ui/heroicons'
+
+	$: console.log('$categoryCountsStore :>> ', $categoryCountsStore)
 
 	// Radio group categories values
 	$: values = [

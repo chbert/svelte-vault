@@ -48,7 +48,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	const page = Number(url.searchParams.get('page')) || 1
 	const pageSize = Number(url.searchParams.get('pagesize')) || 5
 
-	const ascending = sort === 'github' ? true : false
+	const ascending = sort === 'full_name' ? true : false
 	const now = Number(new Date())
 	const range = now - Number(days) * 1000 * 60 * 60 * 24
 
@@ -118,53 +118,64 @@ export const GET: RequestHandler = async ({ url }) => {
 						// Get last week downloads from npm
 						// Replace / with %2F in npm package name
 						const npmEncoded = npmPackage.replace(/\//g, '%2F')
-
 						const npmDownloadsRes = await fetch(
 							`https://api.npmjs.org/downloads/range/last-week/${npmEncoded}`
 						)
-						const npmDownloads = await npmDownloadsRes.json()
 
-						// Sum up all downloads values in downloads inside npmDownloads
-						npmDownloadsLastWeek = npmDownloads.downloads.reduce(
-							(acc: number, curr: any) => acc + curr.downloads,
-							0
-						)
+						const npmDownloads = await npmDownloadsRes.json()
+						if (npmDownloads.error) console.log('npmDownloads.error :>> ', npmDownloads.error)
+
+						if (!npmDownloads.error) {
+							// Sum up all downloads values in downloads inside npmDownloads
+							npmDownloadsLastWeek = npmDownloads?.downloads.reduce(
+								(acc: number, curr: any) => acc + curr.downloads,
+								0
+							)
+						}
 					}
 
 					if (domain === 'github.com') {
-						const { data } = await octokit.request('GET /repos/{owner}/{repo}', {
-							owner: owner,
-							repo: repo
-						})
-
-						const {
-							stargazers_count: stars,
-							open_issues_count: openIssues,
-							full_name: fullName,
-							description,
-							updated_at: repoUpdatedAt,
-							homepage,
-							license
-						} = data
-
-						const { error } = await supabaseAdminClient
-							.from('entries')
-							.update({
-								full_name: fullName,
-								description,
-								homepage,
-								stars,
-								open_issues: openIssues,
-								license: JSON.stringify(license),
-								repo_url: repoUrl,
-								repo_updated_at: repoUpdatedAt,
-								last_data_update: new Date().toISOString(),
-								npm_downloads_last_week: npmDownloadsLastWeek,
-								npm_package: npmPackage
+						// BUG: Fails if repo does not exist (or is private)
+						try {
+							const response = await octokit.request('GET /repos/{owner}/{repo}', {
+								owner: owner,
+								repo: repo
 							})
-							.eq('id', id)
 
-						if (error) throw error
+							if (response.status === 200) {
+								const { data } = response
+								const {
+									stargazers_count: stars,
+									open_issues_count: openIssues,
+									full_name: fullName,
+									description,
+									updated_at: repoUpdatedAt,
+									homepage,
+									license
+								} = data
+
+								const { error } = await supabaseAdminClient
+									.from('entries')
+									.update({
+										full_name: fullName,
+										description,
+										homepage,
+										stars,
+										open_issues: openIssues,
+										license: JSON.stringify(license),
+										repo_url: repoUrl,
+										repo_updated_at: repoUpdatedAt,
+										last_data_update: new Date().toISOString(),
+										npm_downloads_last_week: npmDownloadsLastWeek,
+										npm_package: npmPackage
+									})
+									.eq('id', id)
+
+								if (error) throw error
+							}
+						} catch (error) {
+							console.log('error :>> ', error)
+						}
 					}
 				}
 			})

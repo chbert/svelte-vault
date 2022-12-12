@@ -12,7 +12,8 @@
 		submissionsModalStore,
 		pageSizeStore,
 		totalPagesStore,
-		totalEntriesStore
+		totalEntriesStore,
+		termStore
 	} from '$stores'
 	import selectedPackageManager from '$stores/packageManager'
 	import { updateParams } from '$utils/filter'
@@ -97,7 +98,9 @@
 <div class="container">
 	<div class="page-header">
 		<div class="start">
-			<Title tag="h2" size="xl" hasMargin={false}>Results</Title>
+			<Title tag="h2" size="xl" hasMargin={false}>
+				Results {#if $termStore}for "{$termStore}"{/if}
+			</Title>
 		</div>
 		<div class="center">
 			<RadioGroup
@@ -133,7 +136,7 @@
 			{#each data?.entries as entry (entry.id)}
 				{@const {
 					repo_url,
-					github_updated_at,
+					repo_updated_at,
 					full_name,
 					description,
 					homepage,
@@ -159,7 +162,7 @@
 							openIssues={open_issues}
 							repoUrl={repo_url}
 							license={_license}
-							updated={github_updated_at}
+							updated={repo_updated_at}
 							npmPackage={npm_package}
 							npmDownloads={npm_downloads_last_week}
 						/>

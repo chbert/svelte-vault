@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types'
 import { json as json$1 } from '@sveltejs/kit'
-import { supabaseAdminClient } from '$db/server'
+import { supabaseClient } from '$db'
 
 const addRepoInfo = async (repo: string, npm: string, category: number) => {
 	// remove 'https://www.npmjs.com/package/' from npm
@@ -8,7 +8,7 @@ const addRepoInfo = async (repo: string, npm: string, category: number) => {
 		npm = npm.replace('https://www.npmjs.com/package/', '')
 	}
 
-	const { error } = await supabaseAdminClient.from('entries').insert({
+	const { error } = await supabaseClient.from('entries').insert({
 		repo_url: repo,
 		npm_package: npm,
 		category: category,

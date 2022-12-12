@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types'
 import { json as json$1 } from '@sveltejs/kit'
-import { supabaseAdminClient } from '$db/server'
+import { supabaseClient } from '$db'
 
 import { Octokit } from 'octokit'
 import { throttling } from '@octokit/plugin-throttling'
@@ -59,7 +59,7 @@ const enrichRepoInfo = async (entry: any) => {
 					const { data } = response
 
 					if (data) {
-						const { error } = await supabaseAdminClient
+						const { error } = await supabaseClient
 							.from('entries')
 							.update({
 								stars: data.stargazers_count,
