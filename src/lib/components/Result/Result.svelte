@@ -15,7 +15,7 @@
 	export let fullName: string
 	export let homepage: string
 	export let description: string
-	export let githubRepo: string
+	export let repoUrl: string
 	export let npmPackage: string
 	export let npmDownloads: number
 	export let license: License
@@ -23,7 +23,10 @@
 	export let openIssues: number
 	export let updated: string
 
-	const githubUrl = `https://github.com/${githubRepo}`
+	// Check if repoUrl is a github url
+	const isGithub = repoUrl?.includes('github.com')
+	const gitHubUrl = isGithub ? repoUrl : ''
+
 	const npmUrl = `https://npmjs.com/package/${npmPackage}`
 </script>
 
@@ -31,7 +34,7 @@
 	<div class="result-header">
 		<div class="title">
 			<Title size="lg" tag="h3" hasMargin={false}>
-				<a href={homepage || githubUrl || npmUrl}>{fullName}</a>
+				<a href={repoUrl || npmUrl || homepage}>{npmPackage || fullName}</a>
 			</Title>
 			<div class="subtitle">
 				<Icon src={ArrowPath} size="16" /> Last updated
@@ -44,7 +47,7 @@
 					<Npm />
 				</a>
 			{/if}
-			<a href={githubUrl} target="_blank" rel="noreferrer" name="Github">
+			<a href={repoUrl} target="_blank" rel="noreferrer" name="Github">
 				<Github />
 			</a>
 		</div>
@@ -72,8 +75,10 @@
 						{$selectedPackageManager} add -D
 					{/if}
 					{npmPackage}
-				{:else}
-					git clone https://github.com/{githubRepo}.git
+				{:else if gitHubUrl}
+					{@const owner = gitHubUrl.split('/')[3]}
+					{@const repo = gitHubUrl.split('/')[4]}
+					git clone https://github.com/{owner}/{repo}.git
 				{/if}
 			</CopyCode>
 		</div>

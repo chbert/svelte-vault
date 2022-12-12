@@ -69,7 +69,11 @@ export const GET: RequestHandler = async ({ url }) => {
 		let query = supabaseAdminClient
 			.from('entries')
 			.select(select, { count: 'exact' })
-			.or(`full_name.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`)
+			.or(
+				`full_name.ilike.%${decodeURI(term)}%,npm_package.ilike.%${decodeURI(
+					term
+				)}%,repo_url.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`
+			)
 			.order(sort, { ascending: ascending })
 			.gte('npm_downloads_last_week', downloads)
 

@@ -17,6 +17,8 @@
 	import selectedPackageManager from '$stores/packageManager'
 	import { updateParams } from '$utils/filter'
 
+	import { PUBLIC_TURNSTILE_SITE_KEY } from '$env/static/public'
+
 	import Title from '$components/Title'
 	import Stacked from '$components/list/Stacked'
 	import Item from '$components/list/Stacked/Item'
@@ -24,7 +26,6 @@
 	import RadioGroup from '$components/form/RadioGroup'
 	import Modal from '$components/Modal'
 	import Pagination from '$components/Pagination'
-	import { PUBLIC_TURNSTILE_SITE_KEY } from '$env/static/public'
 
 	export let data: PageData
 	export let form: ActionData
@@ -131,7 +132,7 @@
 		{:then data}
 			{#each data?.entries as entry (entry.id)}
 				{@const {
-					github_repo,
+					repo_url,
 					github_updated_at,
 					full_name,
 					description,
@@ -156,7 +157,7 @@
 							{homepage}
 							{stars}
 							openIssues={open_issues}
-							githubRepo={github_repo}
+							repoUrl={repo_url}
 							license={_license}
 							updated={github_updated_at}
 							npmPackage={npm_package}
