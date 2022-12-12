@@ -24,7 +24,8 @@
 	export let form: ActionData
 
 	const modalId = 'modal-submission'
-	const totalPages = data.entries.length / $pageSizeStore + 1
+
+	$: totalPages = data.entries.length / $pageSizeStore + 1
 
 	// List animations
 	const duration = 300

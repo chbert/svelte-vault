@@ -8,35 +8,37 @@
 	export let totalPages: number = 1
 </script>
 
-<div class="pagination">
-	<button
-		aria-label="Previous page"
-		class="secondary"
-		disabled={page <= 1}
-		on:click={() => {
-			page = page - 1
-			updateParams()
-		}}
-	>
-		<Icon size="14" src={ChevronLeft} />
-	</button>
+{#if totalPages >= 2}
+	<div class="pagination">
+		<button
+			aria-label="Previous page"
+			class="secondary"
+			disabled={page <= 1}
+			on:click={() => {
+				page = page - 1
+				updateParams()
+			}}
+		>
+			<Icon size="14" src={ChevronLeft} />
+		</button>
 
-	<span class="pagination__page">
-		{page} of {totalPages}
-	</span>
+		<span class="pagination__page">
+			{page} of {totalPages}
+		</span>
 
-	<button
-		aria-label="Next page"
-		class="secondary"
-		disabled={page >= totalPages}
-		on:click={() => {
-			page = page + 1
-			updateParams()
-		}}
-	>
-		<Icon size="14" src={ChevronRight} />
-	</button>
-</div>
+		<button
+			aria-label="Next page"
+			class="secondary"
+			disabled={page >= totalPages}
+			on:click={() => {
+				page = page + 1
+				updateParams()
+			}}
+		>
+			<Icon size="14" src={ChevronRight} />
+		</button>
+	</div>
+{/if}
 
 <style lang="postcss">
 	.pagination {
