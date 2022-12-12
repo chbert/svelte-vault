@@ -41,7 +41,7 @@ export const actions: Actions = {
 
 		const token = form.get('cf-turnstile-response')
 		const { success, error } = await validateToken(token, PRIVATE_TURNSTILE_SECRET_KEY)
-		if (!success) return fail(400, { message: 'Please verify that you are human' })
+		if (!success) return fail(400, { message: 'Something went wrong please try again' })
 
 		// Regex to validate URL
 		const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/
