@@ -157,7 +157,9 @@
 </div>
 
 <Modal id={modalId} bind:open={$submissionsModalStore} hasCloseButton={false}>
-	<svelte:fragment slot="title"><Title size="lg">Submit a new resource</Title></svelte:fragment>
+	<svelte:fragment slot="title"
+		><Title size="lg" hasMargin={false}>Submit a new resource</Title></svelte:fragment
+	>
 	<svelte:fragment slot="content">
 		<form id="submissionForm" method="POST" use:enhance>
 			<label for="url">

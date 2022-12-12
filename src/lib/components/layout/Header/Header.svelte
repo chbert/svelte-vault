@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { updateParams } from '$utils/filter'
 	import { termStore, submissionsModalStore } from '$stores'
+
 	import Logo from '$components/Logo'
 
 	let search = ''
@@ -53,6 +54,7 @@
 		& .end {
 			display: flex;
 			align-items: center;
+			gap: 1rem;
 		}
 
 		& .end {

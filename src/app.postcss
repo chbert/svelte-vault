@@ -106,12 +106,21 @@ dialog article {
 dialog article > header,
 dialog article > main,
 dialog article > footer {
-	padding: calc(var(--block-spacing-vertical) * 1) calc(var(--block-spacing-horizontal) * 2);
+	padding: calc(var(--block-spacing-vertical) * 1) calc(var(--block-spacing-horizontal) * 4);
+	margin: 0;
+	border: none;
+	background: none;
 
 	& button,
 	& [role='button'] {
 		border-radius: var(--border-radius);
 	}
+}
+
+dialog article > header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 dialog article > footer {
@@ -162,5 +171,25 @@ dialog article > footer {
 	[role='button'] {
 		background: none;
 		border: none;
+	}
+}
+
+.icon-links {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+
+	& > a {
+		color: var(--text-color);
+		flex: 0 0 auto;
+		margin-right: 1rem;
+
+		&:hover {
+			color: var(--primary);
+		}
+
+		&:last-child {
+			margin-right: 0;
+		}
 	}
 }

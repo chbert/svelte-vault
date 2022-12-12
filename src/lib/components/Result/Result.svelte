@@ -39,7 +39,7 @@
 				{`${formatDate(updated, true)}`}
 			</div>
 		</div>
-		<div class="external-links">
+		<div class="icon-links">
 			{#if npmPackage}
 				<a
 					href={`https://npmjs.com/package/${npmPackage}`}
@@ -94,26 +94,6 @@
 		overflow: hidden;
 		background-color: inherit;
 		border-radius: var(--border-radius);
-
-		& .external-links {
-			display: flex;
-			align-items: center;
-			justify-content: flex-end;
-
-			& > a {
-				color: var(--text-color);
-				flex: 0 0 auto;
-				margin-right: 1rem;
-
-				&:hover {
-					color: var(--primary);
-				}
-
-				&:last-child {
-					margin-right: 0;
-				}
-			}
-		}
 	}
 
 	.result-header {
