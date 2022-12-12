@@ -4,6 +4,7 @@
 
 	import { onMount } from 'svelte'
 	import { fade } from 'svelte/transition'
+	import { SvelteToast } from '@zerodevx/svelte-toast'
 
 	import { supabaseClient } from '$db'
 	import { navigating } from '$app/stores'
@@ -64,3 +65,5 @@
 		<Footer />
 	</footer>
 </div>
+
+<SvelteToast />

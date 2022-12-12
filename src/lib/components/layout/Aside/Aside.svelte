@@ -24,7 +24,7 @@
 	} from '@steeze-ui/heroicons'
 
 	// Radio group categories values
-	const values = [
+	$: values = [
 		{ label: 'All', value: 0, icon: Square3Stack3d, count: $entriesStore?.length },
 		{
 			label: 'Repositories',
@@ -43,18 +43,18 @@
 	]
 
 	// Update the URL with the new filters
-	const onChangeCategory = (e) => {
-		$categoryStore = e.detail
+	const onChangeCategory = (event: CustomEvent) => {
+		$categoryStore = event.detail
 		updateParams()
 	}
 
-	const onChangeDays = (e) => {
-		$daysStore = getDateRangeDays(e.detail.value)
+	const onChangeDays = (event: CustomEvent) => {
+		$daysStore = getDateRangeDays(event.detail.value)
 		updateParams()
 	}
 
-	const onChangeDownloads = (e) => {
-		$downloadsStore = getDownloads(e.detail.values[0])
+	const onChangeDownloads = (event: CustomEvent) => {
+		$downloadsStore = getDownloads(event.detail.values[0])
 		updateParams()
 	}
 </script>
@@ -67,7 +67,7 @@
 	<RadioGroup
 		legend="Categories"
 		{values}
-		on:change={(e) => onChangeCategory(e)}
+		on:change={(event) => onChangeCategory(event)}
 		bind:selected={$categoryStore}
 	/>
 
@@ -78,10 +78,10 @@
 			<RangeSlider
 				float
 				values={[$daysStore]}
-				formatter={(v) => getDateRange(v)}
+				formatter={(value) => getDateRange(value)}
 				min={0}
 				max={15}
-				on:change={(e) => onChangeDays(e)}
+				on:change={(event) => onChangeDays(event)}
 			/>
 			<div class="labels">
 				<span>Any</span>
@@ -97,10 +97,10 @@
 			<RangeSlider
 				float
 				values={[$downloadsStore]}
-				formatter={(v) => getDownloadsRange(v)}
+				formatter={(value) => getDownloadsRange(value)}
 				min={0}
 				max={6}
-				on:change={(e) => onChangeDownloads(e)}
+				on:change={(event) => onChangeDownloads(event)}
 			/>
 			<div class="labels">
 				<span>Any</span>

@@ -1,13 +1,13 @@
-<script>
+<script lang="ts">
 	import { updateParams } from '$utils/filter'
-
-	import { termStore } from '$stores'
+	import { termStore, submissionsModalStore } from '$stores'
 	import Logo from '$components/Logo'
 
 	let search = ''
 
-	const onTermChange = (e) => {
-		$termStore = e.target.value
+	const onTermChange = (event: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
+		// @ts-ignore
+		$termStore = event?.target?.value
 		updateParams()
 	}
 </script>
@@ -26,12 +26,19 @@
 					name="search"
 					placeholder="Search"
 					bind:value={search}
-					on:change={(e) => onTermChange(e)}
+					on:change={(event) => onTermChange(event)}
 				/>
 			</div>
 
 			<div class="end col-xl-3">
-				<span role="button">Submit</span>
+				<a
+					href="#modal"
+					role="button"
+					data-target="modal-submit"
+					on:click={() => ($submissionsModalStore = true)}
+				>
+					Submit
+				</a>
 			</div>
 		</div>
 	</div>

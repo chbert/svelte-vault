@@ -37,6 +37,8 @@ export const load: Load = async ({ fetch, url }) => {
 	if (categories.error) throw console.error(500, entries.error.message)
 
 	// Update stores
+
+	console.log('entries.data.length :>> ', entries.data.length)
 	entriesStore.set(entries.data)
 	categoriesStore.set(categories.data)
 

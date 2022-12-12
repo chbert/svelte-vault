@@ -19,6 +19,7 @@ specifiers:
   '@types/testing-library__jest-dom': ^5.14.5
   '@typescript-eslint/eslint-plugin': ^5.46.0
   '@typescript-eslint/parser': ^5.46.0
+  '@zerodevx/svelte-toast': 1.0.0-rc.1
   autoprefixer: ^10.4.7
   bootstrap: ^5.2.3
   c8: ^7.12.0
@@ -39,11 +40,17 @@ specifiers:
   sass: ^1.56.2
   svelte: ^3.54.0
   svelte-check: ^2.10.2
+  svelte-notifications: ^0.9.98
   svelte-range-slider-pips: ^2.1.0
+  svelte-recaptcha-v2: ^0.0.2
   tslib: ^2.4.1
   typescript: ^4.9.4
   vite: ^4.0.0
   vitest: ^0.25.6
+
+dependencies:
+  '@zerodevx/svelte-toast': 1.0.0-rc.1
+  svelte-notifications: 0.9.98
 
 devDependencies:
   '@octokit/core': 4.1.0
@@ -85,6 +92,7 @@ devDependencies:
   svelte: 3.54.0
   svelte-check: 2.10.2_mdnlwrukihkccok7f7fvelfrze
   svelte-range-slider-pips: 2.1.0
+  svelte-recaptcha-v2: 0.0.2
   tslib: 2.4.1
   typescript: 4.9.4
   vite: 4.0.0_sass@1.56.2
@@ -1171,6 +1179,10 @@ packages:
       '@typescript-eslint/types': 5.46.0
       eslint-visitor-keys: 3.3.0
     dev: true
+
+  /@zerodevx/svelte-toast/1.0.0-rc.1:
+    resolution: {integrity: sha512-KEZUWeFg1MLlHVssx94ZWWKDBOlQUznTH7xsfZ3uPSYbD5NMO8jDEUGiDNiJ3aKpwiabGvZgG7NKJLFK0q/KYg==}
+    dev: false
 
   /abab/2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
@@ -3723,6 +3735,10 @@ packages:
       svelte: 3.54.0
     dev: true
 
+  /svelte-notifications/0.9.98:
+    resolution: {integrity: sha512-w7/sqnQtEjM5uzjb3HfB50RE6KMuuWEQZxfBw86IykslHFJRcTuRvaUv503UMqY/LaioOu6w9mjJTO+ejiReSQ==}
+    dev: false
+
   /svelte-preprocess/4.10.7_zzve7j33lfeyudhavrifg24lba:
     resolution: {integrity: sha512-sNPBnqYD6FnmdBrUmBCaqS00RyCsCpj2BG58A1JBswNF7b0OKviwxqVrOL/CKyJrLSClrSeqQv5BXNg2RUbPOw==}
     engines: {node: '>= 9.11.2'}
@@ -3779,6 +3795,14 @@ packages:
 
   /svelte-range-slider-pips/2.1.0:
     resolution: {integrity: sha512-WpJQSXo1RG++mIKOkkfmcFho9ngzIBl7fPl0bDzpa6yFTFbxeFUVF5KkUSaiZwzs2SNT3xy6nAUeVLbVQ74JLA==}
+    dev: true
+
+  /svelte-recaptcha-v2/0.0.2:
+    resolution: {integrity: sha512-Sx4QuV/AtjxuwOf6C3yih+n3TLlKN+DefYt7wAFR8hjGcAOIAzcb66d0QQdElZJ2H34hvQc1hIaj3AtkoA7G6w==}
+    dependencies:
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /svelte/3.54.0:

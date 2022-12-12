@@ -8,3 +8,5 @@ export const sortStore: Writable<string> = writable('full_name')
 
 export const entriesStore: Writable<any> = writable(null)
 export const categoriesStore: Writable<any> = writable(null)
+
+export const submissionsModalStore: Writable<boolean> = writable(false)

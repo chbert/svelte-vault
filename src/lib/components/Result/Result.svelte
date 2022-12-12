@@ -93,7 +93,7 @@
 	.result {
 		overflow: hidden;
 		background-color: inherit;
-		border-radius: var(--element-border-radius);
+		border-radius: var(--border-radius);
 
 		& .external-links {
 			display: flex;

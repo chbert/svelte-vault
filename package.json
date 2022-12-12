@@ -54,10 +54,15 @@
 		"svelte": "^3.54.0",
 		"svelte-check": "^2.10.2",
 		"svelte-range-slider-pips": "^2.1.0",
+		"svelte-recaptcha-v2": "^0.0.2",
 		"tslib": "^2.4.1",
 		"typescript": "^4.9.4",
 		"vite": "^4.0.0",
 		"vitest": "^0.25.6"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@zerodevx/svelte-toast": "1.0.0-rc.1",
+		"svelte-notifications": "^0.9.98"
+	}
 }

@@ -2,9 +2,11 @@
 	import { quintOut } from 'svelte/easing'
 	import { crossfade } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
+	import { toast } from '@zerodevx/svelte-toast'
 
-	import type { PageData } from './$types'
-	import { sortStore } from '$stores'
+	import type { ActionData, PageData } from './$types'
+	import { enhance } from '$app/forms'
+	import { sortStore, submissionsModalStore } from '$stores'
 	import selectedPackageManager from '$stores/packageManager'
 	import { updateParams } from '$utils/filter'
 
@@ -13,9 +15,14 @@
 	import Item from '$components/list/Stacked/Item'
 	import Result from '$components/Result'
 	import RadioGroup from '$components/form/RadioGroup'
+	import Modal from '$components/Modal'
 
 	export let data: PageData
+	export let form: ActionData
 
+	const modalId = 'modal-submission'
+
+	// List animations
 	const duration = 300
 	const easing = quintOut
 
@@ -51,6 +58,20 @@
 		$sortStore = sortValues[value].value
 		updateParams()
 	}
+
+	$: formValue = ''
+	const onFormSuccess = () => {
+		$submissionsModalStore = false
+		toast.push('Successfully submitted!')
+	}
+
+	const resetForm = () => {
+		// BUG: Once the form is submitted, the form is reset, but the error message is still shown
+		form = null
+		$submissionsModalStore = false
+	}
+
+	$: form?.success ? onFormSuccess() : null
 </script>
 
 <svelte:head>
@@ -135,6 +156,39 @@
 	</Stacked>
 </div>
 
+<Modal id={modalId} bind:open={$submissionsModalStore} hasCloseButton={false}>
+	<svelte:fragment slot="title"><Title size="lg">Submit a new resource</Title></svelte:fragment>
+	<svelte:fragment slot="content">
+		<form id="submissionForm" method="POST" use:enhance>
+			<label for="url">
+				<Title size="sm" transform="uppercase">URL</Title>
+				<input
+					aria-invalid={form?.message ? 'true' : null}
+					id="url"
+					type="text"
+					name="url"
+					placeholder="e.g. https://svelte.dev"
+					bind:value={formValue}
+				/>
+
+				{#if form && form.message}
+					<p class="error">
+						{form.message}
+					</p>
+				{/if}
+
+				<!-- TODO: Add recaptcha: https://github.com/basaran/svelte-recaptcha-v2 -->
+			</label>
+			<div class="form-actions">
+				<button class="secondary" data-target={modalId} on:click={() => resetForm()}>
+					Cancel
+				</button>
+				<input type="submit" value="Submit" />
+			</div>
+		</form>
+	</svelte:fragment>
+</Modal>
+
 <style lang="postcss">
 	:root {
 		--padding: 0 0 1rem 1rem;
@@ -180,6 +234,24 @@
 		padding: 2rem;
 		overflow: hidden;
 		border: var(--border-width) solid var(--muted-border-color);
-		border-radius: var(--element-border-radius);
+		border-radius: var(--border-radius);
+	}
+
+	form#submissionForm {
+		margin-bottom: 0;
+		.form-actions {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 2rem;
+
+			& button,
+			& input[type='submit'] {
+				width: auto;
+			}
+		}
+
+		.error {
+			color: var(--error-color);
+		}
 	}
 </style>
