@@ -2,6 +2,7 @@
 	import { quintOut } from 'svelte/easing'
 	import { crossfade } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
+	import { Turnstile } from 'svelte-turnstile'
 	import { toast } from '@zerodevx/svelte-toast'
 
 	import type { ActionData, PageData } from './$types'
@@ -17,6 +18,7 @@
 	import RadioGroup from '$components/form/RadioGroup'
 	import Modal from '$components/Modal'
 	import Pagination from '$components/Pagination'
+	import { PUBLIC_TURNSTILE_SITE_KEY } from '$env/static/public'
 
 	export let data: PageData
 	export let form: ActionData
@@ -79,6 +81,7 @@
 <svelte:head>
 	<title>Svelte Vault</title>
 	<meta name="description" content="All things svelte" />
+	<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </svelte:head>
 
 <div class="container">
@@ -182,9 +185,10 @@
 						{form.message}
 					</p>
 				{/if}
-
-				<!-- TODO: Add recaptcha: https://github.com/basaran/svelte-recaptcha-v2 -->
 			</label>
+
+			<Turnstile siteKey={PUBLIC_TURNSTILE_SITE_KEY} />
+
 			<div class="form-actions">
 				<button class="secondary" data-target={modalId} on:click={() => resetForm()}>
 					Cancel
