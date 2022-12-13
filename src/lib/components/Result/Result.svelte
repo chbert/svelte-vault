@@ -58,7 +58,9 @@
 
 	<div class="result-footer">
 		<div class="start">
-			<Item icon={Scale}>{license?.spdx_id}</Item>
+			{#if license?.spdx_id}
+				<Item icon={Scale}>{license?.spdx_id}</Item>
+			{/if}
 			<Item icon={Star}>{stars.toLocaleString()}</Item>
 			<Item icon={XCircle}>{openIssues.toLocaleString()} open issues</Item>
 			{#if npmPackage}
