@@ -6,7 +6,10 @@
 	<div class="grid gap-4">
 		<div class="row gy-4">
 			<div class="start col-xl">
-				by <a href="https://christian.bertschy.me">CB</a>
+				by <a href="https://christian.bertschy.me">CB</a> <span class="pipe">|</span> original data
+				via
+				<a href="https://sveltesociety.dev/">Svelte Society</a> <span class="pipe">|</span>
+				data updated every 24h
 			</div>
 
 			<div class="end col-xl">
@@ -32,6 +35,15 @@
 
 		.row {
 			border-top: 1px solid var(--muted-border-color);
+
+			& .start {
+				color: var(--muted-color);
+			}
+		}
+
+		& .pipe {
+			color: var(--muted-color-focus);
+			margin: 0 0.5rem;
 		}
 	}
 </style>
