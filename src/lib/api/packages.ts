@@ -36,8 +36,6 @@ export const getPackages = async ({
 		.order(sort, { ascending: ascending })
 		.gte('npm_downloads_last_week', downloads)
 
-	console.log('downloads :>> ', downloads)
-
 	if (days > -1) query = query.gt('repo_updated_at', repoUpdatedAt)
 	if (downloads > -1) query = query.gt('npm_downloads_last_week', downloads)
 	if (paginate) query = query.range(from, to)

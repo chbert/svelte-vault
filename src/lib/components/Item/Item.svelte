@@ -10,7 +10,14 @@
 	export let orientation: 'vertical' | 'horizontal' = 'vertical'
 </script>
 
-<svelte:element this={tag} class="item {orientation}" {href} class:active data-sveltekit-reload>
+<svelte:element
+	this={tag}
+	class="item {orientation}"
+	class:active
+	data-sveltekit-reload
+	on:keyup
+	on:click
+>
 	{#if icon}
 		<span class="icon">
 			<Icon size="20" src={icon} theme={iconVariant} />

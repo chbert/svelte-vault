@@ -1,6 +1,8 @@
 <script lang="ts">
-	import LinkGroup from '$components/Group/Link'
 	import * as heroicons from '@steeze-ui/heroicons'
+	import { getParams } from '$utils/filter'
+
+	import LinkGroup from '$components/Group/Link'
 
 	export let categories: any[] = []
 
@@ -8,12 +10,12 @@
 		const values: any = []
 		for (const category of categories) {
 			const { name, path, icon } = category
-			values.push({ label: name, href: path, icon: heroicons[icon] })
+			values.push({ label: name, path: path, href: path, icon: heroicons[icon] })
 		}
 		return values
 	}
 
-	const values = getCategoryValues()
+	$: values = getCategoryValues()
 </script>
 
 <div class="aside">

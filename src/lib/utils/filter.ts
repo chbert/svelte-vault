@@ -5,6 +5,23 @@ import { page } from '$app/stores'
 
 import { sortStore, pageSizeStore, daysStore, downloadsStore, termStore } from '$stores'
 
+export const getParams = (category: string) => {
+	if (browser) {
+		let url = new URL(`/${category}`, get(page).url)
+
+		console.log('url :>> ', url)
+
+		url?.searchParams?.set('term', encodeURI(get(termStore)))
+		url?.searchParams?.set('sort', get(sortStore))
+		url?.searchParams?.set('page', '1')
+		url?.searchParams?.set('pagesize', get(pageSizeStore).toString())
+		url?.searchParams?.set('days', get(daysStore).toString())
+		if (category === 'packages') url?.searchParams?.set('downloads', get(downloadsStore).toString())
+
+		return url.href
+	}
+}
+
 export const updateParams = (category: string) => {
 	if (browser) {
 		get(page).url.searchParams.set('term', encodeURI(get(termStore)))
