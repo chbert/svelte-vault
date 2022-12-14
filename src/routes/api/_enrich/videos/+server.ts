@@ -1,7 +1,7 @@
 import { json as json$1 } from '@sveltejs/kit'
 import type { RequestHandler } from './$types'
 
-import { addVideo } from '$utils/videos'
+import { addVideo } from '$api/videos'
 
 export const GET: RequestHandler = async () => {
 	addVideo('https://www.youtube.com/watch?v=6NCTwSEltLM')

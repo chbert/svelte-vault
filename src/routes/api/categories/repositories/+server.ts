@@ -21,7 +21,6 @@ export const GET: RequestHandler = async ({ url }) => {
 		term,
 		sort,
 		ascending,
-		downloads,
 		updatedAt: gitHubUpdatedAtComp,
 		days,
 		paginate: true,
@@ -35,7 +34,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	if (data) {
 		await Promise.all(
 			data.map(async (entry: any) => {
-				const { id, last_data_update: lastDataUpdate, url, npm_package } = entry
+				const { id, last_data_update: lastDataUpdate, url } = entry
 
 				// Check if data was updated in the past 24 hours
 				const needsDataUpdate =
@@ -43,7 +42,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
 				if (needsDataUpdate) {
 					updateData = true
-					updateRepository({ id, url, npm_package })
+					updateRepository({ id, url })
 				}
 			})
 		)
@@ -55,7 +54,6 @@ export const GET: RequestHandler = async ({ url }) => {
 			term,
 			sort,
 			ascending,
-			downloads,
 			updatedAt: gitHubUpdatedAtComp,
 			days,
 			paginate: true,

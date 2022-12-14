@@ -2,7 +2,6 @@ import type { Load } from '@sveltejs/kit'
 import {
 	termStore,
 	sortStore,
-	categoryStore,
 	downloadsStore,
 	daysStore,
 	entriesStore,
@@ -24,7 +23,6 @@ export const load: Load = async ({ fetch, url, params }) => {
 	pageSizeStore.set(Number(pageSize))
 	daysStore.set(Number(days))
 	downloadsStore.set(Number(downloads))
-	categoryStore.set(Number(category))
 
 	const resEntries = await fetch(
 		`/api/categories/${category}?term=${encodeURI(

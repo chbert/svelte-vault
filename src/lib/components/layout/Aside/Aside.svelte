@@ -1,20 +1,19 @@
 <script lang="ts">
 	import LinkGroup from '$components/Group/Link'
+	import * as heroicons from '@steeze-ui/heroicons'
 
-	import { BookOpen, Gift, VideoCamera, Document } from '@steeze-ui/heroicons'
+	export let categories: any[] = []
 
-	// TODO: User categories from db
-	// Radio group categories values
-	const values = [
-		{ label: 'Packages', href: 'packages', icon: Gift },
-		{
-			label: 'Repositories',
-			href: 'repositories',
-			icon: BookOpen
-		},
-		{ label: 'Articles', href: 'articles', icon: Document },
-		{ label: 'Videos', href: 'videos', icon: VideoCamera }
-	]
+	const getCategoryValues = () => {
+		const values: any = []
+		for (const category of categories) {
+			const { name, path, icon } = category
+			values.push({ label: name, href: path, icon: heroicons[icon] })
+		}
+		return values
+	}
+
+	const values = getCategoryValues()
 </script>
 
 <div class="aside">

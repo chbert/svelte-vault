@@ -10,7 +10,7 @@ export const getPackages = async ({
 	sort = 'title',
 	ascending = true,
 	downloads = -1,
-	updatedAt = '',
+	repoUpdatedAt = '',
 	days = -1,
 	paginate = true,
 	page = 1,
@@ -36,7 +36,7 @@ export const getPackages = async ({
 		.order(sort, { ascending: ascending })
 		.gte('npm_downloads_last_week', downloads)
 
-	if (days > -1) query = query.gt('updated_at', updatedAt)
+	if (days > -1) query = query.gt('repo_updated_at', repoUpdatedAt)
 	if (downloads > -1) query = query.gt('npm_downloads_last_week', downloads)
 	if (paginate) query = query.range(from, to)
 
@@ -70,7 +70,7 @@ export const addPackage = async (repoUrl: string, npmPackage: string) => {
 		stars,
 		open_issues,
 		topics,
-		updated_at,
+		repo_updated_at,
 		license,
 		url
 	} = await repoInfo
@@ -83,14 +83,14 @@ export const addPackage = async (repoUrl: string, npmPackage: string) => {
 		stars,
 		open_issues,
 		topics,
-		updated_at,
+		repo_updated_at,
 		license,
 		url,
 		provider,
 		owner,
 		repo,
 		sub_repo,
-		last_data_update: new Date().toISOString(),
+		updated_at: new Date(),
 		npm_package: npmPackage,
 		npm_downloads_last_week: npmDownloadsLastWeek
 	})
@@ -103,12 +103,22 @@ export const addPackage = async (repoUrl: string, npmPackage: string) => {
 export const updatePackage = async ({ id = 0, url = '', npm_package = '' }) => {
 	const { domain, owner, repo } = splitRepoUrl(url)
 
+	const npmDownloadsLastWeek = await getNpmDownloads(npm_package)
+
 	const repoInfo = await getRepoInfo(url, domain, owner, repo)
 	if (repoInfo?.status !== 200) return { success: false, error: repoInfo?.status }
 
-	const npmDownloadsLastWeek = await getNpmDownloads(npm_package)
-	const { title, description, avatar, homepage, stars, open_issues, topics, updated_at, license } =
-		await repoInfo
+	const {
+		title,
+		description,
+		avatar,
+		homepage,
+		stars,
+		open_issues,
+		topics,
+		repo_updated_at,
+		license
+	} = await repoInfo
 
 	const { error } = await supabaseAdminClient
 		.from('packages')
@@ -120,9 +130,9 @@ export const updatePackage = async ({ id = 0, url = '', npm_package = '' }) => {
 			stars,
 			open_issues,
 			topics,
-			updated_at,
+			repo_updated_at,
 			license,
-			last_data_update: new Date().toISOString(),
+			update_at: new Date(),
 			npm_downloads_last_week: npmDownloadsLastWeek
 		})
 		.eq('id', id)

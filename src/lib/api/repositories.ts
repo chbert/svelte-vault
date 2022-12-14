@@ -60,7 +60,7 @@ export const getRepoInfo = async (repoUrl: string, domain: string, owner: string
 					stargazers_count,
 					open_issues_count,
 					topics,
-					updated_at,
+					repo_updated_at,
 					license
 				} = data
 
@@ -73,7 +73,7 @@ export const getRepoInfo = async (repoUrl: string, domain: string, owner: string
 					stars: stargazers_count,
 					open_issues: open_issues_count,
 					topics,
-					updated_at,
+					repo_updated_at,
 					license,
 					url: repoUrl
 				}
@@ -95,7 +95,7 @@ export const getRepositories = async ({
 	term = '',
 	sort = 'title',
 	ascending = true,
-	updatedAt = '',
+	repoUpdatedAt = '',
 	days = -1,
 	paginate = true,
 	page = 1,
@@ -120,7 +120,7 @@ export const getRepositories = async ({
 		)
 		.order(sort, { ascending: ascending })
 
-	if (days > -1) query = query.gt('updated_at', updatedAt)
+	if (days > -1) query = query.gt('repo_updated_at', repoUpdatedAt)
 	if (paginate) query = query.range(from, to)
 
 	return await query
@@ -141,7 +141,7 @@ export const addRepository = async (repoUrl: string) => {
 		stars,
 		open_issues,
 		topics,
-		updated_at,
+		repo_updated_at,
 		license,
 		url
 	} = await repoInfo
@@ -154,14 +154,14 @@ export const addRepository = async (repoUrl: string) => {
 		stars,
 		open_issues,
 		topics,
-		updated_at,
+		repo_updated_at,
 		license,
 		url,
 		provider,
 		owner,
 		repo,
 		sub_repo,
-		last_data_update: new Date().toISOString()
+		updated_at: new Date()
 	})
 
 	if (error) console.log(error)
@@ -175,8 +175,17 @@ export const updateRepository = async ({ id = 0, url = '' }) => {
 	const repoInfo = await getRepoInfo(url, domain, owner, repo)
 	if (repoInfo?.status !== 200) return { success: false, error: repoInfo?.status }
 
-	const { title, description, avatar, homepage, stars, open_issues, topics, updated_at, license } =
-		await repoInfo
+	const {
+		title,
+		description,
+		avatar,
+		homepage,
+		stars,
+		open_issues,
+		topics,
+		repo_updated_at,
+		license
+	} = await repoInfo
 
 	const { error } = await supabaseAdminClient
 		.from('packages')
@@ -188,9 +197,9 @@ export const updateRepository = async ({ id = 0, url = '' }) => {
 			stars,
 			open_issues,
 			topics,
-			updated_at,
+			repo_updated_at,
 			license,
-			last_data_update: new Date().toISOString()
+			updated_at: new Date()
 		})
 		.eq('id', id)
 

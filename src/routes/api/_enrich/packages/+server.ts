@@ -1,7 +1,7 @@
 import { json as json$1 } from '@sveltejs/kit'
 import type { RequestHandler } from './$types'
 
-import { updatePackage } from '$utils/packages'
+import { updatePackage } from '$api/packages'
 import { supabaseClient } from '$db'
 
 export const GET: RequestHandler = async () => {

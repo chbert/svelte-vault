@@ -70,3 +70,27 @@ export const addVideo = async (url: string) => {
 
 	return { success: !error }
 }
+
+export const updateVideo = async (video: number) => {
+	const response = await fetch(`${baseUrl}&id=${video}`)
+	const data = await response.json()
+	const videoInfo = data.items[0]
+
+	const { error } = await supabaseAdminClient
+		.from('videos')
+		.update({
+			title: videoInfo.snippet.title,
+			channel: videoInfo.snippet.channelId,
+			description: videoInfo.snippet.description,
+			thumbnail: videoInfo.snippet.thumbnails.high.url,
+			published_at: videoInfo.snippet.publishedAt,
+			duration: videoInfo.contentDetails.duration,
+			views: videoInfo.statistics.viewCount,
+			likes: videoInfo.statistics.likeCount,
+			hashtags: videoInfo.snippet.tags
+		})
+		.eq('id', video)
+	if (error) console.log(error)
+
+	return { success: !error }
+}
