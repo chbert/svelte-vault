@@ -1,8 +1,8 @@
 import { json as json$1 } from '@sveltejs/kit'
-import type { RequestHandler } from './packages/$types'
+import type { RequestHandler } from './$types'
 
-import { addPackage } from '$utils/packages'
-import { addRepository } from '$utils/repositories'
+import { addPackage } from '$api/packages'
+import { addRepository } from '$api/repositories'
 
 export const GET: RequestHandler = async () => {
 	const baseUrl =
