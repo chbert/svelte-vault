@@ -17,16 +17,16 @@
 
 	const onChangeDays = (event: CustomEvent) => {
 		$daysStore = getDateRangeDays(event.detail.value)
-		updateParams()
+		updateParams(category)
 	}
 
 	const onChangeDownloads = (event: CustomEvent) => {
 		$downloadsStore = getDownloads(event.detail.values[0])
-		updateParams()
+		updateParams(category)
 	}
 </script>
 
-<Container {category}>
+<Container>
 	<div class="range-slider col-xl">
 		<Title size="sm" tag="span">Last updated</Title>
 
@@ -36,7 +36,7 @@
 			formatter={(value) => getDateRange(value)}
 			min={0}
 			max={15}
-			on:change={(event) => onChangeDays(event)}
+			on:stop={(event) => onChangeDays(event)}
 		/>
 	</div>
 
@@ -49,11 +49,11 @@
 			formatter={(value) => getDownloadsRange(value)}
 			min={0}
 			max={6}
-			on:change={(event) => onChangeDownloads(event)}
+			on:stop={(event) => onChangeDownloads(event)}
 		/>
 	</div>
 
-	<div class="col-xl">
-		<button style="width: auto" on:click={resetParams}>Clear filters</button>
+	<div class="col-xl filters-action">
+		<button on:click={resetParams}>Clear filters</button>
 	</div>
 </Container>

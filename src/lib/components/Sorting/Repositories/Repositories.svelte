@@ -2,21 +2,11 @@
 	import { page } from '$app/stores'
 	import { updateParams } from '$utils/filter'
 	import { sortStore } from '$stores'
-	import selectedPackageManager from '$stores/packageManager'
-
-	import RadioGroup from '$components/Group/Radio'
 
 	const category = $page.params.category
 
-	const packageManagerValues = [
-		{ label: 'npm', value: 'npm' },
-		{ label: 'pnpm', value: 'pnpm' },
-		{ label: 'yarn', value: 'yarn' }
-	]
-
 	const sortValues = [
 		{ label: 'name', value: 'title' },
-		{ label: 'downloads', value: 'npm_downloads_last_week' },
 		{ label: 'open issues', value: 'open_issues' }
 	]
 
@@ -29,14 +19,6 @@
 		showSortList = false
 	}
 </script>
-
-<div class="center">
-	<RadioGroup
-		values={packageManagerValues}
-		orientation="horizontal"
-		bind:selected={$selectedPackageManager}
-	/>
-</div>
 
 <div class="end sorting-action">
 	<details role="list">

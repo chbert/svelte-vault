@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores'
 	import { updateParams } from '$utils/filter'
 	import { termStore, submissionsModalStore } from '$stores'
 
@@ -6,10 +7,12 @@
 
 	let search = ''
 
+	const category = $page.params.category
+
 	const onTermChange = (event: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
 		// @ts-ignore
 		$termStore = event?.target?.value
-		updateParams()
+		updateParams(category)
 	}
 </script>
 

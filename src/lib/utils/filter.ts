@@ -5,24 +5,36 @@ import { page } from '$app/stores'
 
 import { sortStore, pageSizeStore, daysStore, downloadsStore, termStore } from '$stores'
 
-export const updateParams = () => {
+export const updateParams = (category: string) => {
 	if (browser) {
-		const url = `${get(page).params.category}/?term=${encodeURI(get(termStore))}&sort=${get(
-			sortStore
-		)}&page=1&pagesize=${get(pageSizeStore)}&days=${get(daysStore)}&downloads=${get(
-			downloadsStore
-		)}`
+		get(page).url.searchParams.set('term', encodeURI(get(termStore)))
+		get(page).url.searchParams.set('sort', get(sortStore))
+		get(page).url.searchParams.set('page', '1')
+		get(page).url.searchParams.set('pagesize', String(get(pageSizeStore)))
+		get(page).url.searchParams.set('days', String(get(daysStore)))
 
-		goto(url, { invalidateAll: true })
+		if (category === 'packages')
+			get(page).url.searchParams.set('downloads', String(get(downloadsStore)))
+
+		goto(`/${category}?${get(page).url.searchParams.toString()}`, {
+			invalidateAll: true
+		})
 	}
 }
 
 export const resetParams = () => {
 	if (browser) {
-		const url = `/?term=&sort=title&page=1&pagesize=${get(pageSizeStore)}&days=-1&downloads=-1`
+		get(page).url.searchParams.set('term', '')
+		get(page).url.searchParams.set('sort', 'title')
+		get(page).url.searchParams.set('page', '1')
+		get(page).url.searchParams.set('pagesize', String(get(pageSizeStore)))
+		get(page).url.searchParams.set('days', '-1')
+		get(page).url.searchParams.set('downloads', '-1')
 
 		termStore.set('')
 
-		goto(url, { invalidateAll: true })
+		goto(`/${get(page).params.category}?${get(page).url.searchParams.toString()}`, {
+			invalidateAll: true
+		})
 	}
 }
