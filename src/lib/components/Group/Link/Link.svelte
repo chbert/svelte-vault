@@ -1,20 +1,12 @@
 <script lang="ts">
-	import { browser } from '$app/environment'
-	import { goto } from '$app/navigation'
 	import { page } from '$app/stores'
 
 	import Item from '$components/Item'
 	import Title from '$components/Title'
-	import { getParams } from '$utils/filter'
 
 	export let values: any[]
 	export let legend: string = ''
 	export let orientation: 'vertical' | 'horizontal' = 'vertical'
-
-	const onItemClick = async (href: string) => {
-		const url = await getParams(href)
-		goto(url)
-	}
 </script>
 
 <section class={orientation}>
@@ -26,14 +18,7 @@
 	{#each values as { icon, label, count, path, href }}
 		{@const active = $page.params.category === path}
 		<span class="item">
-			<Item
-				tag="a"
-				{icon}
-				{count}
-				{active}
-				iconVariant={active ? 'solid' : 'outline'}
-				on:click={() => onItemClick(href)}
-			>
+			<Item tag="a" {icon} {count} {active} {href} iconVariant={active ? 'solid' : 'outline'}>
 				{label}
 			</Item>
 		</span>

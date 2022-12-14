@@ -5,7 +5,7 @@
 
 	import Logo from '$components/Logo'
 
-	let search = ''
+	let search = $page.url.searchParams.get('term') || ''
 
 	const category = $page.params.category
 

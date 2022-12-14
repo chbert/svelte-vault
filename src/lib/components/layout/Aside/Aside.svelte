@@ -6,11 +6,11 @@
 
 	export let categories: any[] = []
 
-	const getCategoryValues = () => {
+	$: getCategoryValues = () => {
 		const values: any = []
 		for (const category of categories) {
 			const { name, path, icon } = category
-			values.push({ label: name, path: path, href: path, icon: heroicons[icon] })
+			values.push({ label: name, path: path, href: getParams(path), icon: heroicons[icon] })
 		}
 		return values
 	}
