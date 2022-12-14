@@ -17,6 +17,8 @@
 
 	export let data: Data
 
+	const orientation = 'horizontal'
+
 	const {
 		title,
 		description,
@@ -41,12 +43,14 @@
 	<div class="result-header">
 		<div class="title">
 			<Title size="lg" tag="h3" hasMargin={false}>
-				<a href={homepage || gitHubUrl || npmUrl}>{npmPackage || title}</a>
+				<a href={homepage || gitHubUrl || npmUrl}>{title || npmPackage}</a>
 			</Title>
-			<div class="subtitle">
-				<Icon src={ArrowPath} size="16" /> Last updated
-				{`${formatDate(updatedAt, true)}`}
-			</div>
+			{#if updatedAt}
+				<div class="subtitle">
+					<Icon src={ArrowPath} size="16" /> Last updated
+					{`${formatDate(updatedAt, true)}`}
+				</div>
+			{/if}
 		</div>
 		<div class="icon-links">
 			{#if npmPackage}
@@ -65,15 +69,19 @@
 
 	<div class="result-footer">
 		<div class="start">
-			<Item icon={Star} href={`${gitHubUrl}/stargazers`}>{stars.toLocaleString()}</Item>
-			<Item icon={XCircle} href={`${gitHubUrl}/issues`}>
-				{openIssues.toLocaleString()} open issues
+			<Item icon={Star} href={`${gitHubUrl}/stargazers`} {orientation}
+				>{stars.toLocaleString()}</Item
+			>
+			<Item icon={XCircle} href={`${gitHubUrl}/issues`} {orientation}>
+				{openIssues.toLocaleString()} issues
 			</Item>
 			{#if npmPackage}
-				<Item icon={ArrowDownTray} href={npmUrl}>{npmDownloads.toLocaleString()} last week</Item>
+				<Item icon={ArrowDownTray} href={npmUrl} {orientation}
+					>{npmDownloads.toLocaleString()} last week</Item
+				>
 			{/if}
 			{#if license?.spdx_id}
-				<Item icon={Scale} href={license?.url}>
+				<Item icon={Scale} href={license?.url} {orientation}>
 					{license?.spdx_id}
 				</Item>
 			{/if}

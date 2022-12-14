@@ -45,8 +45,8 @@
 	$: category = $page.params.category
 	$: result = results.find((c) => c.category === category)
 
-	$totalEntriesStore[category] = data.count
-	$totalPagesStore = Math.ceil($totalEntriesStore[category] / $pageSizeStore)
+	$: $totalEntriesStore[category] = data.count
+	$: $totalPagesStore = Math.ceil($totalEntriesStore[category] / $pageSizeStore)
 
 	// List animations
 	const duration = 300
@@ -91,7 +91,7 @@
 	<div class="page-header">
 		<div class="start">
 			<Title tag="h2" size="xl" hasMargin={false}>
-				Results {#if $termStore}for "{$termStore}"{/if}
+				Results {#if $termStore}for "{decodeURI($termStore)}"{/if}
 			</Title>
 		</div>
 		<Sorting {category} />
@@ -185,18 +185,17 @@
 				display: flex;
 				align-items: center;
 				justify-content: flex-start;
-			}
-
-			& .center {
-				display: flex;
-				align-items: center;
-				justify-content: center;
+				flex-basis: 0;
+				max-width: 50%;
+				min-width: 50%;
 			}
 
 			& .end {
 				display: flex;
 				align-items: center;
 				justify-content: flex-end;
+				max-width: 50%;
+				min-width: 50%;
 			}
 		}
 	}

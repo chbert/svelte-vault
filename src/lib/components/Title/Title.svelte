@@ -9,7 +9,7 @@
 
 <svelte:element
 	this={tag}
-	class="title size-{size} text-{color}"
+	class="title size-{size} text-{color} truncate"
 	class:no-margin={!hasMargin}
 	style="--transform:{transform}; --weight:{weight};"
 >

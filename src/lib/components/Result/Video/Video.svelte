@@ -15,6 +15,8 @@
 
 	export let data: Data
 
+	const orientation = 'horizontal'
+
 	const {
 		url,
 		views,
@@ -56,9 +58,9 @@
 
 	<div class="result-footer">
 		<div class="start">
-			<Item icon={HandThumbUp}>{likes.toLocaleString()} likes</Item>
-			<Item icon={Eye}>{views.toLocaleString()} views</Item>
-			<Item icon={Clock}>{formatDuration(duration)}</Item>
+			<Item icon={HandThumbUp} {orientation}>{likes.toLocaleString()} likes</Item>
+			<Item icon={Eye} {orientation}>{views.toLocaleString()} views</Item>
+			<Item icon={Clock} {orientation}>{formatDuration(duration)}</Item>
 		</div>
 	</div>
 </div>

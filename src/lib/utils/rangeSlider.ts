@@ -99,6 +99,7 @@ export const getDownloadsRange = (value: number) => {
 
 export const getDownloads = (value: number) => {
 	if (value === 0) return -1
+	const downloads = Math.pow(10, value + 1)
 
-	return Math.pow(10, value)
+	return downloads
 }

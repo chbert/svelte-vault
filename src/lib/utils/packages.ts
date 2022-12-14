@@ -5,7 +5,7 @@ export const getNpmDownloads = async (npmPackage: string) => {
 	// Replace / with %2F in npm package name
 	const npmEncoded = npmPackage?.replace(/\//g, '%2F')
 
-	if (!npmEncoded) {
+	if (npmEncoded) {
 		const npmDownloadsRes = await fetch(
 			`https://api.npmjs.org/downloads/range/last-week/${npmEncoded}`
 		)

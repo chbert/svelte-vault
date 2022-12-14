@@ -7,7 +7,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	const sort = url.searchParams.get('sort') || 'title'
 	const days = Number(url.searchParams.get('days')) || -1
 	const page = Number(url.searchParams.get('page')) || 1
-	const pageSize = Number(url.searchParams.get('pagesize')) || 5
+	const pageSize = Number(url.searchParams.get('pagesize')) || 10
 	const ascending = sort === 'title' ? true : false
 
 	const now = Number(new Date())

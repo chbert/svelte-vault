@@ -26,7 +26,7 @@
 			formatter={(value) => getDateRange(value)}
 			min={0}
 			max={15}
-			on:stop={(event) => onChangeDays(event)}
+			on:change={(event) => onChangeDays(event)}
 		/>
 	</div>
 

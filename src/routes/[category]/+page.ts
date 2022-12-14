@@ -13,7 +13,7 @@ export const load: Load = async ({ fetch, url, params }) => {
 	const term = url.searchParams.get('term') || ''
 	const sort = url.searchParams.get('sort') || 'title'
 	const page = url.searchParams.get('page') || '1'
-	const pageSize = url.searchParams.get('pagesize') || '5'
+	const pageSize = url.searchParams.get('pagesize') || '10'
 	const days = url.searchParams.get('days') || '-1'
 	const downloads = url.searchParams.get('downloads') || '-1'
 	const category = params.category || 'packages'

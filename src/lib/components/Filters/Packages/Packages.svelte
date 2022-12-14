@@ -36,7 +36,7 @@
 			formatter={(value) => getDateRange(value)}
 			min={0}
 			max={15}
-			on:stop={(event) => onChangeDays(event)}
+			on:change={(event) => onChangeDays(event)}
 		/>
 	</div>
 
@@ -49,7 +49,7 @@
 			formatter={(value) => getDownloadsRange(value)}
 			min={0}
 			max={6}
-			on:stop={(event) => onChangeDownloads(event)}
+			on:change={(event) => onChangeDownloads(event)}
 		/>
 	</div>
 

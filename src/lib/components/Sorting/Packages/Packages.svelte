@@ -16,8 +16,10 @@
 
 	const sortValues = [
 		{ label: 'name', value: 'title' },
+		{ label: 'stars', value: 'stars' },
 		{ label: 'downloads', value: 'npm_downloads_last_week' },
-		{ label: 'open issues', value: 'open_issues' }
+		{ label: 'issues', value: 'open_issues' },
+		{ label: 'last updated', value: 'repo_updated_at' }
 	]
 
 	let showSortList: boolean = false
@@ -30,27 +32,39 @@
 	}
 </script>
 
-<div class="center">
-	<RadioGroup
-		values={packageManagerValues}
-		orientation="horizontal"
-		bind:selected={$selectedPackageManager}
-	/>
+<div class="end">
+	<div class="sorting">
+		<div>
+			<RadioGroup
+				values={packageManagerValues}
+				orientation="horizontal"
+				bind:selected={$selectedPackageManager}
+			/>
+		</div>
+
+		<div class="sorting-action">
+			<details role="list">
+				<summary aria-haspopup="listbox" on:click={() => (showSortList = true)}>
+					Sort by {selectedSort}
+				</summary>
+				{#if showSortList}
+					<ul role="listbox">
+						{#each sortValues as value, index}
+							<li on:keypress={() => onClickSort(index)} on:click={() => onClickSort(index)}>
+								{value.label}
+							</li>
+						{/each}
+					</ul>
+				{/if}
+			</details>
+		</div>
+	</div>
 </div>
 
-<div class="end sorting-action">
-	<details role="list">
-		<summary aria-haspopup="listbox" on:click={() => (showSortList = true)}
-			>Sort by {selectedSort}</summary
-		>
-		{#if showSortList}
-			<ul role="listbox">
-				{#each sortValues as value, index}
-					<li on:keypress={() => onClickSort(index)} on:click={() => onClickSort(index)}>
-						{value.label}
-					</li>
-				{/each}
-			</ul>
-		{/if}
-	</details>
-</div>
+<style lang="postcss">
+	.sorting {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+</style>

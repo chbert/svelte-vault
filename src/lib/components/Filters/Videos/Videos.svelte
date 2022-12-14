@@ -18,7 +18,7 @@
 
 <Container>
 	<div class="range-slider col-xl">
-		<Title size="sm" tag="span">Last updated</Title>
+		<Title size="sm" tag="span">Published</Title>
 
 		<RangeSlider
 			float
@@ -26,7 +26,7 @@
 			formatter={(value) => getDateRange(value)}
 			min={0}
 			max={15}
-			on:stop={(event) => onChangeDays(event)}
+			on:change={(event) => onChangeDays(event)}
 		/>
 	</div>
 

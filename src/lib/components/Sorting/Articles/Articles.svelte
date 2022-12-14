@@ -7,9 +7,10 @@
 
 	const sortValues = [
 		{ label: 'name', value: 'title' },
-		{ label: 'stars', value: 'stars' },
-		{ label: 'issues', value: 'open_issues' },
-		{ label: 'last updated', value: 'repo_updated_at' }
+		{ label: 'likes', value: 'likes' },
+		{ label: 'views', value: 'views' },
+		{ label: 'duration', value: 'duration' },
+		{ label: 'upload date', value: 'published_at' }
 	]
 
 	let showSortList: boolean = false

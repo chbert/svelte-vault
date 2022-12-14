@@ -44,7 +44,7 @@
 
 		&.horizontal {
 			margin-right: 0.5rem;
-			padding: 0.375rem 1rem 0.625rem 1rem;
+			padding: 0.5rem 1rem 0.5rem 1rem;
 
 			&:last-child {
 				margin-right: 0;
@@ -54,6 +54,10 @@
 		&.vertical {
 			width: 100%;
 			padding: 0.5rem 0.5rem 0.5rem 1rem;
+
+			& .icon {
+				margin-right: 1rem;
+			}
 		}
 
 		&:hover {
@@ -72,7 +76,7 @@
 		& .icon {
 			display: flex;
 			align-items: center;
-			margin-right: 0.75rem;
+			margin-right: 0.5rem;
 			width: 1.25rem;
 			height: 1.25rem;
 		}
