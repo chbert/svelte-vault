@@ -1,0 +1,35 @@
+dialog article {
+	width: 90%;
+	max-width: 32rem;
+}
+
+dialog article > header,
+dialog article > main,
+dialog article > footer {
+	padding: calc(var(--block-spacing-vertical) * 1) calc(var(--block-spacing-horizontal) * 4);
+	margin: 0;
+	border: none;
+	background: none;
+
+	& button,
+	& [role='button'] {
+		border-radius: var(--border-radius);
+	}
+}
+
+dialog article > header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+dialog article > footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	& button,
+	& [role='button'] {
+		border-radius: var(--border-radius);
+	}
+}

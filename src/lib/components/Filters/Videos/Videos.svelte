@@ -2,13 +2,8 @@
 	import RangeSlider from 'svelte-range-slider-pips'
 
 	import { resetParams, updateParams } from '$utils/filter'
-	import {
-		getDateRange,
-		getDateRangeDays,
-		getDownloadsRange,
-		getDownloads
-	} from '$utils/rangeSlider'
-	import { daysStore, downloadsStore } from '$stores'
+	import { getDateRange, getDateRangeDays } from '$utils/rangeSlider'
+	import { daysStore } from '$stores'
 
 	import Container from '$components/Filters/Container'
 	import Title from '$components/Title'
@@ -17,11 +12,6 @@
 
 	const onChangeDays = (event: CustomEvent) => {
 		$daysStore = getDateRangeDays(event.detail.value)
-		updateParams()
-	}
-
-	const onChangeDownloads = (event: CustomEvent) => {
-		$downloadsStore = getDownloads(event.detail.values[0])
 		updateParams()
 	}
 </script>
@@ -40,18 +30,7 @@
 		/>
 	</div>
 
-	<div class="range-slider col-xl">
-		<Title size="sm" tag="span">Weekly downloads</Title>
-
-		<RangeSlider
-			float
-			values={[$downloadsStore]}
-			formatter={(value) => getDownloadsRange(value)}
-			min={0}
-			max={6}
-			on:change={(event) => onChangeDownloads(event)}
-		/>
-	</div>
+	<div class="col-xl" />
 
 	<div class="col-xl">
 		<button style="width: auto" on:click={resetParams}>Clear filters</button>

@@ -10,6 +10,7 @@
 
 	import Item from '$components/Item'
 	import Title from '$components/Title'
+	import Description from '$components/Result/Description'
 	import CopyCode from '$components/CopyCode'
 	import Github from '$components/icons/Github'
 	import Npm from '$components/icons/Npm'
@@ -26,7 +27,7 @@
 		license,
 		stars,
 		open_issues: openIssues,
-		updated
+		repo_updated_at: updatedAt
 	} = data
 
 	// Check if url is a github url
@@ -40,11 +41,11 @@
 	<div class="result-header">
 		<div class="title">
 			<Title size="lg" tag="h3" hasMargin={false}>
-				<a href={url || npmUrl || homepage}>{npmPackage || title}</a>
+				<a href={homepage || gitHubUrl || npmUrl}>{npmPackage || title}</a>
 			</Title>
 			<div class="subtitle">
 				<Icon src={ArrowPath} size="16" /> Last updated
-				{`${formatDate(updated, true)}`}
+				{`${formatDate(updatedAt, true)}`}
 			</div>
 		</div>
 		<div class="icon-links">
@@ -59,18 +60,22 @@
 		</div>
 	</div>
 	<div class="result-main">
-		<p>{@html description}</p>
+		<Description>{@html description}</Description>
 	</div>
 
 	<div class="result-footer">
 		<div class="start">
-			<Item icon={Star}>{stars.toLocaleString()}</Item>
-			<Item icon={XCircle}>{openIssues.toLocaleString()} open issues</Item>
+			<Item icon={Star} href={`${gitHubUrl}/stargazers`}>{stars.toLocaleString()}</Item>
+			<Item icon={XCircle} href={`${gitHubUrl}/issues`}>
+				{openIssues.toLocaleString()} open issues
+			</Item>
 			{#if npmPackage}
-				<Item icon={ArrowDownTray}>{npmDownloads.toLocaleString()} last week</Item>
+				<Item icon={ArrowDownTray} href={npmUrl}>{npmDownloads.toLocaleString()} last week</Item>
 			{/if}
 			{#if license?.spdx_id}
-				<Item icon={Scale}>{license?.spdx_id}</Item>
+				<Item icon={Scale} href={license?.url}>
+					{license?.spdx_id}
+				</Item>
 			{/if}
 		</div>
 

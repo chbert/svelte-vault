@@ -9,6 +9,7 @@
 	import formatDate from '$utils/formatDate'
 
 	import Title from '$components/Title'
+	import Description from '$components/Result/Description'
 
 	export let data: Data
 
@@ -21,13 +22,15 @@
 			<Title size="lg" tag="h3" hasMargin={false}>
 				<a href={url}>{title}</a>
 			</Title>
-			<div class="subtitle">
-				<Icon src={ArrowPath} size="16" /> Published
-				{`${formatDate(publishedAt, true)}`}
-			</div>
+			{#if publishedAt}
+				<div class="subtitle">
+					<Icon src={ArrowPath} size="16" /> Published
+					{`${formatDate(publishedAt, true)}`}
+				</div>
+			{/if}
 		</div>
 	</div>
 	<div class="result-main">
-		<p class="truncate">{@html description}</p>
+		<Description>{@html description}</Description>
 	</div>
 </div>

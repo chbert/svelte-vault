@@ -29,7 +29,7 @@
 			<Title size="sm" transform="uppercase">{legend}</Title>
 		</legend>
 	{/if}
-	{#each values as { icon, label, count, href, value }}
+	{#each values as { icon, label, count, value }}
 		<Item
 			{icon}
 			{label}

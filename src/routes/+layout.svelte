@@ -13,8 +13,6 @@
 
 	import PageLoader from '$components/PageLoader'
 
-	export let data: any
-
 	onMount(() => {
 		const {
 			data: { subscription }

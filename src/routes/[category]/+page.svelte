@@ -27,6 +27,8 @@
 	import VideoResult from '$components/Result/Video'
 	import Modal from '$components/Modal'
 	import Pagination from '$components/Pagination'
+	import Filters from '$components/Filters'
+	import Sorting from '$components/Sorting'
 
 	export let data: PageData
 	export let form: ActionData
@@ -34,8 +36,8 @@
 	const modalId = 'modal-submission'
 
 	const results = [
-		{ category: 'repositories', component: DefaultResult },
 		{ category: 'packages', component: DefaultResult },
+		{ category: 'repositories', component: DefaultResult },
 		{ category: 'articles', component: ArticleResult },
 		{ category: 'videos', component: VideoResult }
 	]
@@ -92,6 +94,11 @@
 				Results {#if $termStore}for "{$termStore}"{/if}
 			</Title>
 		</div>
+		<Sorting {category} />
+	</div>
+
+	<div class="page-filters">
+		<Filters {category} />
 	</div>
 
 	<Stacked>

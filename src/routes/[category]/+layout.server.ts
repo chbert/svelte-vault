@@ -8,8 +8,6 @@ export const load: LayoutServerLoad = async () => {
 		.order('order', { ascending: true })
 	if (error) return console.log(error)
 
-	console.log('data :>> ', data)
-
 	return {
 		categories: data
 	}

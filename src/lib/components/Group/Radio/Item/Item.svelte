@@ -20,5 +20,5 @@
 {/if}
 
 <label for={slugify(label)} class={orientation} class:active>
-	<Item {icon} {iconVariant} {href} {count} {active}>{label}</Item>
+	<Item {icon} {iconVariant} {href} {count} {active} {orientation}>{label}</Item>
 </label>

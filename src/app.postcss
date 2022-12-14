@@ -66,7 +66,7 @@
 	--font-size: 14px;
 	--spacing: 0.25rem;
 
-	--range-slider: var(--muted-color-hover); /* slider main background color */
+	--range-slider: rgba(255, 255, 255, 0.75); /* slider main background color */
 	--range-handle-inactive: var(--muted-color); /* inactive handle color */
 	--range-handle: var(--muted-color); /* non-focussed handle color */
 	--range-handle-focus: var(--primary); /* focussed handle color */
@@ -98,46 +98,14 @@ li[role='list'] > ul {
 	border-radius: var(--border-radius);
 }
 
-dialog article {
-	width: 90%;
-	max-width: 32rem;
-}
-
-dialog article > header,
-dialog article > main,
-dialog article > footer {
-	padding: calc(var(--block-spacing-vertical) * 1) calc(var(--block-spacing-horizontal) * 4);
-	margin: 0;
-	border: none;
-	background: none;
-
-	& button,
-	& [role='button'] {
-		border-radius: var(--border-radius);
-	}
-}
-
-dialog article > header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-dialog article > footer {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-
-	& button,
-	& [role='button'] {
-		border-radius: var(--border-radius);
-	}
-}
-
 .truncate {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+
+.prose {
+	max-width: 65ch;
 }
 
 .sr-only {

@@ -11,6 +11,7 @@
 
 	import Item from '$components/Item'
 	import Title from '$components/Title'
+	import Description from '$components/Result/Description'
 
 	export let data: Data
 
@@ -48,7 +49,7 @@
 				</div>
 			</div>
 			<div class="result-main">
-				<p class="truncate">{@html description}</p>
+				<Description>{@html description}</Description>
 			</div>
 		</div>
 	</div>

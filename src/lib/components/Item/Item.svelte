@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { Icon } from '@steeze-ui/svelte-icon'
 
-	export let tag = 'span'
 	export let icon: any = null
 	export let iconVariant: 'outline' | 'solid' | 'mini' = 'outline'
 	export let count: number = 0
 	export let active: boolean = false
 	export let href: string = ''
+	export let tag = href ? 'a' : 'span'
 	export let orientation: 'vertical' | 'horizontal' = 'vertical'
 </script>
 
@@ -27,6 +27,10 @@
 </svelte:element>
 
 <style lang="postcss">
+	a.item:hover {
+		color: var(--primary);
+	}
+
 	.item {
 		display: flex;
 		flex-wrap: nowrap;
@@ -40,7 +44,7 @@
 
 		&.horizontal {
 			margin-right: 0.5rem;
-			padding: 0.5rem 1rem;
+			padding: 0.375rem 1rem 0.625rem 1rem;
 
 			&:last-child {
 				margin-right: 0;
@@ -78,6 +82,14 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			width: 100%;
+
+			& > * {
+				display: inline-block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				width: 100%;
+			}
 		}
 
 		& .badge {

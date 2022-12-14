@@ -1,4 +1,6 @@
 <script lang="ts">
+	import './styles.postcss'
+
 	import { fade } from 'svelte/transition'
 	import bodyClass from '$utils/bodyClass'
 

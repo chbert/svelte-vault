@@ -5,8 +5,6 @@
 	import Main from '$components/layout/Main'
 
 	export let data: any
-
-	console.log('data :>> ', data)
 </script>
 
 <!-- Header -->
