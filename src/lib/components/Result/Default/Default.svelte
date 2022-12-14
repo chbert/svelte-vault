@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { License } from './types'
+	import type { License, Data } from './types'
 	import { ArrowPath, ArrowDownTray, Star, Scale, XCircle } from '@steeze-ui/heroicons'
 	import { Icon } from '@steeze-ui/svelte-icon'
 
@@ -12,20 +12,24 @@
 	import Github from '$components/icons/Github'
 	import Npm from '$components/icons/Npm'
 
-	export let fullName: string
-	export let homepage: string
-	export let description: string
-	export let repoUrl: string
-	export let npmPackage: string
-	export let npmDownloads: number
-	export let license: License
-	export let stars: number
-	export let openIssues: number
-	export let updated: string
+	export let data: Data
 
-	// Check if repoUrl is a github url
-	const isGithub = repoUrl?.includes('github.com')
-	const gitHubUrl = isGithub ? repoUrl : ''
+	const {
+		title,
+		description,
+		homepage,
+		url,
+		npm_package: npmPackage,
+		npm_downloads_last_week: npmDownloads,
+		license,
+		stars,
+		open_issues: openIssues,
+		updated
+	} = data
+
+	// Check if url is a github url
+	const isGithub = url?.includes('github.com')
+	const gitHubUrl = isGithub ? url : ''
 
 	const npmUrl = `https://npmjs.com/package/${npmPackage}`
 </script>
@@ -34,7 +38,7 @@
 	<div class="result-header">
 		<div class="title">
 			<Title size="lg" tag="h3" hasMargin={false}>
-				<a href={repoUrl || npmUrl || homepage}>{npmPackage || fullName}</a>
+				<a href={url || npmUrl || homepage}>{npmPackage || title}</a>
 			</Title>
 			<div class="subtitle">
 				<Icon src={ArrowPath} size="16" /> Last updated
@@ -47,13 +51,13 @@
 					<Npm />
 				</a>
 			{/if}
-			<a href={repoUrl} target="_blank" rel="noreferrer" name="Github">
+			<a href={url} target="_blank" rel="noreferrer" name="Github">
 				<Github />
 			</a>
 		</div>
 	</div>
 	<div class="result-main">
-		<p>{description}</p>
+		<p>{@html description}</p>
 	</div>
 
 	<div class="result-footer">

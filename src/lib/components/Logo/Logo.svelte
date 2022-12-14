@@ -1,4 +1,4 @@
-<div class="logo">
+<a href="/" class="logo">
 	<svg height="100%" viewBox="0 0 126 48" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<g id="typeface">
 			<path
@@ -26,14 +26,14 @@
 			/>
 		</g>
 	</svg>
-</div>
+</a>
 
 <style lang="postcss">
 	.logo {
 		height: 3rem;
 		svg {
 			& #icon {
-				fill: var(--color);
+				fill: var(--text-color);
 			}
 		}
 	}
