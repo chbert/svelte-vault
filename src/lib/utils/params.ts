@@ -11,12 +11,11 @@ const params = {
 			let url = new URL(`/${category}`, get(page).url)
 
 			url?.searchParams?.set('term', encodeURI(get(termStore)))
-			url?.searchParams?.set('sort', get(sortStore))
+			url?.searchParams?.set('sort', 'title')
 			url?.searchParams?.set('page', '1')
 			url?.searchParams?.set('pagesize', get(pageSizeStore).toString())
-			url?.searchParams?.set('days', get(daysStore).toString())
-			if (category === 'packages')
-				url?.searchParams?.set('downloads', get(downloadsStore).toString())
+			url?.searchParams?.set('days', '-1')
+			if (category === 'packages') url?.searchParams?.set('downloads', '-1')
 
 			return url.href
 		}
