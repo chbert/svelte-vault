@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types'
 import { json as json$1 } from '@sveltejs/kit'
-import { getRepositories, updateRepository } from '$api/repositories'
+import repositories from '$api/repositories'
 
 export const GET: RequestHandler = async ({ url }) => {
 	const term = url.searchParams.get('term') || ''
@@ -17,11 +17,11 @@ export const GET: RequestHandler = async ({ url }) => {
 	// Convert range to  YYYY-MM-DD HH:MI:SS
 	const gitHubUpdatedAtComp = new Date(range).toISOString().slice(0, 19).replace('T', ' ')
 
-	const { data, count, error } = await getRepositories({
+	const { data, count, error } = await repositories.getAll({
 		term,
 		sort,
 		ascending,
-		updatedAt: gitHubUpdatedAtComp,
+		repoUpdatedAt: gitHubUpdatedAtComp,
 		days,
 		paginate: true,
 		page,
@@ -42,7 +42,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
 				if (needsDataUpdate) {
 					updateData = true
-					updateRepository({ id, url })
+					repositories.update({ id, url })
 				}
 			})
 		)
@@ -50,7 +50,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
 	if (updateData) {
 		// Reget all entries from the database
-		const { data, count, error } = await getRepositories({
+		const { data, count, error } = await repositories.getAll({
 			term,
 			sort,
 			ascending,

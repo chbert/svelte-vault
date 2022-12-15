@@ -12,7 +12,7 @@ export const splitRepoUrl = (url: string) => {
 		return { domain, provider, owner, repo, sub_repo }
 	}
 
-	return { domain, provider: null, owner: null, repo: null, subRepo: null }
+	return { domain, provider: '', owner: '', repo: '', subRepo: '' }
 }
 
 export const getEmptyRepoObject = (status: number, repo: string = '', url: string) => {
@@ -25,7 +25,7 @@ export const getEmptyRepoObject = (status: number, repo: string = '', url: strin
 		stars: 0,
 		open_issues: 0,
 		topics: [],
-		updated_at: null,
+		repo_updated_at: null,
 		license: {},
 		url: url
 	}

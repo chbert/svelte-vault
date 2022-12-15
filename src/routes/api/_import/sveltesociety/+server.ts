@@ -1,8 +1,8 @@
 import { json as json$1 } from '@sveltejs/kit'
 import type { RequestHandler } from './$types'
 
-import { addPackage } from '$api/packages'
-import { addRepository } from '$api/repositories'
+import packages from '$api/packages'
+import repositories from '$api/repositories'
 
 export const GET: RequestHandler = async () => {
 	const baseUrl =
@@ -12,14 +12,14 @@ export const GET: RequestHandler = async () => {
 	const tools = await toolsRes.json()
 
 	for await (const tool of tools) {
-		addRepository(tool.url)
+		repositories.add(tool.url)
 	}
 
 	const templatesRes = await fetch(`${baseUrl}/templates/templates.json`)
 	const templates = await templatesRes.json()
 
 	for await (const template of templates) {
-		addRepository(template.url)
+		repositories.add(template.url)
 	}
 
 	const componentsRes = await fetch(`${baseUrl}/components/components.json`)
@@ -27,7 +27,7 @@ export const GET: RequestHandler = async () => {
 
 	for await (const component of components) {
 		if (component.npm) {
-			addPackage(component.url, component.npm)
+			packages.add(component.url, component.npm)
 		}
 	}
 

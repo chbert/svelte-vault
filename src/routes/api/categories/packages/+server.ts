@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types'
 import { json as json$1 } from '@sveltejs/kit'
-import { getPackages, updatePackage } from '$api/packages'
+import packages from '$api/packages'
 
 export const GET: RequestHandler = async ({ url }) => {
 	const term = url.searchParams.get('term') || ''
@@ -17,7 +17,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	// Convert range to  YYYY-MM-DD HH:MI:SS
 	const gitHubUpdatedAtComp = new Date(range).toISOString().slice(0, 19).replace('T', ' ')
 
-	const { data, count, error } = await getPackages({
+	const { data, count, error } = await packages.getAll({
 		term,
 		sort,
 		ascending,
@@ -43,7 +43,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
 				if (needsDataUpdate) {
 					updateData = true
-					updatePackage({ id, url, npm_package })
+					packages.update({ id, url, npm_package })
 				}
 			})
 		)
@@ -51,7 +51,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
 	if (updateData) {
 		// Reget all entries from the database
-		const { data, count, error } = await getPackages({
+		const { data, count, error } = await packages.getAll({
 			term,
 			sort,
 			ascending,

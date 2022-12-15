@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types'
 import { json as json$1 } from '@sveltejs/kit'
-import { getArticles } from '$api/articles'
+import articles from '$api/articles'
 
 export const GET: RequestHandler = async ({ url }) => {
 	const term = url.searchParams.get('term') || ''
@@ -13,7 +13,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	const now = Number(new Date())
 	const range = now - Number(days) * 1000 * 60 * 60 * 24
 
-	const { data, count, error } = await getArticles({
+	const { data, count, error } = await articles.getAll({
 		term,
 		sort,
 		ascending,

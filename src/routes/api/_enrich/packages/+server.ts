@@ -1,7 +1,7 @@
 import { json as json$1 } from '@sveltejs/kit'
 import type { RequestHandler } from './$types'
 
-import { updatePackage } from '$api/packages'
+import packages from '$api/packages'
 import { supabaseClient } from '$db'
 
 export const GET: RequestHandler = async () => {
@@ -11,7 +11,7 @@ export const GET: RequestHandler = async () => {
 
 	for await (const entry of data) {
 		const { id, url, npm_package } = entry
-		updatePackage({ id, url, npm_package })
+		packages.update({ id, url, npm_package })
 	}
 
 	// Return success response 200

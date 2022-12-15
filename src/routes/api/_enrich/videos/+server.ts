@@ -1,10 +1,10 @@
 import { json as json$1 } from '@sveltejs/kit'
 import type { RequestHandler } from './$types'
 
-import { addVideo } from '$api/videos'
+import videos from '$api/videos'
 
 export const GET: RequestHandler = async () => {
-	addVideo('https://www.youtube.com/watch?v=6NCTwSEltLM')
+	videos.add('https://www.youtube.com/watch?v=6NCTwSEltLM')
 
 	// Return success response 200
 	return json$1('Import successfull', { status: 200 })

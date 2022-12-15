@@ -1,6 +1,6 @@
 import { fail, json as json$1 } from '@sveltejs/kit'
 
-import type { Actions } from '../$types'
+import type { Actions } from './$types'
 import { supabaseAdminClient } from '$db/server'
 import { PRIVATE_TURNSTILE_SECRET_KEY } from '$env/static/private'
 
@@ -39,7 +39,7 @@ export const actions: Actions = {
 		const form = await request.formData()
 		const url = form.get('url')
 
-		const token = form.get('cf-turnstile-response')
+		const token = String(form.get('cf-turnstile-response'))
 		const { success, error } = await validateToken(token, PRIVATE_TURNSTILE_SECRET_KEY)
 		if (!success) return fail(400, { message: 'Something went wrong please try again' })
 
