@@ -1,4 +1,5 @@
 import { supabaseAdminClient } from '$db/server'
+import { getArticlesSearchQuery } from '$utils/articles'
 import { getPagination } from '$utils/pagination'
 
 const articles = {
@@ -22,10 +23,12 @@ const articles = {
 			to = pagination.to
 		}
 
+		term = decodeURI(term)
+
 		let query = supabaseAdminClient
 			.from('articles')
 			.select(select, { count: 'exact' })
-			.or(`title.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`)
+			.or(getArticlesSearchQuery(term))
 			.order(sort, { ascending: ascending })
 
 		if (days > -1) query = query.gt('published_at', days)

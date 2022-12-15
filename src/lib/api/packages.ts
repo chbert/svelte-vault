@@ -2,7 +2,7 @@ import { supabaseAdminClient } from '$db/server'
 
 import { getPagination } from '$utils/pagination'
 import { splitRepoUrl } from '$utils/repositories'
-import { cleanupNpmPackage, getNpmDownloads } from '$utils/packages'
+import { cleanupNpmPackage, getNpmDownloads, getPackagesSearchQuery } from '$utils/packages'
 import repositories from '$api/repositories'
 
 const packages = {
@@ -28,14 +28,12 @@ const packages = {
 			to = pagination.to
 		}
 
+		term = decodeURI(term)
+
 		let query = supabaseAdminClient
 			.from('packages')
 			.select(select, { count: 'exact' })
-			.or(
-				`title.ilike.%${decodeURI(term)}%,npm_package.ilike.%${decodeURI(
-					term
-				)}%,url.ilike.%${decodeURI(term)}%,description.ilike.%${decodeURI(term)}%`
-			)
+			.or(getPackagesSearchQuery(term))
 			.order(sort, { ascending: ascending })
 			.gte('npm_downloads_last_week', downloads)
 

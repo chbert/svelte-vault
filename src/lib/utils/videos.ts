@@ -7,6 +7,10 @@ export const getVideoId = (url: string) => {
 	}
 }
 
+export const getVideosSearchQuery = (term: string) => {
+	return `title.ilike.%${term}%,channel.ilike.%${term}%,description.ilike.%${term}%`
+}
+
 export const formatDuration = (duration: string) => {
 	const [hours, minutes, seconds] = duration
 		.replace('PT', '')

@@ -43,8 +43,7 @@
 		color: var(--text-color);
 
 		&.horizontal {
-			margin-right: 0.5rem;
-			padding: 0.5rem 1rem 0.5rem 1rem;
+			padding: 0.5rem 0.75rem;
 
 			&:last-child {
 				margin-right: 0;

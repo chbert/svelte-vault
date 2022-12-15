@@ -14,6 +14,7 @@
 		pageSizeStore,
 		totalPagesStore,
 		totalEntriesStore,
+		categoriesCountStore,
 		termStore
 	} from '$stores'
 
@@ -45,6 +46,7 @@
 	$: category = $page.params.category
 	$: result = results.find((c) => c.category === category)
 
+	$: $categoriesCountStore = data.counts
 	$: $totalEntriesStore[category] = data.count
 	$: $totalPagesStore = Math.ceil($totalEntriesStore[category] / $pageSizeStore)
 

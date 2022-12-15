@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { Icon } from '@steeze-ui/svelte-icon'
+	import { XMark } from '@steeze-ui/heroicons'
+
 	import { page } from '$app/stores'
 	import { termStore, submissionsModalStore } from '$stores'
 	import params from '$utils/params'
@@ -14,6 +17,12 @@
 		$termStore = event?.target?.value
 		params.update(category)
 	}
+
+	const onClick = () => {
+		$termStore = ''
+		search = ''
+		params.update(category)
+	}
 </script>
 
 <div class="header">
@@ -24,14 +33,23 @@
 			</div>
 
 			<div class="center col-xl">
-				<input
-					type="search"
-					id="search"
-					name="search"
-					placeholder="Search"
-					bind:value={search}
-					on:change={(event) => onTermChange(event)}
-				/>
+				<div class="searchbar">
+					<input
+						type="search"
+						id="search"
+						name="search"
+						placeholder="Search"
+						bind:value={search}
+						on:change={(event) => onTermChange(event)}
+					/>
+
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					{#if search}
+						<div class="clear" on:click={onClick}>
+							<Icon src={XMark} size="16" />
+						</div>
+					{/if}
+				</div>
 			</div>
 
 			<div class="end col-xl-3">
@@ -67,6 +85,20 @@
 		& input[id='search'] {
 			width: 100%;
 			margin: 0;
+		}
+
+		.searchbar {
+			position: relative;
+			width: 100%;
+
+			& .clear {
+				cursor: pointer;
+				display: flex;
+				justify-content: flex-end;
+				position: absolute;
+				top: 0.75rem;
+				right: 1rem;
+			}
 		}
 	}
 </style>

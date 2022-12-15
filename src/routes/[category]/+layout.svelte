@@ -19,7 +19,7 @@
 		<div class="row">
 			<aside aria-labelledby="aside-heading" class="col-xl-3">
 				<h2 id="aside-heading" class="sr-only">Aside</h2>
-				<Aside categories={data?.categories} />
+				<Aside categories={data?.categories} counts={data?.counts} />
 			</aside>
 
 			<main aria-labelledby="main-heading" class="col-xl-9">

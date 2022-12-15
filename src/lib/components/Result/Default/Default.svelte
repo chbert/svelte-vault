@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../styles.postcss'
 
-	import type { License, Data } from './types'
+	import type { Data } from './types'
 	import { ArrowPath, ArrowDownTray, Star, Scale, XCircle } from '@steeze-ui/heroicons'
 	import { Icon } from '@steeze-ui/svelte-icon'
 
@@ -14,6 +14,7 @@
 	import CopyCode from '$components/CopyCode'
 	import Github from '$components/icons/Github'
 	import Npm from '$components/icons/Npm'
+	import Badge from '$components/Badge'
 
 	export let data: Data
 
@@ -28,6 +29,7 @@
 		npm_downloads_last_week: npmDownloads,
 		license,
 		stars,
+		topics,
 		open_issues: openIssues,
 		repo_updated_at: updatedAt
 	} = data
@@ -64,7 +66,18 @@
 		</div>
 	</div>
 	<div class="result-main">
-		<Description>{@html description}</Description>
+		<div>
+			{#if description}
+				<Description>{@html description}</Description>
+			{/if}
+			{#if topics}
+				{#each topics as topic}
+					<Badge href={`https://www.github.com/topics/${topic}`}>
+						{topic}
+					</Badge>
+				{/each}
+			{/if}
+		</div>
 	</div>
 
 	<div class="result-footer">

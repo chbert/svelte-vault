@@ -11,6 +11,7 @@
 
 	import Item from '$components/Item'
 	import Title from '$components/Title'
+	import Badge from '$components/Badge'
 	import Description from '$components/Result/Description'
 
 	export let data: Data
@@ -50,8 +51,20 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="result-main">
-				<Description>{@html description}</Description>
+				<div>
+					{#if description}
+						<Description>{@html description}</Description>
+					{/if}
+					{#if hashtags}
+						{#each hashtags as hashtag}
+							<Badge href={`https://www.youtube.com/results?search_query=${hashtag}`}>
+								#{hashtag}
+							</Badge>
+						{/each}
+					{/if}
+				</div>
 			</div>
 		</div>
 	</div>

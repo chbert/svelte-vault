@@ -9,5 +9,6 @@ export const totalPagesStore: Writable<number> = writable(0)
 
 export const entriesStore: Writable<any> = writable(null)
 export const totalEntriesStore: Writable<any> = writable(null)
+export const categoriesCountStore: Writable<any> = writable(null)
 
 export const submissionsModalStore: Writable<boolean> = writable(false)

@@ -15,6 +15,10 @@ export const splitRepoUrl = (url: string) => {
 	return { domain, provider: '', owner: '', repo: '', subRepo: '' }
 }
 
+export const getRepositoriesSearchQuery = (term: string) => {
+	return `title.ilike.%${term}%,url.ilike.%${term}%,description.ilike.%${term}%`
+}
+
 export const getEmptyRepoObject = (status: number, repo: string = '', url: string) => {
 	return {
 		status,

@@ -41,14 +41,11 @@ const params = {
 
 	reset: () => {
 		if (browser) {
-			get(page).url.searchParams.set('term', '')
 			get(page).url.searchParams.set('sort', 'title')
 			get(page).url.searchParams.set('page', '1')
 			get(page).url.searchParams.set('pagesize', String(get(pageSizeStore)))
 			get(page).url.searchParams.set('days', '-1')
 			get(page).url.searchParams.set('downloads', '-1')
-
-			termStore.set('')
 
 			goto(`/${get(page).params.category}?${get(page).url.searchParams.toString()}`, {
 				invalidateAll: true

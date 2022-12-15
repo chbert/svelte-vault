@@ -10,6 +10,7 @@
 
 	import Title from '$components/Title'
 	import Description from '$components/Result/Description'
+	import Badge from '$components/Badge'
 
 	export let data: Data
 
@@ -31,6 +32,17 @@
 		</div>
 	</div>
 	<div class="result-main">
-		<Description>{@html description}</Description>
+		<div>
+			{#if description}
+				<Description>{@html description}</Description>
+			{/if}
+			{#if tags}
+				{#each tags as tag}
+					<Badge>
+						{tag}
+					</Badge>
+				{/each}
+			{/if}
+		</div>
 	</div>
 </div>

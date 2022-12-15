@@ -5,7 +5,7 @@ import { throttling } from '@octokit/plugin-throttling'
 
 import { env } from '$env/dynamic/private'
 import { getPagination } from '$utils/pagination'
-import { getEmptyRepoObject, splitRepoUrl } from '$utils/repositories'
+import { getEmptyRepoObject, getRepositoriesSearchQuery, splitRepoUrl } from '$utils/repositories'
 
 const token = env.PRIVATE_GITHUB_TOKEN
 
@@ -61,14 +61,12 @@ const repositories = {
 			to = pagination.to
 		}
 
+		term = decodeURI(term)
+
 		let query = supabaseAdminClient
 			.from('repositories')
 			.select(select, { count: 'exact' })
-			.or(
-				`title.ilike.%${decodeURI(term)}%,url.ilike.%${decodeURI(
-					term
-				)}%,description.ilike.%${decodeURI(term)}%`
-			)
+			.or(getRepositoriesSearchQuery(term))
 			.order(sort, { ascending: ascending })
 
 		if (days > -1) query = query.gt('repo_updated_at', repoUpdatedAt)

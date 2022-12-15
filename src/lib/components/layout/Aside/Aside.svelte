@@ -5,12 +5,21 @@
 	import LinkGroup from '$components/Group/Link'
 
 	export let categories: any[] = []
+	export let counts: any[] = []
 
 	$: getCategoryValues = () => {
 		const values: any = []
 		for (const category of categories) {
 			const { name, path, icon } = category
-			values.push({ label: name, path: path, href: params.get(path), icon: heroicons[icon] })
+			const count = counts.find((count) => count.name === name).count || 0
+
+			values.push({
+				label: name,
+				path: path,
+				href: params.get(path),
+				icon: heroicons[icon],
+				count: count || 0
+			})
 		}
 		return values
 	}

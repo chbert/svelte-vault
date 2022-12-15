@@ -30,3 +30,7 @@ export const cleanupNpmPackage = (npmPackage: string) => {
 	}
 	return npmPackage
 }
+
+export const getPackagesSearchQuery = (term: string) => {
+	return `title.ilike.%${term}%,npm_package.ilike.%${term}%,url.ilike.%${term}%,description.ilike.%${term}%`
+}

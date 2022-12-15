@@ -24,6 +24,7 @@ export const load: Load = async ({ fetch, url, params }) => {
 	daysStore.set(Number(days))
 	downloadsStore.set(Number(downloads))
 
+	// Fetch entries
 	const resEntries = await fetch(
 		`/api/categories/${category}?term=${encodeURI(
 			term
