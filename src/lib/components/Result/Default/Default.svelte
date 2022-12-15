@@ -45,7 +45,7 @@
 	<div class="result-header">
 		<div class="title">
 			<Title size="lg" tag="h3" hasMargin={false}>
-				<a href={homepage || gitHubUrl || npmUrl}>{title || npmPackage}</a>
+				<a href={homepage || gitHubUrl || npmUrl}>{npmPackage || title}</a>
 			</Title>
 			{#if updatedAt}
 				<div class="subtitle">
