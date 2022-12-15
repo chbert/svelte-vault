@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores'
-	import { updateParams } from '$utils/filter'
 	import { termStore, submissionsModalStore } from '$stores'
+	import params from '$utils/params'
 
 	import Logo from '$components/Logo'
 
@@ -12,7 +12,7 @@
 	const onTermChange = (event: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
 		// @ts-ignore
 		$termStore = event?.target?.value
-		updateParams(category)
+		params.update(category)
 	}
 </script>
 

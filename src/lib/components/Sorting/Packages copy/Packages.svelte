@@ -1,16 +1,23 @@
 <script lang="ts">
 	import { page } from '$app/stores'
 	import { sortStore } from '$stores'
+	import selectedPackageManager from '$stores/packageManager'
 	import params from '$utils/params'
+
+	import RadioGroup from '$components/Group/Radio'
 
 	const category = $page.params.category
 
+	const packageManagerValues = [
+		{ label: 'npm', value: 'npm' },
+		{ label: 'pnpm', value: 'pnpm' },
+		{ label: 'yarn', value: 'yarn' }
+	]
+
 	const sortValues = [
 		{ label: 'name', value: 'title' },
-		{ label: 'likes', value: 'likes' },
-		{ label: 'views', value: 'views' },
-		{ label: 'duration', value: 'duration' },
-		{ label: 'upload date', value: 'published_at' }
+		{ label: 'downloads', value: 'npm_downloads_last_week' },
+		{ label: 'open issues', value: 'open_issues' }
 	]
 
 	let showSortList: boolean = false
@@ -23,11 +30,19 @@
 	}
 </script>
 
-<div class="end sorting-action">
+<div class="center">
+	<RadioGroup
+		values={packageManagerValues}
+		orientation="horizontal"
+		bind:selected={$selectedPackageManager}
+	/>
+</div>
+
+<div class="end">
 	<details role="list">
-		<summary aria-haspopup="listbox" on:click={() => (showSortList = true)}>
-			Sort by {selectedSort}
-		</summary>
+		<summary aria-haspopup="listbox" on:click={() => (showSortList = true)}
+			>Sort by {selectedSort}</summary
+		>
 		{#if showSortList}
 			<ul role="listbox">
 				{#each sortValues as value, index}

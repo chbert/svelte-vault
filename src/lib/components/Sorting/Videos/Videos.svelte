@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores'
-	import { updateParams } from '$utils/filter'
 	import { sortStore } from '$stores'
+	import params from '$utils/params'
 
 	const category = $page.params.category
 
@@ -15,7 +15,7 @@
 
 	const onClickSort = (value: number) => {
 		$sortStore = sortValues[value].value
-		updateParams(category)
+		params.update(category)
 		showSortList = false
 	}
 </script>

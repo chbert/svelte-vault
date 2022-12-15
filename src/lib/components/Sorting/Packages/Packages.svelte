@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores'
-	import { updateParams } from '$utils/filter'
 	import { sortStore } from '$stores'
 	import selectedPackageManager from '$stores/packageManager'
+	import params from '$utils/params'
 
 	import RadioGroup from '$components/Group/Radio'
 
@@ -27,7 +27,7 @@
 
 	const onClickSort = (value: number) => {
 		$sortStore = sortValues[value].value
-		updateParams(category)
+		params.update(category)
 		showSortList = false
 	}
 </script>

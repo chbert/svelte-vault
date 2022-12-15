@@ -1,7 +1,7 @@
 <script lang="ts">
 	import RangeSlider from 'svelte-range-slider-pips'
 
-	import { resetParams, updateParams } from '$utils/filter'
+	import params from '$utils/params'
 	import { getDateRange, getDateRangeDays } from '$utils/rangeSlider'
 	import { daysStore } from '$stores'
 
@@ -12,7 +12,7 @@
 
 	const onChangeDays = (event: CustomEvent) => {
 		$daysStore = getDateRangeDays(event.detail.value)
-		updateParams(category)
+		params.update(category)
 	}
 </script>
 
@@ -33,6 +33,6 @@
 	<div class="col-xl" />
 
 	<div class="col-xl filters-action">
-		<button on:click={resetParams}>Clear filters</button>
+		<button on:click={params.reset}>Clear filters</button>
 	</div>
 </Container>

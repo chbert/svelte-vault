@@ -1,4 +1,6 @@
 <script lang="ts">
+	import '../styles.postcss'
+
 	import RangeSlider from 'svelte-range-slider-pips'
 
 	import params from '$utils/params'
@@ -16,7 +18,7 @@
 	}
 </script>
 
-<Container>
+<Container {category}>
 	<div class="range-slider col-xl">
 		<Title size="sm" tag="span">Last updated</Title>
 
@@ -32,7 +34,7 @@
 
 	<div class="col-xl" />
 
-	<div class="col-xl filters-action">
-		<button on:click={resetParams}>Clear filters</button>
+	<div class="col-xl">
+		<button style="width: auto" on:click={params.reset}>Clear filters</button>
 	</div>
 </Container>
