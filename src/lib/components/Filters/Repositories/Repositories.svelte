@@ -1,12 +1,13 @@
 <script lang="ts">
 	import RangeSlider from 'svelte-range-slider-pips'
-
 	import params from '$utils/params'
+
 	import { getDateRange, getDateRangeDays } from '$utils/rangeSlider'
 	import { daysStore } from '$stores'
 
 	import Container from '$components/Filters/Container'
 	import Title from '$components/Title'
+	import ClearButton from '../ClearButton/ClearButton.svelte'
 
 	export let category: string
 
@@ -32,7 +33,5 @@
 
 	<div class="col-xl" />
 
-	<div class="col-xl filters-action">
-		<button on:click={resetParams}>Clear filters</button>
-	</div>
+	<ClearButton class="col-xl" />
 </Container>

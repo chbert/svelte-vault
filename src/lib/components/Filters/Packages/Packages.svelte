@@ -12,6 +12,7 @@
 
 	import Container from '$components/Filters/Container'
 	import Title from '$components/Title'
+	import ClearButton from '../ClearButton/ClearButton.svelte'
 
 	export let category: string
 
@@ -53,7 +54,5 @@
 		/>
 	</div>
 
-	<div class="col-xl filters-action">
-		<button on:click={resetParams}>Clear filters</button>
-	</div>
+	<ClearButton class="col-xl" />
 </Container>
