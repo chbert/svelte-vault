@@ -1,10 +1,11 @@
+import adapter from '@sveltejs/adapter-vercel'
 import { vitePreprocess } from '@sveltejs/kit/vite'
-import adapter from '@sveltejs/adapter-auto'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
+	preprocess: [vitePreprocess()],
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({ edge: true }),
 		alias: {
 			$components: './src/lib/components',
 			$api: './src/lib/api',
@@ -13,7 +14,11 @@ const config = {
 			$utils: './src/lib/utils'
 		}
 	},
-	preprocess: [vitePreprocess()]
+	vitePlugin: {
+		experimental: {
+			inspector: true
+		}
+	}
 }
 
 export default config
