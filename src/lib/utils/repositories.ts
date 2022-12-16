@@ -16,7 +16,8 @@ export const splitRepoUrl = (url: string) => {
 }
 
 export const getRepositoriesSearchQuery = (term: string) => {
-	return `title.ilike.%${term}%,url.ilike.%${term}%,description.ilike.%${term}%`
+	const encodedTerm = encodeURI(term)
+	return `title.fts.%${encodedTerm}%,url.fts.%${encodedTerm}%,description.fts.%${encodedTerm}%`
 }
 
 export const getEmptyRepoObject = (status: number, repo: string = '', url: string) => {

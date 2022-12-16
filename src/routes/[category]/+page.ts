@@ -18,7 +18,7 @@ export const load: Load = async ({ fetch, url, params }) => {
 	const downloads = url.searchParams.get('downloads') || '-1'
 	const category = params.category || 'packages'
 
-	termStore.set(term)
+	termStore.set(decodeURI(term))
 	sortStore.set(sort)
 	pageSizeStore.set(Number(pageSize))
 	daysStore.set(Number(days))

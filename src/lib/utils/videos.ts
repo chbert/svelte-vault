@@ -7,10 +7,6 @@ export const getVideoId = (url: string) => {
 	}
 }
 
-export const getVideosSearchQuery = (term: string) => {
-	return `title.ilike.%${term}%,channel.ilike.%${term}%,description.ilike.%${term}%`
-}
-
 export const formatDuration = (duration: string) => {
 	// Format duration from ISO 8601 format to human readable format
 	const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/

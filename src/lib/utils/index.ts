@@ -121,3 +121,11 @@ export const sortArrayByKeyValue = (array: any[], orderBy = 'id', ascending = tr
 export const getUrlExtension = (url: any) => {
 	return url.split(/[#?]/)[0].split('.').pop().trim()
 }
+
+export const getSplittedTerm = (term: string) => {
+	const decodedTerm = decodeURI(term)
+	const words = decodedTerm.split(' ')
+	const splittedTerm = words.map((word) => `'${word}'`).join('&')
+
+	return splittedTerm
+}

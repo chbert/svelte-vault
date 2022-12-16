@@ -93,7 +93,7 @@
 	<div class="page-header">
 		<div class="start">
 			<Title tag="h2" size="xl" hasMargin={false}>
-				Results {#if $termStore}for "{decodeURI($termStore)}"{/if}
+				Results {#if $termStore}for "{$termStore}"{/if}
 			</Title>
 		</div>
 		<Sorting {category} />

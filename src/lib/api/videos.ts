@@ -2,7 +2,8 @@ import { supabaseAdminClient } from '$db/server'
 
 import { GOOGLE_API_KEY } from '$env/static/private'
 import { getPagination } from '$utils/pagination'
-import { getVideoId, getVideosSearchQuery } from '$utils/videos'
+import { getVideoId } from '$utils/videos'
+import { getSplittedTerm } from '$utils'
 
 const apiKey = GOOGLE_API_KEY
 const baseUrl = `https://www.googleapis.com/youtube/v3/videos?key=${apiKey}&part=snippet,statistics,contentDetails`
@@ -38,9 +39,9 @@ const videos = {
 		let query = supabaseAdminClient
 			.from('videos')
 			.select(select, { count: 'exact' })
-			.or(getVideosSearchQuery(term))
 			.order(sort, { ascending: ascending })
 
+		if (term) query = query.textSearch('fts', `${getSplittedTerm(term)}`)
 		if (days > -1) query = query.gt('published_at', publishedAfter)
 		if (views > -1) query = query.gt('views', views)
 		if (likes > -1) query = query.gt('likes', likes)

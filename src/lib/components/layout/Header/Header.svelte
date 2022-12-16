@@ -8,19 +8,21 @@
 
 	import Logo from '$components/Logo'
 
-	let search = $page.url.searchParams.get('term') || ''
-
+	let search = decodeURI($page.url.searchParams.get('term') || '')
 	const category = $page.params.category
 
 	const onTermChange = (event: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
 		// @ts-ignore
-		$termStore = event?.target?.value
+		search = event?.target?.value
+		$termStore = search
+
 		params.update(category)
 	}
 
 	const onClick = () => {
 		$termStore = ''
 		search = ''
+
 		params.update(category)
 	}
 </script>
@@ -93,11 +95,11 @@
 
 			& .clear {
 				cursor: pointer;
-				display: flex;
-				justify-content: flex-end;
 				position: absolute;
-				top: 0.75rem;
-				right: 1rem;
+				top: 0.5rem;
+				right: 0.5rem;
+				width: 1.5rem;
+				height: 1.5rem;
 			}
 		}
 	}

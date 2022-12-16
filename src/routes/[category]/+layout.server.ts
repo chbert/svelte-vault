@@ -1,10 +1,10 @@
 import type { LayoutServerLoad } from '../$types'
 import { supabaseAdminClient } from '$db/server'
 
-import { getVideosSearchQuery } from '$utils/videos'
 import { getArticlesSearchQuery } from '$utils/articles'
 import { getRepositoriesSearchQuery } from '$utils/repositories'
 import { getPackagesSearchQuery } from '$utils/packages'
+import { getSplittedTerm } from '$utils'
 
 export const load: LayoutServerLoad = async ({ url }) => {
 	const term = url.searchParams.get('term') || ''
@@ -25,10 +25,7 @@ export const load: LayoutServerLoad = async ({ url }) => {
 		let query = supabaseAdminClient.from(categoryTable).select(`id`, { count: 'exact' })
 
 		if (term) {
-			if (categoryName === 'Articles') query = query.or(getArticlesSearchQuery(term))
-			else if (categoryName === 'Videos') query = query.or(getVideosSearchQuery(term))
-			else if (categoryName === 'Repositories') query = query.or(getRepositoriesSearchQuery(term))
-			else if (categoryName === 'Packages') query = query.or(getPackagesSearchQuery(term))
+			query = query.textSearch('fts', `${getSplittedTerm(term)}`)
 		}
 
 		const { count, error } = await query

@@ -1,3 +1,4 @@
 export const getArticlesSearchQuery = (term: string) => {
-	return `title.ilike.%${term}%,description.ilike.%${term}%`
+	const encodedTerm = encodeURI(term)
+	return `title.fts.%${encodedTerm}%,description.fts.%${encodedTerm}%`
 }
