@@ -25,7 +25,8 @@ const articles = {
 
 		term = decodeURI(term)
 
-		let publishedAfter = new Date().getTime() - 1000 * 60 * 60 * 24 * days
+		const publishedAfterDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * days)
+		const publishedAfter = publishedAfterDate.toISOString().replace('T', ' ').substring(0, 19)
 
 		let query = supabaseAdminClient
 			.from('articles')
@@ -33,7 +34,7 @@ const articles = {
 			.or(getArticlesSearchQuery(term))
 			.order(sort, { ascending: ascending })
 
-		if (days > -1) query = query.gt('published_at', publishedAfter)
+		if (days > -1) query = query.gt('published_at', publishedAfterDate)
 		if (paginate) query = query.range(from, to)
 
 		return await query
@@ -41,6 +42,13 @@ const articles = {
 	// Add an article
 	add: async (url: string, title: string, description: string, author: string = '') => {
 		return await supabaseAdminClient.from('articles').insert({ url, title, description, author })
+	},
+	// Delete an article
+	delete: async (id: number) => {
+		const { error } = await supabaseAdminClient.from('articles').delete().eq('id', id)
+		if (error) return { success: false, error }
+
+		return { success: !error }
 	}
 }
 

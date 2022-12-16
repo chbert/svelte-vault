@@ -13,12 +13,14 @@
 	import Title from '$components/Title'
 	import Badge from '$components/Badge'
 	import Description from '$components/Result/Description'
+	import Delete from '$components/Result/Delete'
 
 	export let data: Data
 
 	const orientation = 'horizontal'
 
 	const {
+		id,
 		url,
 		views,
 		title,
@@ -50,6 +52,7 @@
 						{`${formatDate(publishedAt, true)}`}
 					</div>
 				</div>
+				<Delete {id} />
 			</div>
 
 			<div class="result-main">

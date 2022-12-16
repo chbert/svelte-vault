@@ -15,12 +15,14 @@
 	import Github from '$components/icons/Github'
 	import Npm from '$components/icons/Npm'
 	import Badge from '$components/Badge'
+	import Delete from '$components/Result/Delete'
 
 	export let data: Data
 
 	const orientation = 'horizontal'
 
 	const {
+		id,
 		title,
 		description,
 		homepage,
@@ -63,6 +65,7 @@
 			<a href={url} target="_blank" rel="noreferrer" name="Github">
 				<Github />
 			</a>
+			<Delete {id} />
 		</div>
 	</div>
 	<div class="result-main">

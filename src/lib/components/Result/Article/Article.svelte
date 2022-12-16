@@ -11,10 +11,11 @@
 	import Title from '$components/Title'
 	import Description from '$components/Result/Description'
 	import Badge from '$components/Badge'
+	import Delete from '$components/Result/Delete'
 
 	export let data: Data
 
-	const { url, title, description, tags, published_at: publishedAt } = data
+	const { id, url, title, description, tags, published_at: publishedAt } = data
 </script>
 
 <div class="result">
@@ -30,6 +31,7 @@
 				</div>
 			{/if}
 		</div>
+		<Delete {id} />
 	</div>
 	<div class="result-main">
 		<div>

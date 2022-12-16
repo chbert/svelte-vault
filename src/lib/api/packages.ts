@@ -13,7 +13,6 @@ const packages = {
 		sort = 'title',
 		ascending = true,
 		downloads = -1,
-		repoUpdatedAt = '',
 		days = -1,
 		paginate = true,
 		page = 1,
@@ -30,7 +29,8 @@ const packages = {
 
 		term = decodeURI(term)
 
-		let repoUpdatedAfter = new Date().getTime() - 1000 * 60 * 60 * 24 * days
+		const repoUpdatedAfterDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * days)
+		const repoUpdatedAfter = repoUpdatedAfterDate.toISOString().replace('T', ' ').substring(0, 19)
 
 		let query = supabaseAdminClient
 			.from('packages')
@@ -39,7 +39,7 @@ const packages = {
 			.order(sort, { ascending: ascending })
 			.gte('npm_downloads_last_week', downloads)
 
-		if (days > -1) query = query.lt('repo_updated_at', repoUpdatedAfter)
+		if (days > -1) query = query.gt('repo_updated_at', repoUpdatedAfter)
 		if (downloads > -1) query = query.gt('npm_downloads_last_week', downloads)
 		if (paginate) query = query.range(from, to)
 
@@ -141,6 +141,13 @@ const packages = {
 			.eq('id', id)
 
 		if (error) console.log(error)
+
+		return { success: !error }
+	},
+	// Delete a package
+	delete: async (id: number) => {
+		const { error } = await supabaseAdminClient.from('packages').delete().eq('id', id)
+		if (error) return { success: false, error }
 
 		return { success: !error }
 	}

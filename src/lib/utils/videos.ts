@@ -12,19 +12,23 @@ export const getVideosSearchQuery = (term: string) => {
 }
 
 export const formatDuration = (duration: string) => {
-	const [hours, minutes, seconds] = duration
-		.replace('PT', '')
-		.replace('H', ':')
-		.replace('M', ':')
-		.replace('S', '')
-		.split(':')
-		.map((time) => parseInt(time))
+	// Format duration from ISO 8601 format to human readable format
+	const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/
+	const match = duration.match(regex)
+
+	if (!match) return null
+
+	const hours = match[1]
+	const minutes = match[2]
+	const seconds = match[3]
 
 	if (hours) {
-		return `${hours}h ${minutes}m ${seconds}s`
-	} else if (minutes) {
-		return `${minutes}m ${seconds}s`
-	} else {
-		return `${seconds}s`
+		return `${hours}:${minutes}:${seconds}`
+	}
+	if (minutes) {
+		return `${minutes}:${seconds}`
+	}
+	if (seconds) {
+		return `0:${seconds}`
 	}
 }

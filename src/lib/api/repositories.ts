@@ -46,7 +46,6 @@ const repositories = {
 		term = '',
 		sort = 'title',
 		ascending = true,
-		repoUpdatedAt = '',
 		days = -1,
 		paginate = true,
 		page = 1,
@@ -63,7 +62,8 @@ const repositories = {
 
 		term = decodeURI(term)
 
-		let repoUpdatedAfter = new Date().getTime() - 1000 * 60 * 60 * 24 * days
+		const repoUpdatedAfterDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * days)
+		const repoUpdatedAfter = repoUpdatedAfterDate.toISOString().replace('T', ' ').substring(0, 19)
 
 		let query = supabaseAdminClient
 			.from('repositories')
@@ -71,7 +71,7 @@ const repositories = {
 			.or(getRepositoriesSearchQuery(term))
 			.order(sort, { ascending: ascending })
 
-		if (days > -1) query = query.lt('repo_updated_at', repoUpdatedAfter)
+		if (days > -1) query = query.gt('repo_updated_at', repoUpdatedAfter)
 		if (paginate) query = query.range(from, to)
 
 		return await query
@@ -209,6 +209,13 @@ const repositories = {
 			.eq('id', id)
 
 		if (error) console.log(error)
+
+		return { success: !error }
+	},
+	// Delete a repository
+	delete: async (id: number) => {
+		const { error } = await supabaseAdminClient.from('packages').delete().eq('id', id)
+		if (error) return { success: false, error }
 
 		return { success: !error }
 	}

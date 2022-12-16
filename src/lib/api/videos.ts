@@ -32,7 +32,8 @@ const videos = {
 
 		term = decodeURI(term)
 
-		let publishedAfter = new Date().getTime() - 1000 * 60 * 60 * 24 * days
+		const publishedAfterDate = new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * days)
+		const publishedAfter = publishedAfterDate.toISOString().replace('T', ' ').substring(0, 19)
 
 		let query = supabaseAdminClient
 			.from('videos')
@@ -40,7 +41,7 @@ const videos = {
 			.or(getVideosSearchQuery(term))
 			.order(sort, { ascending: ascending })
 
-		if (days > -1) query = query.lt('published_at', publishedAfter)
+		if (days > -1) query = query.gt('published_at', publishedAfter)
 		if (views > -1) query = query.gt('views', views)
 		if (likes > -1) query = query.gt('likes', likes)
 
@@ -98,6 +99,13 @@ const videos = {
 			})
 			.eq('video', video)
 		if (error) console.log(error)
+
+		return { success: !error }
+	},
+	// Delete a video
+	delete: async (id: number) => {
+		const { error } = await supabaseAdminClient.from('videos').delete().eq('id', id)
+		if (error) return { success: false, error }
 
 		return { success: !error }
 	}
