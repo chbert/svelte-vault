@@ -4,6 +4,7 @@
 	export let icon: any = null
 	export let iconVariant: 'outline' | 'solid' | 'mini' = 'outline'
 	export let count: number = 0
+	export let showZeroCount: boolean = false
 	export let active: boolean = false
 	export let href: string = ''
 	export let tag = href ? 'a' : 'span'
@@ -21,7 +22,7 @@
 		<slot />
 	</div>
 
-	{#if count !== 0}
+	{#if showZeroCount}
 		<span class="badge">{count}</span>
 	{/if}
 </svelte:element>
@@ -38,7 +39,7 @@
 		justify-content: space-between;
 
 		border-radius: 999rem;
-		transition: all var(--transition);
+		transition: background-color var(--transition);
 
 		color: var(--text-color);
 

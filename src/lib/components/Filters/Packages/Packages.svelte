@@ -1,6 +1,4 @@
 <script lang="ts">
-	import RangeSlider from 'svelte-range-slider-pips'
-
 	import params from '$utils/params'
 	import {
 		getDateRange,
@@ -11,8 +9,8 @@
 	import { daysStore, downloadsStore } from '$stores'
 
 	import Container from '$components/Filters/Container'
-	import Title from '$components/Title'
-	import ClearButton from '../ClearButton/ClearButton.svelte'
+	import ClearButton from '$components/Filters/ClearButton'
+	import Slider from '$components/Slider'
 
 	export let category: string
 
@@ -28,29 +26,25 @@
 </script>
 
 <Container>
-	<div class="range-slider col-xl">
-		<Title size="sm" tag="span">Last updated</Title>
-
-		<RangeSlider
-			float
+	<div class="col-xl">
+		<Slider
+			title="Last updated"
 			values={[$daysStore]}
 			formatter={(value) => getDateRange(value)}
 			min={0}
 			max={15}
-			on:change={(event) => onChangeDays(event)}
+			on:stop={(event) => onChangeDays(event)}
 		/>
 	</div>
 
-	<div class="range-slider col-xl">
-		<Title size="sm" tag="span">Weekly downloads</Title>
-
-		<RangeSlider
-			float
+	<div class="col-xl">
+		<Slider
+			title="Weekly downloads"
 			values={[$downloadsStore]}
 			formatter={(value) => getDownloadsRange(value)}
 			min={0}
 			max={6}
-			on:change={(event) => onChangeDownloads(event)}
+			on:stop={(event) => onChangeDownloads(event)}
 		/>
 	</div>
 

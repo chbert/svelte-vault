@@ -1,5 +1,5 @@
 <script lang="ts">
-	import * as heroicons from '@steeze-ui/heroicons'
+	import { Gift, BookOpen, VideoCamera, Document } from '@steeze-ui/heroicons'
 	import params from '$utils/params'
 
 	import LinkGroup from '$components/Group/Link'
@@ -17,7 +17,16 @@
 				label: name,
 				path: path,
 				href: params.get(path),
-				icon: heroicons[icon],
+				icon:
+					icon === 'Gift'
+						? Gift
+						: icon === 'BookOpen'
+						? BookOpen
+						: icon === 'VideoCamera'
+						? VideoCamera
+						: icon === 'Document'
+						? Document
+						: null,
 				count: count || 0
 			})
 		}

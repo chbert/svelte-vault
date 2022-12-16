@@ -1,13 +1,12 @@
 <script lang="ts">
-	import RangeSlider from 'svelte-range-slider-pips'
 	import params from '$utils/params'
 
 	import { getDateRange, getDateRangeDays } from '$utils/rangeSlider'
 	import { daysStore } from '$stores'
 
 	import Container from '$components/Filters/Container'
-	import Title from '$components/Title'
-	import ClearButton from '../ClearButton/ClearButton.svelte'
+	import ClearButton from '$components/Filters/ClearButton'
+	import Slider from '$components/Slider'
 
 	export let category: string
 
@@ -19,15 +18,13 @@
 
 <Container>
 	<div class="range-slider col-xl">
-		<Title size="sm" tag="span">Last updated</Title>
-
-		<RangeSlider
-			float
+		<Slider
+			title="Last updated"
 			values={[$daysStore]}
 			formatter={(value) => getDateRange(value)}
 			min={0}
 			max={15}
-			on:change={(event) => onChangeDays(event)}
+			on:stop={(event) => onChangeDays(event)}
 		/>
 	</div>
 

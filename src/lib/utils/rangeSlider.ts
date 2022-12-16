@@ -1,4 +1,4 @@
-export const getDateRange = (value: number) => {
+export const getDateRange: any = (value: number) => {
 	switch (value) {
 		case 0:
 			return 'Any'
@@ -37,7 +37,7 @@ export const getDateRange = (value: number) => {
 	return 'Any'
 }
 
-export const getDateRangeDays = (value: number) => {
+export const getDateRangeDays: any = (value: number) => {
 	switch (value) {
 		case 0:
 			return -1
@@ -76,7 +76,7 @@ export const getDateRangeDays = (value: number) => {
 	return 0
 }
 
-export const getDownloadsRange = (value: number) => {
+export const getDownloadsRange: any = (value: number) => {
 	switch (value) {
 		case 0:
 			return 'Any'
@@ -97,7 +97,7 @@ export const getDownloadsRange = (value: number) => {
 	return 'Any'
 }
 
-export const getDownloads = (value: number) => {
+export const getDownloads: any = (value: number) => {
 	if (value === 0) return -1
 	const downloads = Math.pow(10, value + 1)
 
