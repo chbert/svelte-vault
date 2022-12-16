@@ -1,5 +1,5 @@
 import { supabaseAdminClient } from '$db/server'
-import { getArticlesSearchQuery } from '$utils/articles'
+import { getSplittedTerm } from '$utils'
 import { getPagination } from '$utils/pagination'
 
 const articles = {
@@ -31,9 +31,9 @@ const articles = {
 		let query = supabaseAdminClient
 			.from('articles')
 			.select(select, { count: 'exact' })
-			.or(getArticlesSearchQuery(term))
 			.order(sort, { ascending: ascending })
 
+		if (term) query = query.textSearch('fts', `${getSplittedTerm(term)}`)
 		if (days > -1) query = query.gt('published_at', publishedAfterDate)
 		if (paginate) query = query.range(from, to)
 

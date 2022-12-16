@@ -15,11 +15,6 @@ export const splitRepoUrl = (url: string) => {
 	return { domain, provider: '', owner: '', repo: '', subRepo: '' }
 }
 
-export const getRepositoriesSearchQuery = (term: string) => {
-	const encodedTerm = encodeURI(term)
-	return `title.fts.%${encodedTerm}%,url.fts.%${encodedTerm}%,description.fts.%${encodedTerm}%`
-}
-
 export const getEmptyRepoObject = (status: number, repo: string = '', url: string) => {
 	return {
 		status,

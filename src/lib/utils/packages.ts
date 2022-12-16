@@ -30,8 +30,3 @@ export const cleanupNpmPackage = (npmPackage: string) => {
 	}
 	return npmPackage
 }
-
-export const getPackagesSearchQuery = (term: string) => {
-	const encodedTerm = encodeURI(term)
-	return `title.wfts.%${encodedTerm}%,npm_package.wfts.%${encodedTerm}%,url.wfts.%${encodedTerm}%,description.wfts.%${encodedTerm}%`
-}

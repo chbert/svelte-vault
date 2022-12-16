@@ -2,8 +2,9 @@ import { supabaseAdminClient } from '$db/server'
 
 import { getPagination } from '$utils/pagination'
 import { splitRepoUrl } from '$utils/repositories'
-import { cleanupNpmPackage, getNpmDownloads, getPackagesSearchQuery } from '$utils/packages'
+import { cleanupNpmPackage, getNpmDownloads } from '$utils/packages'
 import repositories from '$api/repositories'
+import { getSplittedTerm } from '$utils'
 
 const packages = {
 	// Get all packages
@@ -35,10 +36,10 @@ const packages = {
 		let query = supabaseAdminClient
 			.from('packages')
 			.select(select, { count: 'exact' })
-			.or(getPackagesSearchQuery(term))
 			.order(sort, { ascending: ascending })
 			.gte('npm_downloads_last_week', downloads)
 
+		if (term) query = query.textSearch('fts', `${getSplittedTerm(term)}`)
 		if (days > -1) query = query.gt('repo_updated_at', repoUpdatedAfter)
 		if (downloads > -1) query = query.gt('npm_downloads_last_week', downloads)
 		if (paginate) query = query.range(from, to)
