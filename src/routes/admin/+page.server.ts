@@ -61,6 +61,10 @@ export const actions: Actions = {
 				break
 			case 'packages':
 				packages.add(repositoryUrl, npmPackage)
+				break
+			case 'articles':
+				articles.add(articleUrl, articleTitle, articleDescription)
+				break
 		}
 
 		return { success: true }

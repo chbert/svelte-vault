@@ -37,6 +37,10 @@ const articles = {
 		if (paginate) query = query.range(from, to)
 
 		return await query
+	},
+	// Add an article
+	add: async (url: string, title: string, description: string, author: string = '') => {
+		return await supabaseAdminClient.from('articles').insert({ url, title, description, author })
 	}
 }
 

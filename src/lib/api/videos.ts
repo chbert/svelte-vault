@@ -54,24 +54,27 @@ const videos = {
 		const id = getVideoId(url)
 		const response = await fetch(`${baseUrl}&id=${id}`)
 		const data = await response.json()
-		const videoInfo = data.items[0]
 
-		const { error } = await supabaseAdminClient.from('videos').insert({
-			url,
-			video: id,
-			title: videoInfo.snippet.title,
-			channel: videoInfo.snippet.channelId,
-			description: videoInfo.snippet.description,
-			thumbnail: videoInfo.snippet.thumbnails.default.url,
-			published_at: videoInfo.snippet.publishedAt,
-			duration: videoInfo.contentDetails.duration,
-			views: videoInfo.statistics.viewCount,
-			likes: videoInfo.statistics.likeCount,
-			hashtags: videoInfo.snippet.tags
-		})
-		if (error) console.log(error)
+		if (data.items.length) {
+			const videoInfo = data.items[0]
 
-		return { success: !error }
+			const { error } = await supabaseAdminClient.from('videos').insert({
+				url,
+				video: id,
+				title: videoInfo.snippet.title,
+				channel: videoInfo.snippet.channelId,
+				description: videoInfo.snippet.description,
+				thumbnail: videoInfo.snippet.thumbnails.default.url,
+				published_at: videoInfo.snippet.publishedAt,
+				duration: videoInfo.contentDetails.duration,
+				views: videoInfo.statistics.viewCount,
+				likes: videoInfo.statistics.likeCount,
+				hashtags: videoInfo.snippet.tags
+			})
+			if (error) console.log(error)
+
+			return { success: !error }
+		}
 	},
 
 	// Update a video
@@ -79,8 +82,6 @@ const videos = {
 		const response = await fetch(`${baseUrl}&id=${video}`)
 		const data = await response.json()
 		const videoInfo = data.items[0]
-
-		console.log('videoInfo :>> ', videoInfo)
 
 		const { error } = await supabaseAdminClient
 			.from('videos')

@@ -9,7 +9,7 @@
 
 	$: selected = ''
 
-	if (form?.success) {
+	$: if (form?.success) {
 		toast.push('Successfully submitted!')
 	}
 </script>
@@ -21,7 +21,7 @@
 			<label>
 				Category
 				<select name="category" required bind:value={selected}>
-					<option value="" selected>Select a category...</option>
+					<option value="">Select a category...</option>
 					<option value="packages"> Packages </option>
 					<option value="repositories"> Repositories </option>
 					<option value="videos"> Videos </option>
