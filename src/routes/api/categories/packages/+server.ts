@@ -1,5 +1,5 @@
 import type { RequestHandler } from './$types'
-import { json as json$1 } from '@sveltejs/kit'
+import { json } from '@sveltejs/kit'
 import packages from '$api/packages'
 
 export const GET: RequestHandler = async ({ url }) => {
@@ -11,18 +11,11 @@ export const GET: RequestHandler = async ({ url }) => {
 	const pageSize = Number(url.searchParams.get('pagesize')) || 10
 	const ascending = sort === 'title' ? true : false
 
-	const now = Number(new Date())
-	const range = now - Number(days) * 1000 * 60 * 60 * 24
-
-	// Convert range to  YYYY-MM-DD HH:MI:SS
-	const gitHubUpdatedAtComp = new Date(range).toISOString().slice(0, 19).replace('T', ' ')
-
 	const { data, count, error } = await packages.getAll({
 		term,
 		sort,
 		ascending,
 		downloads,
-		repoUpdatedAt: gitHubUpdatedAtComp,
 		days,
 		paginate: true,
 		page,
@@ -35,11 +28,10 @@ export const GET: RequestHandler = async ({ url }) => {
 	if (data) {
 		await Promise.all(
 			data.map(async (entry: any) => {
-				const { id, last_data_update: lastDataUpdate, url, npm_package } = entry
+				const { id, updated_at: updatedAt, url, npm_package } = entry
 
 				// Check if data was updated in the past 24 hours
-				const needsDataUpdate =
-					new Date(lastDataUpdate).valueOf() < Date.now() - 1000 * 60 * 60 * 24
+				const needsDataUpdate = new Date(updatedAt).valueOf() < Date.now() - 1000 * 60 * 60 * 24
 
 				if (needsDataUpdate) {
 					updateData = true
@@ -56,16 +48,15 @@ export const GET: RequestHandler = async ({ url }) => {
 			sort,
 			ascending,
 			downloads,
-			repoUpdatedAt: gitHubUpdatedAtComp,
 			days,
 			paginate: true,
 			page,
 			pageSize
 		})
-		if (error) return json$1({ error: error?.message }, { status: 500 })
+		if (error) return json({ error: error?.message }, { status: 500 })
 
-		return json$1({ data, count, error }, { status: 200 })
+		return json({ data, count, error }, { status: 200 })
 	}
 
-	return json$1({ data, count, error }, { status: 200 })
+	return json({ data, count, error }, { status: 200 })
 }

@@ -1,10 +1,18 @@
-import { json as json$1 } from '@sveltejs/kit'
 import type { RequestHandler } from './$types'
+
+import { json, redirect } from '@sveltejs/kit'
+import { getSupabase } from '@supabase/auth-helpers-sveltekit'
 
 import packages from '$api/packages'
 import repositories from '$api/repositories'
 
-export const GET: RequestHandler = async () => {
+export const GET: RequestHandler = async (event) => {
+	const { session } = await getSupabase(event)
+
+	if (!session) {
+		throw redirect(303, '/')
+	}
+
 	const baseUrl =
 		'https://raw.githubusercontent.com/svelte-society/sveltesociety.dev/staging/src/routes'
 
@@ -32,5 +40,5 @@ export const GET: RequestHandler = async () => {
 	}
 
 	// Return success response 200
-	return json$1('Import successfull', { status: 200 })
+	return json('Import successfull', { status: 200 })
 }

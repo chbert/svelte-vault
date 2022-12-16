@@ -32,13 +32,15 @@ const videos = {
 
 		term = decodeURI(term)
 
+		let publishedAfter = new Date().getTime() - 1000 * 60 * 60 * 24 * days
+
 		let query = supabaseAdminClient
 			.from('videos')
 			.select(select, { count: 'exact' })
 			.or(getVideosSearchQuery(term))
 			.order(sort, { ascending: ascending })
 
-		if (days > -1) query = query.gt('published_at', days)
+		if (days > -1) query = query.lt('published_at', publishedAfter)
 		if (views > -1) query = query.gt('views', views)
 		if (likes > -1) query = query.gt('likes', likes)
 
@@ -73,10 +75,12 @@ const videos = {
 	},
 
 	// Update a video
-	update: async (video: number) => {
+	update: async (video: string) => {
 		const response = await fetch(`${baseUrl}&id=${video}`)
 		const data = await response.json()
 		const videoInfo = data.items[0]
+
+		console.log('videoInfo :>> ', videoInfo)
 
 		const { error } = await supabaseAdminClient
 			.from('videos')
@@ -91,7 +95,7 @@ const videos = {
 				likes: videoInfo.statistics.likeCount,
 				hashtags: videoInfo.snippet.tags
 			})
-			.eq('id', video)
+			.eq('video', video)
 		if (error) console.log(error)
 
 		return { success: !error }

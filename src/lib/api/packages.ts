@@ -30,6 +30,8 @@ const packages = {
 
 		term = decodeURI(term)
 
+		let repoUpdatedAfter = new Date().getTime() - 1000 * 60 * 60 * 24 * days
+
 		let query = supabaseAdminClient
 			.from('packages')
 			.select(select, { count: 'exact' })
@@ -37,7 +39,7 @@ const packages = {
 			.order(sort, { ascending: ascending })
 			.gte('npm_downloads_last_week', downloads)
 
-		if (days > -1) query = query.gt('repo_updated_at', repoUpdatedAt)
+		if (days > -1) query = query.lt('repo_updated_at', repoUpdatedAfter)
 		if (downloads > -1) query = query.gt('npm_downloads_last_week', downloads)
 		if (paginate) query = query.range(from, to)
 
@@ -106,7 +108,7 @@ const packages = {
 
 		const npmDownloadsLastWeek = await getNpmDownloads(npm_package)
 
-		const repoInfo = await getRepoInfo(url, domain, owner, repo)
+		const repoInfo = await repositories.enrich(url, domain, owner, repo)
 		if (repoInfo?.status !== 200) return { success: false, error: repoInfo?.status }
 
 		const {

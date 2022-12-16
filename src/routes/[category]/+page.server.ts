@@ -1,6 +1,7 @@
-import { fail, json as json$1 } from '@sveltejs/kit'
-
 import type { Actions } from './$types'
+
+import { fail, json } from '@sveltejs/kit'
+
 import { supabaseAdminClient } from '$db/server'
 import { PRIVATE_TURNSTILE_SECRET_KEY } from '$env/static/private'
 
@@ -49,7 +50,7 @@ export const actions: Actions = {
 
 		if (urlIsValid && success) {
 			const { error } = await supabaseAdminClient.from('submissions').insert({ url: url })
-			if (error) return json$1({ error: error?.message }, { status: 500 })
+			if (error) return json({ error: error?.message }, { status: 500 })
 			return { success: true }
 		}
 

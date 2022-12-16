@@ -63,13 +63,15 @@ const repositories = {
 
 		term = decodeURI(term)
 
+		let repoUpdatedAfter = new Date().getTime() - 1000 * 60 * 60 * 24 * days
+
 		let query = supabaseAdminClient
 			.from('repositories')
 			.select(select, { count: 'exact' })
 			.or(getRepositoriesSearchQuery(term))
 			.order(sort, { ascending: ascending })
 
-		if (days > -1) query = query.gt('repo_updated_at', repoUpdatedAt)
+		if (days > -1) query = query.lt('repo_updated_at', repoUpdatedAfter)
 		if (paginate) query = query.range(from, to)
 
 		return await query

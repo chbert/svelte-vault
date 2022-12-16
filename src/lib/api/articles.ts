@@ -25,13 +25,15 @@ const articles = {
 
 		term = decodeURI(term)
 
+		let publishedAfter = new Date().getTime() - 1000 * 60 * 60 * 24 * days
+
 		let query = supabaseAdminClient
 			.from('articles')
 			.select(select, { count: 'exact' })
 			.or(getArticlesSearchQuery(term))
 			.order(sort, { ascending: ascending })
 
-		if (days > -1) query = query.gt('published_at', days)
+		if (days > -1) query = query.gt('published_at', publishedAfter)
 		if (paginate) query = query.range(from, to)
 
 		return await query

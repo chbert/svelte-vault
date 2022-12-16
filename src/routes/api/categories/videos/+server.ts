@@ -1,5 +1,5 @@
 import type { RequestHandler } from './$types'
-import { json as json$1 } from '@sveltejs/kit'
+import { json } from '@sveltejs/kit'
 import videos from '$api/videos'
 
 export const GET: RequestHandler = async ({ url }) => {
@@ -11,9 +11,6 @@ export const GET: RequestHandler = async ({ url }) => {
 	const page = Number(url.searchParams.get('page')) || 1
 	const pageSize = Number(url.searchParams.get('pagesize')) || 10
 	const ascending = sort === 'title' ? true : false
-
-	const now = Number(new Date())
-	const range = now - Number(days) * 1000 * 60 * 60 * 24
 
 	const { data, count, error } = await videos.getAll({
 		term,
@@ -27,5 +24,39 @@ export const GET: RequestHandler = async ({ url }) => {
 		pageSize
 	})
 
-	return json$1({ data, count, error }, { status: 200 })
+	let updateData = false
+
+	if (data) {
+		await Promise.all(
+			data.map(async (entry: any) => {
+				const { video, updated_at: updatedAt } = entry
+
+				// Check if data was updated in the past 24 hours
+				const needsDataUpdate = new Date(updatedAt).valueOf() < Date.now() - 1000 * 60 * 60 * 24
+
+				if (needsDataUpdate) {
+					updateData = true
+					videos.update(video)
+				}
+			})
+		)
+	}
+
+	if (updateData) {
+		// Reget all entries from the database
+		const { data, count, error } = await videos.getAll({
+			term,
+			sort,
+			ascending,
+			days,
+			paginate: true,
+			page,
+			pageSize
+		})
+		if (error) return json({ error: error?.message }, { status: 500 })
+
+		return json({ data, count, error }, { status: 200 })
+	}
+
+	return json({ data, count, error }, { status: 200 })
 }
