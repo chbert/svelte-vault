@@ -63,7 +63,7 @@ const packages = {
 			}
 		}
 
-		const repoInfo = await repositories.getAll(repoUrl, domain, owner, repo)
+		const repoInfo = await repositories.enrich(repoUrl, domain, owner, repo)
 		if (repoInfo?.status !== 200) return { success: false, error: repoInfo?.status }
 
 		const {

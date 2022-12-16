@@ -34,7 +34,7 @@ const articles = {
 			.order(sort, { ascending: ascending })
 
 		if (term) query = query.textSearch('fts', `${getSplittedTerm(term)}`)
-		if (days > -1) query = query.gt('published_at', publishedAfterDate)
+		if (days > -1) query = query.gt('published_at', publishedAfter)
 		if (paginate) query = query.range(from, to)
 
 		return await query
