@@ -9,9 +9,16 @@
 	export let href: string = ''
 	export let tag = href ? 'a' : 'span'
 	export let orientation: 'vertical' | 'horizontal' = 'vertical'
+	export let reload = 'off'
 </script>
 
-<svelte:element this={tag} class="item {orientation}" {href} class:active data-sveltekit-reload>
+<svelte:element
+	this={tag}
+	class="item {orientation}"
+	{href}
+	class:active
+	data-sveltekit-reload={reload}
+>
 	{#if icon}
 		<span class="icon">
 			<Icon size="20" src={icon} theme={iconVariant} />

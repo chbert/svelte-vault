@@ -1,7 +1,7 @@
 <script lang="ts">
 	import params from '$utils/params'
 
-	import { getDateRange, getDateRangeDays } from '$utils/rangeSlider'
+	import { convertDaysToValue, getDateRange, getDateRangeDays } from '$utils/rangeSlider'
 	import { daysStore } from '$stores'
 
 	import Container from '$components/Filters/Container'
@@ -20,8 +20,8 @@
 	<div class="range-slider col-xl">
 		<Slider
 			title="Last updated"
-			values={[$daysStore]}
-			formatter={(value) => getDateRange(value)}
+			values={[convertDaysToValue($daysStore)]}
+			handleFormatter={(value) => getDateRange(value)}
 			min={0}
 			max={15}
 			on:stop={(event) => onChangeDays(event)}

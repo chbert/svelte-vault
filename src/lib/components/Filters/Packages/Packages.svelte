@@ -4,7 +4,9 @@
 		getDateRange,
 		getDateRangeDays,
 		getDownloadsRange,
-		getDownloads
+		getDownloads,
+		convertDaysToValue,
+		convertDownloadsToValue
 	} from '$utils/rangeSlider'
 	import { daysStore, downloadsStore } from '$stores'
 
@@ -13,6 +15,8 @@
 	import Slider from '$components/Slider'
 
 	export let category: string
+
+	$: console.log('$daysStore :>> ', $daysStore)
 
 	const onChangeDays = (event: CustomEvent) => {
 		$daysStore = getDateRangeDays(event.detail.value)
@@ -29,8 +33,8 @@
 	<div class="col-xl">
 		<Slider
 			title="Last updated"
-			values={[$daysStore]}
-			formatter={(value) => getDateRange(value)}
+			values={[convertDaysToValue($daysStore)]}
+			handleFormatter={(value) => getDateRange(value)}
 			min={0}
 			max={15}
 			on:stop={(event) => onChangeDays(event)}
@@ -40,8 +44,8 @@
 	<div class="col-xl">
 		<Slider
 			title="Weekly downloads"
-			values={[$downloadsStore]}
-			formatter={(value) => getDownloadsRange(value)}
+			values={[convertDownloadsToValue($downloadsStore)]}
+			handleFormatter={(value) => getDownloadsRange(value)}
 			min={0}
 			max={6}
 			on:stop={(event) => onChangeDownloads(event)}

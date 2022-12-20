@@ -33,8 +33,6 @@ export const getDateRange: any = (value: number) => {
 		case 15:
 			return 'More than a year'
 	}
-
-	return 'Any'
 }
 
 export const getDateRangeDays: any = (value: number) => {
@@ -76,6 +74,45 @@ export const getDateRangeDays: any = (value: number) => {
 	return 0
 }
 
+export const convertDaysToValue: any = (value: number) => {
+	switch (value) {
+		case -1:
+			return 0
+		case 1:
+			return 1
+		case 2:
+			return 2
+		case 3:
+			return 3
+		case 4:
+			return 4
+		case 5:
+			return 5
+		case 6:
+			return 6
+		case 7:
+			return 7
+		case 14:
+			return 8
+		case 21:
+			return 9
+		case 30:
+			return 10
+		case 60:
+			return 11
+		case 90:
+			return 12
+		case 180:
+			return 13
+		case 365:
+			return 14
+		case 366:
+			return 15
+	}
+
+	return 0
+}
+
 export const getDownloadsRange: any = (value: number) => {
 	switch (value) {
 		case 0:
@@ -102,4 +139,16 @@ export const getDownloads: any = (value: number) => {
 	const downloads = Math.pow(10, value + 1)
 
 	return downloads
+}
+
+export const convertDownloadsToValue: any = (value: number) => {
+	if (value === -1) return 0
+	if (value < 100) return 1
+	if (value < 1000) return 2
+	if (value < 10000) return 3
+	if (value < 100000) return 4
+	if (value < 1000000) return 5
+	if (value < 10000000) return 6
+
+	return 0
 }

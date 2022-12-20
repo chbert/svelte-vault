@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../styles.postcss'
+	import '../Result.postcss'
 
 	import type { Data } from './types'
 	import { ArrowPath, ArrowDownTray, Star, Scale, XCircle } from '@steeze-ui/heroicons'

@@ -37,7 +37,7 @@
 </script>
 
 <div class="aside">
-	<LinkGroup legend="Categories" {values} />
+	<LinkGroup legend="Categories" {values} reload="" />
 </div>
 
 <style lang="postcss">

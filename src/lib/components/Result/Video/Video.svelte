@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../styles.postcss'
+	import '../Result.postcss'
 
 	import type { Data } from './types'
 	import { formatDuration } from '$utils/videos'

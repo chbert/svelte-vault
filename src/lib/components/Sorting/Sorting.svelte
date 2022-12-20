@@ -1,5 +1,5 @@
 <script lang="ts">
-	import './styles.postcss'
+	import './Sorting.postcss'
 
 	import Packages from '$components/Sorting/Packages'
 	import Repositories from '$components/Sorting/Repositories'

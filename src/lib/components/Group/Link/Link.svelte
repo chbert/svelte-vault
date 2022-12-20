@@ -7,6 +7,7 @@
 	export let values: any[]
 	export let legend: string = ''
 	export let orientation: 'vertical' | 'horizontal' = 'vertical'
+	export let reload = 'off'
 </script>
 
 <section class={orientation}>
@@ -24,6 +25,7 @@
 				{active}
 				{href}
 				{count}
+				{reload}
 				showZeroCount
 				iconVariant={active ? 'solid' : 'outline'}
 			>
