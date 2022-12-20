@@ -37,7 +37,7 @@
 
 .result-footer {
 	display: flex;
-	justify-content: space-between;
+	flex-direction: column;
 	align-items: center;
 	padding: 0.5rem;
 	color: var(--muted-color);
@@ -49,10 +49,21 @@
 	}
 
 	& .start {
-		margin-top: 1rem;
+		margin-top: 0rem;
+		display: flex;
+		justify-content: center;
 	}
 
-	@media (min-width: 1200px) {
+	& .end {
+		margin-top: 1rem;
+	}
+}
+
+@media (min-width: 1200px) {
+	.result-footer {
+		flex-direction: row;
+		justify-content: space-between;
+
 		& .start {
 			margin-top: 0;
 			display: flex;
@@ -61,10 +72,8 @@
 		}
 
 		& .end {
-			display: flex;
+			margin-top: 0;
 			flex-basis: 0;
-			justify-content: flex-end;
-			align-items: center;
 		}
 	}
 }
