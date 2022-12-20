@@ -20,7 +20,7 @@
 		<Slider
 			title="Published"
 			values={[convertDaysToValue($daysStore)]}
-			handleFormatter={getDateRange(value)}
+			handleFormatter={(value) => getDateRange(value)}
 			min={0}
 			max={15}
 			on:stop={(event) => onChangeDays(event)}

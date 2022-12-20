@@ -8,6 +8,7 @@
 	export let legend: string = ''
 	export let orientation: 'vertical' | 'horizontal' = 'vertical'
 	export let reload = 'off'
+	export let tag = 'a'
 </script>
 
 <section class={orientation}>
@@ -20,7 +21,7 @@
 		{@const active = $page.params.category === path}
 		<span class="item">
 			<Item
-				tag="a"
+				{tag}
 				{icon}
 				{active}
 				{href}

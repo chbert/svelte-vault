@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto, invalidateAll } from '$app/navigation'
 	import { Icon } from '@steeze-ui/svelte-icon'
 
 	export let icon: any = null
@@ -10,14 +11,31 @@
 	export let tag = href ? 'a' : 'span'
 	export let orientation: 'vertical' | 'horizontal' = 'vertical'
 	export let reload = 'off'
+
+	const onClick = (e: Event) => {
+		if (e.type === 'click' || (e.type === 'keypress' && e.code === 'Enter')) {
+			e.preventDefault()
+			e.stopPropagation()
+		}
+
+		if (href) {
+			if ((reload = '')) {
+				goto(href, { invalidateAll: reload === '' })
+			} else {
+				goto(href)
+			}
+		}
+	}
 </script>
 
 <svelte:element
 	this={tag}
 	class="item {orientation}"
-	{href}
+	href={tag === 'a' ? href : null}
 	class:active
-	data-sveltekit-reload={reload}
+	on:click={tag === 'button' ? (e) => onClick(e) : null}
+	on:keypress={tag === 'button' ? (e) => onClick(e) : null}
+	data-sveltekit-reload={tag === 'a' ? reload : null}
 >
 	{#if icon}
 		<span class="icon">

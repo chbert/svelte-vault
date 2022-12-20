@@ -20,7 +20,7 @@
 			on:click={() => {
 				page = page - 1
 				newUrl?.searchParams?.set('page', String(page))
-				goto(newUrl)
+				goto(newUrl, { invalidateAll: true })
 			}}
 		>
 			<Icon size="14" src={ChevronLeft} />
@@ -37,7 +37,7 @@
 			on:click={() => {
 				page = page + 1
 				newUrl?.searchParams?.set('page', String(page))
-				goto(newUrl)
+				goto(newUrl, { invalidateAll: true })
 			}}
 		>
 			<Icon size="14" src={ChevronRight} />

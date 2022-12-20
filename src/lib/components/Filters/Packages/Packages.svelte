@@ -16,8 +16,6 @@
 
 	export let category: string
 
-	$: console.log('$daysStore :>> ', $daysStore)
-
 	const onChangeDays = (event: CustomEvent) => {
 		$daysStore = getDateRangeDays(event.detail.value)
 		params.update(category)
