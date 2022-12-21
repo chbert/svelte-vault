@@ -194,7 +194,7 @@ const repositories = {
 		} = await repoInfo
 
 		const { error } = await supabaseAdminClient
-			.from('packages')
+			.from('repositories')
 			.update({
 				title,
 				description,

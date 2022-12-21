@@ -29,7 +29,9 @@ export const GET: RequestHandler = async ({ url }) => {
 				const { id, updated_at: updatedAt, url } = entry
 
 				// Check if data was updated in the past 24 hours
-				const needsDataUpdate = new Date(updatedAt).valueOf() < Date.now() - 1000 * 60 * 60 * 24
+				const needsDataUpdate = updatedAt
+					? new Date(updatedAt).valueOf() < Date.now() - 1000 * 60 * 60 * 24
+					: true
 
 				if (needsDataUpdate) {
 					updateData = true

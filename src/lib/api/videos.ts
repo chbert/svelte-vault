@@ -96,7 +96,8 @@ const videos = {
 				duration: videoInfo.contentDetails.duration,
 				views: videoInfo.statistics.viewCount,
 				likes: videoInfo.statistics.likeCount,
-				hashtags: videoInfo.snippet.tags
+				hashtags: videoInfo.snippet.tags,
+				updated_at: new Date()
 			})
 			.eq('video', video)
 		if (error) console.log(error)
