@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { goto, invalidateAll } from '$app/navigation'
-	import { Icon } from '@steeze-ui/svelte-icon'
+	import { goto } from '$app/navigation'
 
 	export let icon: any = null
-	export let iconVariant: 'outline' | 'solid' | 'mini' = 'outline'
 	export let count: number = 0
 	export let showZeroCount: boolean = false
 	export let active: boolean = false
@@ -39,7 +37,7 @@
 >
 	{#if icon}
 		<span class="icon">
-			<Icon size="20" src={icon} theme={iconVariant} />
+			<iconify-icon icon={`${icon}${active ? '-solid' : ''}`} />
 		</span>
 	{/if}
 

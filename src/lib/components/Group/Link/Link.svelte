@@ -20,16 +20,7 @@
 	{#each values as { icon, label, count, path, href }}
 		{@const active = $page.params.category === path}
 		<span class="item">
-			<Item
-				{tag}
-				{icon}
-				{active}
-				{href}
-				{count}
-				{reload}
-				showZeroCount
-				iconVariant={active ? 'solid' : 'outline'}
-			>
+			<Item {tag} {icon} {active} {href} {count} {reload} showZeroCount>
 				{label}
 			</Item>
 		</span>

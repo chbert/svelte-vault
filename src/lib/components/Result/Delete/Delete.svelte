@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { Icon } from '@steeze-ui/svelte-icon'
-	import { Trash } from '@steeze-ui/heroicons'
-
 	import { page } from '$app/stores'
 	import { goto } from '$app/navigation'
 	import { toast } from '@zerodevx/svelte-toast'
@@ -42,7 +39,7 @@
 
 {#if $page.data.session}
 	<button on:click={onClick} class:shift>
-		<Icon src={Trash} size="16" />
+		<iconify-icon icon="heroicons:trash" />
 	</button>
 {/if}
 

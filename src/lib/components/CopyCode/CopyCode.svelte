@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { copy, type CopyDetail } from '@svelte-put/copy'
 
-	import { Icon } from '@steeze-ui/svelte-icon'
-	import { Square2Stack } from '@steeze-ui/heroicons'
-
 	let copied = ''
 
 	function handleCopy(event: CustomEvent<CopyDetail>) {
@@ -16,7 +13,7 @@
 		<slot />
 	</code>
 
-	<Icon size="20" src={Square2Stack} theme="outline" />
+	<iconify-icon icon="heroicons:square-2-stack" />
 </div>
 
 <style lang="postcss">

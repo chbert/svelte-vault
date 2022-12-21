@@ -4,9 +4,6 @@
 	import type { Data } from './types'
 	import { formatDuration } from '$utils/videos'
 
-	import { ArrowPath, HandThumbUp, Eye, Clock } from '@steeze-ui/heroicons'
-	import { Icon } from '@steeze-ui/svelte-icon'
-
 	import formatDate from '$utils/formatDate'
 
 	import Item from '$components/Item'
@@ -48,7 +45,7 @@
 						<a href={url} target="_blank" rel="noreferrer">{title}</a>
 					</Title>
 					<div class="subtitle">
-						<Icon src={ArrowPath} size="16" /> Uploaded
+						<iconify-icon icon="heroicons:arrow-path" />
 						{`${formatDate(publishedAt, true)}`}
 					</div>
 				</div>
@@ -74,9 +71,9 @@
 
 	<div class="result-footer">
 		<div class="start">
-			<Item icon={HandThumbUp} {orientation}>{likes.toLocaleString()} likes</Item>
-			<Item icon={Eye} {orientation}>{views.toLocaleString()} views</Item>
-			<Item icon={Clock} {orientation}>{formatDuration(duration)}</Item>
+			<Item icon="heroicons:hand-thumb-up" {orientation}>{likes.toLocaleString()} likes</Item>
+			<Item icon="heroicons:eye" {orientation}>{views.toLocaleString()} views</Item>
+			<Item icon="heroicons:clock" {orientation}>{formatDuration(duration)}</Item>
 		</div>
 	</div>
 </div>

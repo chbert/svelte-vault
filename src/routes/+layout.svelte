@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../pico.scss'
 	import '../app.postcss'
+	import 'iconify-icon'
 
 	import { onMount } from 'svelte'
 	import { fade } from 'svelte/transition'

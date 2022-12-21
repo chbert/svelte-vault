@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { ChevronLeft, ChevronRight } from '@steeze-ui/heroicons'
-	import { Icon } from '@steeze-ui/svelte-icon'
-
 	import { page as pageStore } from '$app/stores'
 	import { goto } from '$app/navigation'
 
@@ -23,7 +20,7 @@
 				goto(newUrl, { invalidateAll: true })
 			}}
 		>
-			<Icon size="14" src={ChevronLeft} />
+			<iconify-icon icon="heroicons:chevron-left" />
 		</button>
 
 		<span class="pagination__page">
@@ -40,7 +37,7 @@
 				goto(newUrl, { invalidateAll: true })
 			}}
 		>
-			<Icon size="14" src={ChevronRight} />
+			<iconify-icon icon="heroicons:chevron-right" />
 		</button>
 	</div>
 {/if}

@@ -2,8 +2,6 @@
 	import '../Result.postcss'
 
 	import type { Data } from './types'
-	import { ArrowPath, ArrowDownTray, Star, Scale, XCircle } from '@steeze-ui/heroicons'
-	import { Icon } from '@steeze-ui/svelte-icon'
 
 	import formatDate from '$utils/formatDate'
 	import selectedPackageManager from '$stores/packageManager'
@@ -51,7 +49,7 @@
 			</Title>
 			{#if updatedAt}
 				<div class="subtitle">
-					<Icon src={ArrowPath} size="16" /> Last updated
+					<iconify-icon icon="heroicons:arrow-path" /> Last updated
 					{`${formatDate(updatedAt, true)}`}
 				</div>
 			{/if}
@@ -85,19 +83,19 @@
 
 	<div class="result-footer">
 		<div class="start">
-			<Item icon={Star} href={`${gitHubUrl}/stargazers`} {orientation}
+			<Item icon="heroicons:star" href={`${gitHubUrl}/stargazers`} {orientation}
 				>{stars.toLocaleString()}</Item
 			>
-			<Item icon={XCircle} href={`${gitHubUrl}/issues`} {orientation}>
+			<Item icon="heroicons:scale" href={`${gitHubUrl}/issues`} {orientation}>
 				{openIssues.toLocaleString()} issues
 			</Item>
 			{#if npmPackage}
-				<Item icon={ArrowDownTray} href={npmUrl} {orientation}
+				<Item icon="heroicons:arrow-down-tray" href={npmUrl} {orientation}
 					>{npmDownloads.toLocaleString()} last week</Item
 				>
 			{/if}
 			{#if license?.spdx_id}
-				<Item icon={Scale} href={license?.url} {orientation}>
+				<Item icon="heroicons:scale" href={license?.url} {orientation}>
 					{license?.spdx_id}
 				</Item>
 			{/if}

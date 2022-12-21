@@ -3,9 +3,6 @@
 
 	import type { Data } from './types'
 
-	import { ArrowPath } from '@steeze-ui/heroicons'
-	import { Icon } from '@steeze-ui/svelte-icon'
-
 	import formatDate from '$utils/formatDate'
 
 	import Title from '$components/Title'
@@ -26,7 +23,7 @@
 			</Title>
 			{#if publishedAt}
 				<div class="subtitle">
-					<Icon src={ArrowPath} size="16" /> Published
+					<iconify-icon icon="heroicons:arrow-path" /> Published
 					{`${formatDate(publishedAt, true)}`}
 				</div>
 			{/if}

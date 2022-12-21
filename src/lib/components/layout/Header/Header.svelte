@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { Icon } from '@steeze-ui/svelte-icon'
-	import { XMark } from '@steeze-ui/heroicons'
-
 	import { page } from '$app/stores'
 	import { termStore, submissionsModalStore } from '$stores'
 	import params from '$utils/params'
@@ -48,7 +45,7 @@
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					{#if search}
 						<div class="clear" on:click={onClick}>
-							<Icon src={XMark} size="16" />
+							<iconify-icon icon="heroicons:x-mark" />
 						</div>
 					{/if}
 				</div>
