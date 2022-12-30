@@ -2,13 +2,12 @@
 	import { copy, type CopyDetail } from '@svelte-put/copy'
 
 	let copied = ''
-
 	function handleCopy(event: CustomEvent<CopyDetail>) {
 		copied = event.detail.text
 	}
 </script>
 
-<div class="copy-code" use:copy on:copy={handleCopy}>
+<div class="copy-code" use:copy on:copied={handleCopy}>
 	<code class="truncate">
 		<slot />
 	</code>
